@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aquaman.security.admin.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.aquaman.security.admin.entity.domain.User">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="dept_id" jdbcType="BIGINT" property="deptId" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="login_time" jdbcType="BIGINT" property="loginTime" />
+    <result column="permission_code" jdbcType="VARCHAR" property="permissionCode" />
+    <result column="gmt_create" jdbcType="BIGINT" property="gmtCreate" />
+    <result column="gmt_modify" jdbcType="BIGINT" property="gmtModify" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, account, password, nick_name, mobile, email, dept_id, status, type, login_time, 
+    permission_code, gmt_create, gmt_modify
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ad_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ad_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.aquaman.security.admin.entity.domain.User">
+    insert into ad_user (id, account, password, 
+      nick_name, mobile, email, 
+      dept_id, status, type, 
+      login_time, permission_code, gmt_create, 
+      gmt_modify)
+    values (#{id,jdbcType=BIGINT}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{nickName,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{deptId,jdbcType=BIGINT}, #{status,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{loginTime,jdbcType=BIGINT}, #{permissionCode,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=BIGINT}, 
+      #{gmtModify,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.aquaman.security.admin.entity.domain.User">
+    insert into ad_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="account != null">
+        account,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="nickName != null">
+        nick_name,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="deptId != null">
+        dept_id,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="loginTime != null">
+        login_time,
+      </if>
+      <if test="permissionCode != null">
+        permission_code,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModify != null">
+        gmt_modify,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="account != null">
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null">
+        #{deptId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="loginTime != null">
+        #{loginTime,jdbcType=BIGINT},
+      </if>
+      <if test="permissionCode != null">
+        #{permissionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=BIGINT},
+      </if>
+      <if test="gmtModify != null">
+        #{gmtModify,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aquaman.security.admin.entity.domain.User">
+    update ad_user
+    <set>
+      <if test="account != null">
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null">
+        dept_id = #{deptId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="loginTime != null">
+        login_time = #{loginTime,jdbcType=BIGINT},
+      </if>
+      <if test="permissionCode != null">
+        permission_code = #{permissionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=BIGINT},
+      </if>
+      <if test="gmtModify != null">
+        gmt_modify = #{gmtModify,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aquaman.security.admin.entity.domain.User">
+    update ad_user
+    set account = #{account,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      dept_id = #{deptId,jdbcType=BIGINT},
+      status = #{status,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      login_time = #{loginTime,jdbcType=BIGINT},
+      permission_code = #{permissionCode,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=BIGINT},
+      gmt_modify = #{gmtModify,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
