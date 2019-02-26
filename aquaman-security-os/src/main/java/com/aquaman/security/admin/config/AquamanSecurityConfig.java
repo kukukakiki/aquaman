@@ -1,6 +1,8 @@
 package com.aquaman.security.admin.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
@@ -8,7 +10,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.stereotype.Component;
 
 /**
- * 安全验证框架配置类
+ * 资源服务器配置
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
  * @version 2019/2/26
@@ -25,5 +27,20 @@ public class AquamanSecurityConfig extends ResourceServerConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
+    }
+
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
+        http.
+            // 请求授权
+            authorizeRequests()
+            // 过滤OPTIONS请求
+            .antMatchers(HttpMethod.OPTIONS).permitAll()
+            // 过滤该URL
+            .antMatchers("/test").permitAll()
+            // 任何请求
+            .anyRequest().authenticated()
+            // 取消跨站请求防护
+            .and().csrf().disable();
     }
 }
