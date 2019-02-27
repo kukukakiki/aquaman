@@ -1,6 +1,7 @@
 package com.aquaman.security.admin.service;
 
-import com.aquaman.security.admin.endity.domain.User;
+import com.aquaman.security.admin.entity.domain.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  * 用户服务接口
@@ -8,7 +9,7 @@ import com.aquaman.security.admin.endity.domain.User;
  * @author wei.wang
  * @since 2019年02月26日
  */
-public interface UserService {
+public interface UserService extends UserDetailsService {
 
     /**
      * 根据ID删除具体数据

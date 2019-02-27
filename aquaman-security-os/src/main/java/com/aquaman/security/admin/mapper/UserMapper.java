@@ -1,6 +1,6 @@
 package com.aquaman.security.admin.mapper;
 
-import com.aquaman.security.admin.endity.domain.User;
+import com.aquaman.security.admin.entity.domain.User;
 
 /**
  * 用户Mapper
@@ -52,4 +52,6 @@ public interface UserMapper {
      * @return
      */
     int updateByPrimaryKey(User user);
+
+    User loadUserByAccount(String account);
 }

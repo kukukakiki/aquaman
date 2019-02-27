@@ -1,10 +1,12 @@
 package com.aquaman.security.admin.service.impl;
 
-import com.aquaman.security.admin.endity.domain.User;
+import com.aquaman.security.admin.entity.domain.User;
 import com.aquaman.security.admin.mapper.UserMapper;
 import com.aquaman.security.admin.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -80,5 +82,16 @@ public class UserServiceImpl implements UserService {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
         return user;
+    }
+
+    /**
+     * spring security自定义登录需要通过该方法验证登录
+     * @param s
+     * @return
+     * @throws UsernameNotFoundException
+     */
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        return userMapper.loadUserByAccount(s);
     }
 }
