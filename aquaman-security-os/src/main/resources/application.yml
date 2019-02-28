@@ -27,6 +27,7 @@ mybatis:
   # 设置mybatis实体类包路径
   # type-aliases-package: com.aquaman.security.admin.entity
 
+# 定义日志级别
 logging:
   level:
     com:
@@ -34,3 +35,9 @@ logging:
         security:
           admin:
             mapper: debug
+
+# Aquaman自定义配置项目
+aquaman:
+  security:
+    authorization:
+      login-page: /login

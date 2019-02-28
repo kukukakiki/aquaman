@@ -26,6 +26,7 @@ package com.aquaman.security.admin.config;
 import com.aquaman.security.admin.handler.login.LoginFailureHandler;
 import com.aquaman.security.admin.handler.login.LoginSuccessHandler;
 import com.aquaman.security.admin.handler.logout.LogoutSuccessHandler;
+import com.aquaman.security.admin.properties.security.AquamanSecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -54,6 +55,9 @@ public class AquamanWebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private LogoutSuccessHandler logoutSuccessHandler;
 
+    @Autowired
+    private AquamanSecurityProperties aquamanSecurityProperties;
+
     /**
      * 声明一个Bean，该Bean主要用于spring security拿到用户对象password后进行matches匹配密码是否正确
      * @return
@@ -69,7 +73,7 @@ public class AquamanWebSecurityConfig extends WebSecurityConfigurerAdapter {
             // 采用form方式登录
             .formLogin()
             // 登录处理URI
-            .loginPage("/login")
+            .loginPage(aquamanSecurityProperties.getAuthorization().getLoginPage())
             // 登录成功处理器
             .successHandler(loginSuccessHandler)
             // 登录失败处理器
@@ -85,7 +89,7 @@ public class AquamanWebSecurityConfig extends WebSecurityConfigurerAdapter {
             // 过滤OPTIONS请求
             .antMatchers(HttpMethod.OPTIONS).permitAll()
             // 过滤该URL
-            // .antMatchers("/test").permitAll()
+            .antMatchers(aquamanSecurityProperties.getAuthorization().getLoginPage()).permitAll()
             // 任何请求
             .anyRequest().authenticated()
             // 取消跨站请求防护

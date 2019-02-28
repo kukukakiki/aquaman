@@ -65,7 +65,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
             // JSON格式返回
             response.getWriter().print(JSONUtil.objectToJSONString(resultVO));
         } else {
-            logger.error("---------------------------------Principal转换异常---------------------------------");
+            log.error("---------------------------------Principal转换异常---------------------------------");
             // 如果authentication.getPrincipal()为空或authentication.getPrincipal()无法转换成User，抛出异常
             ResultVO resultVO = new ResultVO(ResultCodeEnum.PRINCIPAL_TO_USER_CONVERSION);
             throw new PrincipalToUserConversionException(resultVO);
