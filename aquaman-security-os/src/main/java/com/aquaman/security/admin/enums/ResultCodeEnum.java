@@ -14,6 +14,9 @@ import java.util.HashMap;
 public enum  ResultCodeEnum {
 
     SUCCESS("0000", "操作成功"),
+    LOGOUT_SUCCESS("0001", "登出成功"),
+
+    USER_NOT_LOGIN("1000", "用户未登录"),
     UNKNOWN_ERROR("9999", "未知异常，请联系管理员"),
     PRINCIPAL_TO_USER_CONVERSION("9001","底层数据转换异常"),
     LOGIN_PASSWORD_ERROR("9002", "用户名密码错误"),

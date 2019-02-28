@@ -1,7 +1,8 @@
 package com.aquaman.security.admin.config;
 
-import com.aquaman.security.admin.handler.LoginFailureHandler;
-import com.aquaman.security.admin.handler.LoginSuccessHandler;
+import com.aquaman.security.admin.handler.login.LoginFailureHandler;
+import com.aquaman.security.admin.handler.login.LoginSuccessHandler;
+import com.aquaman.security.admin.handler.logout.LogoutSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +28,9 @@ public class AquamanWebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private LoginFailureHandler loginFailureHandler;
 
+    @Autowired
+    private LogoutSuccessHandler logoutSuccessHandler;
+
     /**
      * 声明一个Bean，该Bean主要用于spring security拿到用户对象password后进行matches匹配密码是否正确
      * @return
@@ -41,10 +45,17 @@ public class AquamanWebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
             // 采用form方式登录
             .formLogin()
+            // 登录处理URI
+            .loginPage("/login")
             // 登录成功处理器
             .successHandler(loginSuccessHandler)
             // 登录失败处理器
             .failureHandler(loginFailureHandler)
+            .and()
+            // 登出设置
+            .logout()
+            // 登出成功处理器
+            .logoutSuccessHandler(logoutSuccessHandler)
             .and()
             // 请求授权
             .authorizeRequests()

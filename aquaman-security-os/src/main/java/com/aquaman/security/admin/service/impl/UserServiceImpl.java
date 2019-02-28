@@ -1,6 +1,7 @@
 package com.aquaman.security.admin.service.impl;
 
 import com.aquaman.security.admin.entity.domain.User;
+import com.aquaman.security.admin.entity.query.UserQuery;
 import com.aquaman.security.admin.mapper.UserMapper;
 import com.aquaman.security.admin.service.UserService;
 import org.apache.commons.lang3.StringUtils;
@@ -10,6 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+
+import java.util.List;
 
 /**
  * 用户服务实现类
@@ -93,5 +96,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         return userMapper.loadUserByAccount(s);
+    }
+
+    @Override
+    public List<User> findUserByPage(UserQuery query) {
+        return userMapper.findUserByPage(query);
     }
 }

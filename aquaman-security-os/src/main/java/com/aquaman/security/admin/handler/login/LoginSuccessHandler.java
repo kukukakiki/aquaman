@@ -1,4 +1,4 @@
-package com.aquaman.security.admin.handler;
+package com.aquaman.security.admin.handler.login;
 
 import com.aquaman.security.admin.entity.domain.User;
 import com.aquaman.security.admin.entity.vo.CurrentLoginUserVO;

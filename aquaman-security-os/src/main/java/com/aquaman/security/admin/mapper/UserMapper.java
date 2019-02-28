@@ -1,6 +1,9 @@
 package com.aquaman.security.admin.mapper;
 
 import com.aquaman.security.admin.entity.domain.User;
+import com.aquaman.security.admin.entity.query.UserQuery;
+
+import java.util.List;
 
 /**
  * 用户Mapper
@@ -53,5 +56,17 @@ public interface UserMapper {
      */
     int updateByPrimaryKey(User user);
 
+    /**
+     * 根据用户名（Account）查询用户
+     * @param account
+     * @return
+     */
     User loadUserByAccount(String account);
+
+    /**
+     * 根据query对象查询用户集合
+     * @param query
+     * @return
+     */
+    List<User> findUserByPage(UserQuery query);
 }

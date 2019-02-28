@@ -1,7 +1,10 @@
 package com.aquaman.security.admin.service;
 
 import com.aquaman.security.admin.entity.domain.User;
+import com.aquaman.security.admin.entity.query.UserQuery;
 import org.springframework.security.core.userdetails.UserDetailsService;
+
+import java.util.List;
 
 /**
  * 用户服务接口
@@ -52,4 +55,6 @@ public interface UserService extends UserDetailsService {
      * @return
      */
     int updateByPrimaryKey(User user);
+
+    List<User> findUserByPage(UserQuery query);
 }
