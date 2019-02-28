@@ -25,7 +25,9 @@ package com.aquaman.security.admin.service;
 
 import com.aquaman.security.admin.entity.domain.User;
 import com.aquaman.security.admin.entity.query.UserQuery;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
 
@@ -79,5 +81,19 @@ public interface UserService extends UserDetailsService {
      */
     int updateByPrimaryKey(User user);
 
+    /**
+     * spring security用户登陆使用或根据用户名查询用户信息
+     * @param account
+     * @return
+     * @throws UsernameNotFoundException
+     */
+    @Override
+    User loadUserByUsername(String account) throws UsernameNotFoundException;
+
+    /**
+     * 根据query对象查询用户集合
+     * @param query
+     * @return
+     */
     List<User> findUserByPage(UserQuery query);
 }

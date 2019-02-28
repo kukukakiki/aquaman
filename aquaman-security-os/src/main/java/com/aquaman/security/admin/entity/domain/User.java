@@ -23,11 +23,13 @@ SOFTWARE.
  */
 package com.aquaman.security.admin.entity.domain;
 
+import com.aquaman.security.admin.validator.user.AccountNotRepeat;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 
 /**
@@ -49,6 +51,7 @@ public class User implements UserDetails {
     /**
      * 用户名
      */
+    @AccountNotRepeat
     private String account;
 
 

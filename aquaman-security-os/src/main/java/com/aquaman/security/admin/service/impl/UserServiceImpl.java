@@ -60,7 +60,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int insert(User user) {
-        Assert.notNull(user.getId(), "用户ID不能为空");
         Assert.notNull(user.getAccount(), "用户名不能为空");
         encodePassword(user);
         return userMapper.insert(user);
@@ -68,7 +67,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int insertSelective(User user) {
-        Assert.notNull(user.getId(), "用户ID不能为空");
         Assert.notNull(user.getAccount(), "用户名不能为空");
         encodePassword(user);
         return userMapper.insertSelective(user);
@@ -95,8 +93,6 @@ public class UserServiceImpl implements UserService {
         return userMapper.updateByPrimaryKey(user);
     }
 
-
-
     /**
      * 密码加密
      * @param user
@@ -110,15 +106,9 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    /**
-     * spring security自定义登录需要通过该方法验证登录
-     * @param s
-     * @return
-     * @throws UsernameNotFoundException
-     */
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return userMapper.loadUserByAccount(s);
+    public User loadUserByUsername(String account) throws UsernameNotFoundException {
+        return userMapper.loadUserByAccount(account);
     }
 
     @Override

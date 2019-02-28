@@ -21,70 +21,49 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.aquaman.security.admin.controller.user;
+package com.aquaman.security.admin.controller.base;
 
-import com.aquaman.security.admin.controller.base.BaseRest;
-import com.aquaman.security.admin.entity.domain.User;
-import com.aquaman.security.admin.entity.query.UserQuery;
 import com.aquaman.security.admin.entity.vo.ResultVO;
 import com.aquaman.security.admin.enums.ResultCodeEnum;
-import com.aquaman.security.admin.service.UserService;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.List;
 
 /**
- * 用户操作Rest
+ * 基础Rest类
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
- * @version 2019/2/27
- * @since 2019/2/27
+ * @version 2019/2/28
+ * @since 2018/7/30
  */
-@RestController
-@RequestMapping("/user")
-@Slf4j
-public class UserOperatorRest extends BaseRest {
-
-    @Autowired
-    private UserService userService;
+public class BaseRest {
 
     /**
-     * 获取用户列表
-     * @param userQuery
+     * 操作成功
      * @return
      */
-    @GetMapping
-    public ResultVO<List<User>> get(UserQuery userQuery){
-        List<User> users = userService.findUserByPage(userQuery);
-        ResultVO<List<User>> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, users);
+    private ResultVO success(){
+        ResultVO resultVO = new ResultVO(ResultCodeEnum.SUCCESS);
         return resultVO;
     }
 
     /**
-     * 用户新增
-     * @param user
+     * 未知异常
      * @return
      */
-    @PostMapping
-    public ResultVO create(@Valid User user){
-        int resultNum = userService.insertSelective(user);
-        if(resultNum < 1){
-            log.warn("新增用户信息警告，因为新增数量小于1:{}", resultNum);
-        }
-        return null;
+    private ResultVO unknownError(){
+        ResultVO resultVO = new ResultVO(ResultCodeEnum.UNKNOWN_ERROR);
+        return resultVO;
     }
 
     /**
-     * 用户修改
-     * @param user
-     * @return
+     * Valid校验异常信息打印控制台
+     * @param resultErrors
+     * @param log
      */
-    @PutMapping("/id:\\d+")
-    public ResultVO update(@Valid User user){
-        return null;
+    protected void validatorErrorConsolePrint(BindingResult resultErrors, Logger log) {
+        if(resultErrors.hasErrors()){
+            resultErrors.getAllErrors().stream().forEach(
+                    objectError -> log.error(objectError.getDefaultMessage()));
+        }
     }
 }

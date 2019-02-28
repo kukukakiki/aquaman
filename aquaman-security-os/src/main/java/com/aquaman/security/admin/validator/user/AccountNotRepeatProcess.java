@@ -21,70 +21,40 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.aquaman.security.admin.controller.user;
+package com.aquaman.security.admin.validator.user;
 
-import com.aquaman.security.admin.controller.base.BaseRest;
 import com.aquaman.security.admin.entity.domain.User;
-import com.aquaman.security.admin.entity.query.UserQuery;
 import com.aquaman.security.admin.entity.vo.ResultVO;
 import com.aquaman.security.admin.enums.ResultCodeEnum;
+import com.aquaman.security.admin.exception.ValidatorException;
 import com.aquaman.security.admin.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.List;
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 
 /**
- * 用户操作Rest
+ * 用户名不能重复校验处理器
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
- * @version 2019/2/27
- * @since 2019/2/27
+ * @version 2019/2/28
+ * @since 2019/2/28
  */
-@RestController
-@RequestMapping("/user")
 @Slf4j
-public class UserOperatorRest extends BaseRest {
+public class AccountNotRepeatProcess implements ConstraintValidator<AccountNotRepeat, String> {
 
     @Autowired
     private UserService userService;
 
-    /**
-     * 获取用户列表
-     * @param userQuery
-     * @return
-     */
-    @GetMapping
-    public ResultVO<List<User>> get(UserQuery userQuery){
-        List<User> users = userService.findUserByPage(userQuery);
-        ResultVO<List<User>> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, users);
-        return resultVO;
-    }
-
-    /**
-     * 用户新增
-     * @param user
-     * @return
-     */
-    @PostMapping
-    public ResultVO create(@Valid User user){
-        int resultNum = userService.insertSelective(user);
-        if(resultNum < 1){
-            log.warn("新增用户信息警告，因为新增数量小于1:{}", resultNum);
+    @Override
+    public boolean isValid(String value, ConstraintValidatorContext context) {
+        User user = userService.loadUserByUsername(value);
+        if(user != null){
+            log.error("用户名{}已在数据库存在", value);
+            ResultVO resultVO = new ResultVO(ResultCodeEnum.USER_ACCOUNT_REPEAT);
+            throw new ValidatorException(resultVO);
         }
-        return null;
-    }
-
-    /**
-     * 用户修改
-     * @param user
-     * @return
-     */
-    @PutMapping("/id:\\d+")
-    public ResultVO update(@Valid User user){
-        return null;
+        return true;
     }
 }
