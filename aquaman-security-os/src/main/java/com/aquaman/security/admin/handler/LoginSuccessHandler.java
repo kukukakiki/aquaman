@@ -29,6 +29,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
+        response.setContentType("application/json;charset=UTF-8");
         // 获取登录成功对象
         if (authentication.getPrincipal() != null && authentication.getPrincipal() instanceof User){
             User user = (User) authentication.getPrincipal();

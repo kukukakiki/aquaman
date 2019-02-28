@@ -29,7 +29,4 @@ mvnw.cmd
 
 ### Aquaman ###
 /aquaman-doc/generator-mybatis-admin/src
-/aquaman-doc/generator-mybatis-admin/mybatis-generator-core-1.3.7.jar
-/aquaman-doc/generator-mybatis-admin/mybatis-generator-core-1.3.7-javadoc.jar
-/aquaman-doc/generator-mybatis-admin/mybatis-generator-core-1.3.7-sources.jar
-/aquaman-doc/generator-mybatis-admin/mysql-connector-java-5.1.46.jar
+/aquaman-security-os/target
