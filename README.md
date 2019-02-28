@@ -1,5 +1,11 @@
 # Aquaman Admin（海王管理系统）
 
+## 前端fe工程
+
+前端工程基于[vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)开发
+
+在此鸣谢vue-element-admin贡献者们
+
 #### 1. mybatis自动生成工具
 
 - 修改generatorConfig.xml文件

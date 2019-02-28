@@ -1,5 +1,7 @@
 package com.aquaman.security.admin.config;
 
+import com.aquaman.security.admin.handler.LoginSuccessHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -18,6 +20,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class AquamanWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private LoginSuccessHandler loginSuccessHandler;
+
     /**
      * 声明一个Bean，该Bean主要用于spring security拿到用户对象password后进行matches匹配密码是否正确
      * @return
@@ -29,8 +34,12 @@ public class AquamanWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.
-            httpBasic().and()
+        http
+            // 采用form方式登录
+            .formLogin()
+            // 登录成功处理器
+            .successHandler(loginSuccessHandler)
+            .and()
             // 请求授权
             .authorizeRequests()
             // 过滤OPTIONS请求
