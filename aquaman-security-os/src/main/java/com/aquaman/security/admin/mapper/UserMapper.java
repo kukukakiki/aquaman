@@ -25,6 +25,7 @@ package com.aquaman.security.admin.mapper;
 
 import com.aquaman.security.admin.entity.domain.User;
 import com.aquaman.security.admin.entity.query.UserQuery;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 import java.util.List;
 
@@ -35,7 +36,7 @@ import java.util.List;
  * @version 2019/2/26
  * @since 2019/2/26
  */
-public interface UserMapper {
+public interface UserMapper extends BaseMapper<User> {
 
     /**
      * 根据ID删除具体数据
