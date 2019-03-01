@@ -16,6 +16,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
  */
 public interface IUserService extends IService<User>, UserDetailsService {
 
+    /**
+     * 根据account查询用户信息
+     * @param account
+     * @return
+     * @throws UsernameNotFoundException
+     */
     @Override
     User loadUserByUsername(String account) throws UsernameNotFoundException;
 }
