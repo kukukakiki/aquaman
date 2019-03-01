@@ -1,11 +1,14 @@
 package com.aquaman.security.admin.entity.domain;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,7 +20,6 @@ import java.util.Collection;
  * <p>
  * 
  * </p>
- *
  * @author kukukakiki
  * @since 2019-03-01
  */
@@ -38,8 +40,10 @@ public class User implements UserDetails, Serializable {
     private String account;
 
     /**
+     * 处理逻辑查阅{@link com.aquaman.security.admin.handler.mybatisplus.UserSaveOrUpdatePasswordHandler}
      * 密码
      */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private String password;
 
     /**
@@ -79,11 +83,15 @@ public class User implements UserDetails, Serializable {
     /**
      * 创建时间
      */
+    //@TableField(el = "now()", fill = FieldFill.INSERT)
+    @DateTimeFormat(pattern = "yyyyMMddHHmmss")
     private Long gmtCreate;
 
     /**
      * 修改时间
      */
+    @TableField(update = "now()", fill = FieldFill.INSERT_UPDATE)
+    @DateTimeFormat(pattern = "yyyyMMddHHmmss")
     private Long gmtModify;
 
 

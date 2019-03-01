@@ -1,30 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aquaman.security.admin.mapper.UserMapper">
-  <resultMap id="BaseResultMap" type="com.aquaman.security.admin.entity.domain.User">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="account" jdbcType="VARCHAR" property="account" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
-    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
-    <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="dept_id" jdbcType="BIGINT" property="deptId" />
-    <result column="status" jdbcType="VARCHAR" property="status" />
-    <result column="type" jdbcType="VARCHAR" property="type" />
-    <result column="login_time" jdbcType="BIGINT" property="loginTime" />
-    <result column="permission_code" jdbcType="VARCHAR" property="permissionCode" />
-    <result column="gmt_create" jdbcType="BIGINT" property="gmtCreate" />
-    <result column="gmt_modify" jdbcType="BIGINT" property="gmtModify" />
-  </resultMap>
-  <sql id="Base_Column_List">
+
+    <sql id="Base_Column_List">
     id, account, password, nick_name, mobile, email, dept_id, status, type, login_time,
     permission_code, gmt_create, gmt_modify
-  </sql>
-  <!-- 根据用户名获取用户信息 -->
-  <select id="loadUserByAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
+    </sql>
+    <sql id="Base_Where_List">
+        1=1
+        <if test="account != null and account != ''">
+            and account = #{account,jdbcType=VARCHAR}
+        </if>
+        <if test="nickName != null and nickName != ''">
+            and nick_name = #{nickName,jdbcType=VARCHAR}
+        </if>
+        <if test="mobile != null and mobile != ''">
+            and mobile = #{mobile,jdbcType=VARCHAR}
+        </if>
+        <if test="email != null and email != ''">
+            and email = #{email,jdbcType=VARCHAR}
+        </if>
+        <if test="deptId != null and deptId != ''">
+            and dept_id = #{deptId,jdbcType=BIGINT}
+        </if>
+        <if test="status != null and status != ''">
+            and status = #{status,jdbcType=VARCHAR}
+        </if>
+        <if test="type != null and type != ''">
+            and type = #{type,jdbcType=VARCHAR}
+        </if>
+        <if test="loginTime != null and loginTime != ''">
+            and login_time = #{loginTime,jdbcType=BIGINT}
+        </if>
+        <if test="permissionCode != null">
+            and permission_code = #{permissionCode,jdbcType=VARCHAR}
+        </if>
+        <if test="gmtModify != null and gmt_modify != ''">
+            and gmt_modify = DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')
+        </if>
+    </sql>
+    <!-- 根据用户名获取用户信息 -->
+    <select id="loadUserByAccount" parameterType="java.lang.String" resultType="com.aquaman.security.admin.entity.domain.User">
     select
     <include refid="Base_Column_List" />
     from ad_user
     where account = #{account,jdbcType=VARCHAR}
-  </select>
+    </select>
+
+    <select id="findUserByPage" resultType="com.aquaman.security.admin.entity.domain.User">
+        select
+        <include refid="Base_Column_List" />
+        from ad_user
+        where <include refid="Base_Where_List" />
+    </select>
+
+
 </mapper>

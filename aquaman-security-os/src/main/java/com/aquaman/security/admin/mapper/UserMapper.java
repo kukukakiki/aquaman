@@ -1,10 +1,11 @@
 package com.aquaman.security.admin.mapper;
 
 import com.aquaman.security.admin.entity.domain.User;
+import com.aquaman.security.admin.entity.query.UserQuery;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Flush;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 
 /**
  * <p>
@@ -14,6 +15,7 @@ import org.apache.ibatis.annotations.Select;
  * @author kukukakiki
  * @since 2019-03-01
  */
+@Mapper
 public interface UserMapper extends BaseMapper<User> {
 
     /**
@@ -21,6 +23,12 @@ public interface UserMapper extends BaseMapper<User> {
      * @param account
      * @return
      */
-    // @Select("select id, account, password, nick_name, mobile, email, dept_id, status, type, login_time, permission_code, gmt_create, gmt_modify where account = #{account}")
     User loadUserByAccount(@Param("account") String account);
+
+    /**
+     * 分页查询用户信息
+     * @param query
+     * @return
+     */
+    Page<User> findUserByPage(UserQuery query);
 }

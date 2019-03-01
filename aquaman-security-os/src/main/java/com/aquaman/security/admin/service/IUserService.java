@@ -1,10 +1,13 @@
 package com.aquaman.security.admin.service;
 
 import com.aquaman.security.admin.entity.domain.User;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import java.util.Collection;
 
 /**
  * <p>

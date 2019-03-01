@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,24 +31,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Autowired
     private UserMapper userMapper;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     @Override
     public User loadUserByUsername(String account) throws UsernameNotFoundException {
         return userMapper.loadUserByAccount(account);
-    }
-
-    /**
-     * 密码加密
-     * @param user
-     * @return
-     */
-    private User encodePassword(User user){
-        if(StringUtils.isNotBlank(user.getPassword())){
-            // 将密码加密（该加密方式使用spring security的PasswordEncoder）后存入数据库中
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-        }
-        return user;
     }
 }
