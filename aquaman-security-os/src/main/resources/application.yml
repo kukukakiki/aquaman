@@ -3,14 +3,14 @@ server:
 spring:
   # DB 配置
   datasource:
-    url: jdbc:mysql://fanxiweb.mysql.rds.aliyuncs.com:3306/fanxiweb
-    username: fanxiweb
-    password: q1w2e3r4t5
+    url: *****
+    username: *****
+    password: *****
   # 缓存配置
   redis:
-    host: 101.200.38.213
-    port: 6379
-    password: leerzoom213
+    host: *****
+    port: *****
+    password: *****
   resources:
     # 不要为我们工程中的资源文件建立映射
     add-mappings: false
@@ -25,7 +25,7 @@ mybatis:
   # 设置mybatis sql脚本文件路径
   mapper-locations: classpath*:mapper/*.xml
   # 设置mybatis实体类包路径
-  # type-aliases-package: com.aquaman.security.admin.entity
+  type-aliases-package: com.aquaman.security.admin.entity.domain
 
 # 定义日志级别
 logging:
