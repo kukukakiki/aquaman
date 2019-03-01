@@ -61,9 +61,9 @@ public class BaseRest {
      * @param log
      */
     protected void validatorErrorConsolePrint(BindingResult resultErrors, Logger log) {
-        if(resultErrors.hasErrors()){
+        /*if(resultErrors.hasErrors()){
             resultErrors.getAllErrors().stream().forEach(
                     objectError -> log.error(objectError.getDefaultMessage()));
-        }
+        }*/
     }
 }

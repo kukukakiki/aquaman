@@ -27,7 +27,7 @@ import com.aquaman.security.admin.entity.domain.User;
 import com.aquaman.security.admin.entity.vo.ResultVO;
 import com.aquaman.security.admin.enums.ResultCodeEnum;
 import com.aquaman.security.admin.exception.ValidatorException;
-import com.aquaman.security.admin.service.UserService;
+import com.aquaman.security.admin.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -45,7 +45,7 @@ import javax.validation.ConstraintValidatorContext;
 public class AccountNotRepeatProcess implements ConstraintValidator<AccountNotRepeat, String> {
 
     @Autowired
-    private UserService userService;
+    private IUserService userService;
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {

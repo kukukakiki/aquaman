@@ -10,14 +10,4 @@
         <typeAlias alias="ArrayList" type="java.util.ArrayList" />
         <typeAlias alias="LinkedList" type="java.util.LinkedList" />
     </typeAliases>
-   <!-- <plugins>
-        &lt;!&ndash; com.github.pagehelper为PageHelper类所在包名 &ndash;&gt;
-        <plugin interceptor="com.github.pagehelper.PageHelper">
-            &lt;!&ndash; 方言 &ndash;&gt;
-            <property name="dialect" value="mysql"/>
-            &lt;!&ndash; 该参数默认为false &ndash;&gt;
-            &lt;!&ndash; 设置为true时，使用RowBounds分页会进行count查询 &ndash;&gt;
-            <property name="rowBoundsWithCount" value="true"/>
-        </plugin>
-    </plugins>-->
 </configuration>

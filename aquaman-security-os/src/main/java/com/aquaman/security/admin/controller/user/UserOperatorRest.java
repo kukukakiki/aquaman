@@ -28,11 +28,14 @@ import com.aquaman.security.admin.entity.domain.User;
 import com.aquaman.security.admin.entity.query.UserQuery;
 import com.aquaman.security.admin.entity.vo.ResultVO;
 import com.aquaman.security.admin.enums.ResultCodeEnum;
-import com.aquaman.security.admin.service.UserService;
+import com.aquaman.security.admin.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -50,7 +53,7 @@ import java.util.List;
 public class UserOperatorRest extends BaseRest {
 
     @Autowired
-    private UserService userService;
+    private IUserService userService;
 
     /**
      * 获取用户列表
@@ -59,7 +62,7 @@ public class UserOperatorRest extends BaseRest {
      */
     @GetMapping
     public ResultVO<List<User>> get(UserQuery userQuery){
-        List<User> users = userService.findUserByPage(userQuery);
+        List<User> users = userService.list();
         ResultVO<List<User>> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, users);
         return resultVO;
     }
@@ -71,9 +74,9 @@ public class UserOperatorRest extends BaseRest {
      */
     @PostMapping
     public ResultVO create(@Valid User user){
-        int resultNum = userService.insertSelective(user);
-        if(resultNum < 1){
-            log.warn("新增用户信息警告，因为新增数量小于1:{}", resultNum);
+        boolean isSuccess = userService.save(user);
+        if(isSuccess){
+            log.warn("新增用户信息警告，因为新增数量小于1:{}", isSuccess);
         }
         return null;
     }

@@ -23,6 +23,9 @@ SOFTWARE.
  */
 package com.aquaman.security.admin.entity.query;
 
+import com.aquaman.security.admin.entity.domain.User;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.segments.MergeSegments;
 import lombok.Data;
 
 import java.io.Serializable;

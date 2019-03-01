@@ -3,14 +3,14 @@ server:
 spring:
   # DB 配置
   datasource:
-    url: *****
-    username: *****
-    password: *****
+    url: jdbc:mysql://fanxiweb.mysql.rds.aliyuncs.com:3306/fanxiweb
+    username: fanxiweb
+    password: q1w2e3r4t5
   # 缓存配置
   redis:
-    host: *****
-    port: *****
-    password: *****
+    host: 101.200.38.213
+    port: 6379
+    password: leerzoom213
   resources:
     # 不要为我们工程中的资源文件建立映射
     add-mappings: false
@@ -19,7 +19,15 @@ spring:
     # session存储方式采用redis
     #store-type: redis
 
-mybatis:
+#mybatis:
+  # 设置mybatis配置文件路径
+  #config-location: classpath:mybatis/mybatis-config.xml
+  # 设置mybatis sql脚本文件路径
+  #mapper-locations: classpath*:mapper/*.xml
+  # 设置mybatis实体类包路径
+  #type-aliases-package: com.aquaman.security.admin.entity.domain
+
+mybatis-plus:
   # 设置mybatis配置文件路径
   config-location: classpath:mybatis/mybatis-config.xml
   # 设置mybatis sql脚本文件路径
@@ -30,11 +38,7 @@ mybatis:
 # 定义日志级别
 logging:
   level:
-    com:
-      aquaman:
-        security:
-          admin:
-            mapper: debug
+    com.aquaman.security.admin: debug
 
 # Aquaman自定义配置项目
 aquaman:

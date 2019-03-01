@@ -1,4 +1,4 @@
-package code.generator.mybatis.plus;
+package com.aquaman.code.generator;
 
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
@@ -23,7 +23,7 @@ import java.util.List;
  * @version 2019/3/1
  * @since 2019/3/1
  */
-public class CodeGenerator {
+public class CodeGeneratorApplication {
 
     private static final String MYSQL_URL = "jdbc:mysql://fanxiweb.mysql.rds.aliyuncs.com:3306/fanxiweb";
 
@@ -43,6 +43,8 @@ public class CodeGenerator {
 
     private static final String CURRENT_EXECUTE_TABLE = "ad_user";
 
+    private static final String PROJECT_NAME = "aquaman-security-os";
+
     /**
      * 快速入门参考https://mp.baomidou.com/guide/generator.html#%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96
      * 配置新增参考https://mp.baomidou.com/config/generator-config.html#logicdeletefieldname
@@ -54,7 +56,8 @@ public class CodeGenerator {
 
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
-        final String projectPath = System.getProperty("user.dir");
+        //  + "/" + PROJECT_NAME
+        final String projectPath = System.getProperty("user.dir") + "/" + PROJECT_NAME;
         gc.setOutputDir(projectPath + "/src/main/java");
         gc.setAuthor(PROJECT_AUTHOR);
         gc.setOpen(false);
@@ -130,7 +133,9 @@ public class CodeGenerator {
         strategy.setInclude(CURRENT_EXECUTE_TABLE);
         //strategy.setSuperEntityColumns("id");
         strategy.setControllerMappingHyphenStyle(true);
-        strategy.setTablePrefix(pc.getModuleName() + "_");
+        strategy.setTablePrefix("ad" + "_");
+        // Boolean类型字段是否移除is前缀（默认 false）
+        strategy.setEntityBooleanColumnRemoveIsPrefix(true);
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         mpg.execute();
