@@ -61,6 +61,9 @@ public class User implements UserDetails, Serializable {
      */
     private String email;
 
+    /**
+     * 部门ID
+     */
     private Long deptId;
 
     /**
@@ -78,6 +81,9 @@ public class User implements UserDetails, Serializable {
      */
     private Long loginTime;
 
+    /**
+     * 权限Code
+     */
     private String permissionCode;
 
     /**

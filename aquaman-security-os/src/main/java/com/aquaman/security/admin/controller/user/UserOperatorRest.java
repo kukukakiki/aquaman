@@ -29,6 +29,8 @@ import com.aquaman.security.admin.entity.query.UserQuery;
 import com.aquaman.security.admin.entity.vo.ResultVO;
 import com.aquaman.security.admin.enums.ResultCodeEnum;
 import com.aquaman.security.admin.service.IUserService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,8 +64,8 @@ public class UserOperatorRest extends BaseRest {
      */
     @GetMapping
     public ResultVO<List<User>> get(UserQuery userQuery){
-        List<User> users = userService.list();
-        ResultVO<List<User>> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, users);
+        IPage<User> page1 = userService.page(userQuery, userQuery.instance());
+        ResultVO<List<User>> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, page1);
         return resultVO;
     }
 

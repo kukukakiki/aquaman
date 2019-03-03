@@ -2,10 +2,15 @@ package com.aquaman.security.admin.user;
 
 import com.aquaman.security.admin.entity.domain.User;
 import com.aquaman.security.admin.entity.query.UserQuery;
+import com.aquaman.security.admin.entity.vo.ResultVO;
+import com.aquaman.security.admin.enums.ResultCodeEnum;
 import com.aquaman.security.admin.mapper.UserMapper;
+import com.aquaman.security.admin.service.IUserService;
+import com.aquaman.security.admin.util.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.commons.collections.CollectionUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,6 +33,9 @@ public class UserMapperTest {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private IUserService userService;
 
     @Test
     public void save() {
@@ -59,15 +67,27 @@ public class UserMapperTest {
 
         System.out.println("----- 自定义 XML 分页 start ------");
         // PageQuery<User> myPage = new PageQuery<User>(1, 5);
-        UserQuery query = new UserQuery(1, 5);
-        query.setAccount("test5");
-        Page<User> userPage = userMapper.findUserByPage(query);
+        //UserQuery query = new UserQuery(1, 5);
+        //query.setAccount("test5");
+        //Page<User> userPage = userMapper.findUserByPage(query);
         // Assert.assertSame(myPage, userMyPage);
-        System.out.println("总条数 ------> " + userPage.getTotal());
-        System.out.println("当前页数 ------> " + userPage.getCurrent());
-        System.out.println("当前每页显示数 ------> " + userPage.getSize());
-        print(userPage.getRecords());
+        //System.out.println("总条数 ------> " + userPage.getTotal());
+        //System.out.println("当前页数 ------> " + userPage.getCurrent());
+        //System.out.println("当前每页显示数 ------> " + userPage.getSize());
+        //print(userPage.getRecords());
         System.out.println("----- 自定义 XML 分页 end ------");
+    }
+
+    @Test
+    public void defaultPage() throws JsonProcessingException {
+
+        UserQuery query =new UserQuery(1, 5);
+        query.setAccount("test3");
+
+        IPage<User> page1 = userService.page(query, query.instance());
+
+        ResultVO<List<User>> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, page1.getTotal());
+        System.out.println(JSONUtil.objectToJSONString(resultVO));
     }
 
     private <T> void print(List<T> list) {

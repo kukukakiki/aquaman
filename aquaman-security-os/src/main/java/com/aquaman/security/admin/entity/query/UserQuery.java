@@ -24,9 +24,7 @@ SOFTWARE.
 package com.aquaman.security.admin.entity.query;
 
 import com.aquaman.security.admin.entity.domain.User;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.segments.MergeSegments;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -38,15 +36,18 @@ import java.io.Serializable;
  * @since 2019/2/27
  */
 @Data
-public class UserQuery extends Page<User> implements Serializable {
+public class UserQuery extends PageQuery<User> implements Serializable {
 
     private static final long serialVersionUID = 8874511002284155516L;
 
-    public UserQuery(){}
+    public UserQuery() {
+    }
 
     public UserQuery(long current, long size) {
         super(current, size);
     }
+
+    private String password;
 
     /**
      * 主键ID
