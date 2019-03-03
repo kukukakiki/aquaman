@@ -63,8 +63,8 @@ public class UserOperatorRest extends BaseRest {
      * @return
      */
     @GetMapping
-    public ResultVO<List<User>> get(UserQuery userQuery){
-        IPage<User> page1 = userService.page(userQuery, userQuery.instance());
+    public ResultVO<List<User>> getByPage(UserQuery userQuery){
+        IPage<User> page1 = userService.page(userQuery);
         ResultVO<List<User>> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, page1);
         return resultVO;
     }

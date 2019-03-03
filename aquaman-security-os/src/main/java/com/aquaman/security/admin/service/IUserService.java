@@ -1,7 +1,9 @@
 package com.aquaman.security.admin.service;
 
 import com.aquaman.security.admin.entity.domain.User;
+import com.aquaman.security.admin.entity.query.UserQuery;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -27,4 +29,6 @@ public interface IUserService extends IService<User>, UserDetailsService {
      */
     @Override
     User loadUserByUsername(String account) throws UsernameNotFoundException;
+
+    IPage<User> page(UserQuery query);
 }

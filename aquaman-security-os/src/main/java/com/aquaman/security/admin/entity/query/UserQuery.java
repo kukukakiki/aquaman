@@ -40,13 +40,6 @@ public class UserQuery extends PageQuery<User> implements Serializable {
 
     private static final long serialVersionUID = 8874511002284155516L;
 
-    public UserQuery() {
-    }
-
-    public UserQuery(long current, long size) {
-        super(current, size);
-    }
-
     private String password;
 
     /**

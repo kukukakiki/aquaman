@@ -1,5 +1,6 @@
 package com.aquaman.security.admin.entity.domain;
 
+import com.aquaman.security.admin.validator.user.AccountNotRepeat;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -37,6 +38,7 @@ public class User implements UserDetails, Serializable {
     /**
      * 账号
      */
+    @AccountNotRepeat
     private String account;
 
     /**

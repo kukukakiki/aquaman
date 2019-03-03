@@ -81,10 +81,10 @@ public class UserMapperTest {
     @Test
     public void defaultPage() throws JsonProcessingException {
 
-        UserQuery query =new UserQuery(1, 5);
+        UserQuery query =new UserQuery();
         query.setAccount("test3");
 
-        IPage<User> page1 = userService.page(query, query.instance());
+        IPage<User> page1 = userService.page(query);
 
         ResultVO<List<User>> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, page1.getTotal());
         System.out.println(JSONUtil.objectToJSONString(resultVO));

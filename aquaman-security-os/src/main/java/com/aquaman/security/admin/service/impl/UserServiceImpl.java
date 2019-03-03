@@ -1,9 +1,11 @@
 package com.aquaman.security.admin.service.impl;
 
 import com.aquaman.security.admin.entity.domain.User;
+import com.aquaman.security.admin.entity.query.UserQuery;
 import com.aquaman.security.admin.mapper.UserMapper;
 import com.aquaman.security.admin.service.IUserService;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +36,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public User loadUserByUsername(String account) throws UsernameNotFoundException {
         return userMapper.loadUserByAccount(account);
+    }
+
+    @Override
+    public IPage<User> page(UserQuery query) {
+        return this.page(query, query.instanceQueryWrapper());
     }
 }

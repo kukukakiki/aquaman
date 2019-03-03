@@ -23,7 +23,6 @@ SOFTWARE.
  */
 package com.aquaman.security.admin.entity.query;
 
-import com.aquaman.security.admin.entity.domain.User;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
@@ -32,12 +31,13 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * 封装至Mybatis-plus中的Page<T>对象
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
  * @version 2019/3/3
  * @since 2019/3/3
  */
-public class PageQuery<T> extends QueryWrapper<T> implements IPage<T> {
+public class PageQuery<T> implements IPage<T> {
 
     /**
      * 查询数据列表
@@ -233,8 +233,12 @@ public class PageQuery<T> extends QueryWrapper<T> implements IPage<T> {
         return this;
     }
 
-    @Override
-    public QueryWrapper<T> instance() {
+    /**
+     * 改造实例化QueryWrapper方法
+     * @return
+     */
+    public QueryWrapper<T> instanceQueryWrapper() {
+        // 调用Mybatis-plus底层分页方法需要QueryWrapper对象，此处为了方便实例化查询对象
         return new QueryWrapper(this);
     }
 }
