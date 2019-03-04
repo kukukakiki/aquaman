@@ -1,16 +1,25 @@
 server:
   port: 8001
+
+# druid 公钥配置
+publickey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAIvYfACyldtg8G9CDaFBr2r4rzupQbVbVjzRGFUeTQyUrcSDwXB3zQhHeQqtxlalmfvEUck1erSSbkZWI0BueK0CAwEAAQ==
+
 spring:
   # DB 配置
   datasource:
-    url: ******
-    username: ******
-    password: ******
+    url: jdbc:mysql://fanxiweb.mysql.rds.aliyuncs.com:3306/fanxiweb
+    username: fanxiweb
+    password: JLXFlYO0ksWlcue/1IH7xLa9h3zON/n8a56CwQQ5M9GoEnHLd4/sR4Xwz1C/ng58vA9EvJEihV2xg/1KkRF1Vg==
+    # durid 配置
+    druid:
+      # 解密所需配置
+      filters: config
+      connection-properties: config.decrypt=true;config.decrypt.key=${publickey}
   # 缓存配置
   redis:
-    host: ******
-    port: ******
-    password: ******
+    host: 101.200.38.213
+    port: 6379
+    password: leerzoom213
   resources:
     # 不要为我们工程中的资源文件建立映射
     add-mappings: false
@@ -34,6 +43,8 @@ mybatis-plus:
   mapper-locations: classpath*:mapper/*.xml
   # 设置mybatis实体类包路径
   type-aliases-package: com.aquaman.security.admin.entity.domain
+  # 配置通用枚举,https://mp.baomidou.com/guide/enum.html
+  type-enums-package: com.aquaman.security.admin.enums
 
 # 定义日志级别
 logging:

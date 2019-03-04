@@ -28,12 +28,17 @@ import com.aquaman.security.admin.entity.domain.User;
 import com.aquaman.security.admin.entity.query.UserQuery;
 import com.aquaman.security.admin.entity.vo.ResultVO;
 import com.aquaman.security.admin.enums.ResultCodeEnum;
+import com.aquaman.security.admin.enums.StatusEnum;
 import com.aquaman.security.admin.service.IUserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,6 +58,9 @@ import java.util.List;
 @RequestMapping("/user")
 @Slf4j
 public class UserOperatorRest extends BaseRest {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private IUserService userService;
@@ -76,11 +84,13 @@ public class UserOperatorRest extends BaseRest {
      */
     @PostMapping
     public ResultVO create(@Valid User user){
+        encodePassword(user);
         boolean isSuccess = userService.save(user);
-        if(isSuccess){
-            log.warn("新增用户信息警告，因为新增数量小于1:{}", isSuccess);
+        if(!isSuccess){
+            log.error("新增用户失败，执行返回结果：", isSuccess);
+            return unknownError();
         }
-        return null;
+        return success();
     }
 
     /**
@@ -88,8 +98,45 @@ public class UserOperatorRest extends BaseRest {
      * @param user
      * @return
      */
-    @PutMapping("/id:\\d+")
-    public ResultVO update(@Valid User user){
-        return null;
+    @PutMapping("/{id:\\d+}")
+    public ResultVO update(@PathVariable Long id, @Valid User user){
+        user.setId(id);
+        encodePassword(user);
+        boolean isSuccess = userService.updateById(user);
+        if(!isSuccess){
+            log.warn("修改用户失败，执行返回结果：", isSuccess);
+            return unknownError();
+        }
+        return success();
+    }
+
+    /**
+     * 用户删除（逻辑）
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/{id:\\d+}")
+    public ResultVO delete(@PathVariable Long id){
+        User user = new User();
+        user.setId(id);
+        user.setStatus(StatusEnum.STOP);
+        boolean isSuccess = userService.updateById(user);
+        if(!isSuccess){
+            log.warn("修改用户失败，执行返回结果：", isSuccess);
+            return unknownError();
+        }
+        return success();
+    }
+
+    /**
+     * 密码非空则加密
+     * @param user
+     */
+    private void encodePassword(User user){
+        // 密码非空则加密
+        if(StringUtils.isNotEmpty(user.getPassword())){
+            String encodePwd = passwordEncoder.encode(user.getPassword());
+            user.setPassword(encodePwd);
+        }
     }
 }

@@ -25,11 +25,11 @@ import java.util.List;
  */
 public class CodeGeneratorApplication {
 
-    private static final String MYSQL_URL = "********";
+    private static final String MYSQL_URL = "jdbc:mysql://fanxiweb.mysql.rds.aliyuncs.com:3306/fanxiweb";
 
-    private static final String MYSQL_USER = "********";
+    private static final String MYSQL_USER = "fanxiweb";
 
-    private static final String MYSQL_PWD = "********";
+    private static final String MYSQL_PWD = "*********";
 
     private static final String MYSQL_DRIVER_NAME = "com.mysql.jdbc.Driver";
 

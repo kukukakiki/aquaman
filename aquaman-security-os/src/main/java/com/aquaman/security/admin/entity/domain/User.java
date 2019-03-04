@@ -1,5 +1,7 @@
 package com.aquaman.security.admin.entity.domain;
 
+import com.aquaman.security.admin.enums.StatusEnum;
+import com.aquaman.security.admin.enums.UserRegistTypeEnmu;
 import com.aquaman.security.admin.validator.user.AccountNotRepeat;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -42,10 +44,8 @@ public class User implements UserDetails, Serializable {
     private String account;
 
     /**
-     * 处理逻辑查阅{@link com.aquaman.security.admin.handler.mybatisplus.MyBatisPlusFillHandler}
      * 密码
      */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
     private String password;
 
     /**
@@ -71,12 +71,12 @@ public class User implements UserDetails, Serializable {
     /**
      * 状态
      */
-    private String status;
+    private StatusEnum status;
 
     /**
      * 会员类型
      */
-    private String type;
+    private UserRegistTypeEnmu type;
 
     /**
      * 登录时间
@@ -89,6 +89,7 @@ public class User implements UserDetails, Serializable {
     private String permissionCode;
 
     /**
+     * 处理逻辑查阅{@link com.aquaman.security.admin.handler.mybatisplus.MyBatisPlusFillHandler}
      * 创建时间
      */
     @TableField(fill = FieldFill.INSERT)

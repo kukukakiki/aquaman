@@ -4,13 +4,11 @@ import com.aquaman.security.admin.entity.domain.User;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.ibatis.binding.MapperMethod;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
@@ -28,9 +26,6 @@ import java.util.Date;
 @Component
 @Slf4j
 public class MyBatisPlusFillHandler implements MetaObjectHandler {
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Override
     public void insertFill(MetaObject metaObject) {
@@ -53,45 +48,9 @@ public class MyBatisPlusFillHandler implements MetaObjectHandler {
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
-        // 原始对象不为空，并且为User类型、密码为空
-        if(originalObj != null && originalObj instanceof User && StringUtils.isNotEmpty(((User) originalObj).getPassword())){
-            encodePassword(metaObject, ((User) originalObj).getPassword());
-        }
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        log.info("UserSaveOrUpdatePasswordHandler update fill ....");
-        // 获取原始对象
-        Object originalObj = metaObject.getOriginalObject();
-        // 修改方法是原始对象是MapperMethod.ParamMap类型
-        if(originalObj != null && originalObj instanceof MapperMethod.ParamMap){
-            MapperMethod.ParamMap paramMap = (MapperMethod.ParamMap)originalObj;
-            // 拿到param1属性对象
-            Object object =  paramMap.get("param1");
-            if(object != null && object instanceof User){
-                User user = (User) object;
-                if(StringUtils.isNotEmpty(user.getPassword())) {
-                    encodePassword(metaObject, user.getPassword());
-                } else {
-                    this.setFieldValByName("password", null, metaObject);
-                }
-            }
-        }
-
-    }
-
-
-
-    /**
-     * 密码加密
-     * @param metaObject
-     * @return
-     */
-    private void encodePassword(MetaObject metaObject, String password){
-        if(StringUtils.isNotEmpty(password)){
-            // 新增或修改操作如果密码不为空，都需要加密明文密码
-            this.setFieldValByName("password", passwordEncoder.encode(password), metaObject);
-        }
     }
 }

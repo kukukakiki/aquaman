@@ -4,6 +4,7 @@ import com.aquaman.security.admin.entity.domain.User;
 import com.aquaman.security.admin.entity.query.UserQuery;
 import com.aquaman.security.admin.entity.vo.ResultVO;
 import com.aquaman.security.admin.enums.ResultCodeEnum;
+import com.aquaman.security.admin.enums.StatusEnum;
 import com.aquaman.security.admin.mapper.UserMapper;
 import com.aquaman.security.admin.service.IUserService;
 import com.aquaman.security.admin.util.JSONUtil;
@@ -40,16 +41,18 @@ public class UserMapperTest {
     @Test
     public void save() {
         User user = new User();
-        user.setAccount("test2015");
+        user.setAccount("test2009");
         user.setPassword("123456");
+        user.setStatus(StatusEnum.START);
         userMapper.insert(user);
     }
 
     @Test
     public void update() {
         User updateUser = new User();
-        updateUser.setId(20L);
-        updateUser.setPassword("1234561");
+        updateUser.setId(31L);
+        updateUser.setNickName("一剪梅");
+        // updateUser.setPassword("1234561");
         userMapper.updateById(updateUser);
     }
 
@@ -91,8 +94,8 @@ public class UserMapperTest {
     }
 
     private <T> void print(List<T> list) {
-        if (!CollectionUtils.isEmpty(list)) {
+        /*if (!CollectionUtils.isEmpty(list)) {
             list.forEach(System.out::println);
-        }
+        }*/
     }
 }
