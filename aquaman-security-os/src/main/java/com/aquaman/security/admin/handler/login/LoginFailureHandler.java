@@ -24,8 +24,8 @@ SOFTWARE.
 package com.aquaman.security.admin.handler.login;
 
 import com.aquaman.security.admin.entity.vo.ResultVO;
-import com.aquaman.security.admin.enums.ResultCodeEnum;
-import com.aquaman.security.admin.util.JSONUtil;
+import com.aquaman.security.common.util.JSONUtil;
+import com.aquaman.security.common.enums.ResultCodeEnum;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;

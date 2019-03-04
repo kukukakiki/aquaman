@@ -24,7 +24,7 @@ SOFTWARE.
 package com.aquaman.security.admin.controller;
 
 import com.aquaman.security.admin.entity.vo.ResultVO;
-import com.aquaman.security.admin.enums.ResultCodeEnum;
+import com.aquaman.security.common.enums.ResultCodeEnum;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

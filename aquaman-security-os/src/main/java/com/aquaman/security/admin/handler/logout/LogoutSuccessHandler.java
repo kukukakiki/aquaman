@@ -24,8 +24,8 @@ SOFTWARE.
 package com.aquaman.security.admin.handler.logout;
 
 import com.aquaman.security.admin.entity.vo.ResultVO;
-import com.aquaman.security.admin.enums.ResultCodeEnum;
-import com.aquaman.security.admin.util.JSONUtil;
+import com.aquaman.security.common.util.JSONUtil;
+import com.aquaman.security.common.enums.ResultCodeEnum;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 import org.springframework.stereotype.Component;

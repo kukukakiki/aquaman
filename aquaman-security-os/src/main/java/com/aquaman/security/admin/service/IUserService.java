@@ -30,5 +30,16 @@ public interface IUserService extends IService<User>, UserDetailsService {
     @Override
     User loadUserByUsername(String account) throws UsernameNotFoundException;
 
+    /**
+     * 用户分页查询
+     * @param query
+     * @return
+     */
     IPage<User> page(UserQuery query);
+
+    /**
+     * 更新最后登录时间
+     * @param id
+     */
+    void updateLoginTime(Long id);
 }

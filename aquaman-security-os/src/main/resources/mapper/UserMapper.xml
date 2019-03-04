@@ -54,5 +54,9 @@
         where <include refid="Base_Where_List" />
     </select>
 
+    <update id="updateLoginTime" parameterType="java.lang.Long">
+        update ad_user set login_time = DATE_FORMAT(NOW(), '%Y%m%d%H%i%s') where id = #{id,jdbcType=BIGINT}
+    </update>
+
 
 </mapper>

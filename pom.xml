@@ -40,12 +40,14 @@
 		<jwt.version>0.7.0</jwt.version>
 		<mybatis-plus.version>3.1.0</mybatis-plus.version>
 		<druid-version>1.1.10</druid-version>
+		<base-version>0.0.1-SNAPSHOT</base-version>
 	</properties>
 
 	<modules>
 		<module>/aquaman-security-os</module>
 		<module>code-generator</module>
-	</modules>
+        <module>aquaman-common</module>
+    </modules>
 
 	<build>
 		<plugins>

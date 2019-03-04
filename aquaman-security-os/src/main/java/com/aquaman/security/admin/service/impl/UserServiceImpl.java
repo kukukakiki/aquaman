@@ -42,4 +42,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public IPage<User> page(UserQuery query) {
         return this.page(query, query.instanceQueryWrapper());
     }
+
+    @Override
+    public void updateLoginTime(Long id) {
+        userMapper.updateLoginTime(id);
+    }
 }

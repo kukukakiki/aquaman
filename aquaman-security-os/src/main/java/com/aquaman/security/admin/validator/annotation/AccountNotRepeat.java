@@ -21,30 +21,36 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.aquaman.security.admin.util;
+package com.aquaman.security.admin.validator.annotation;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.aquaman.security.admin.validator.process.AccountNotRepeatProcess;
+
+import javax.validation.Constraint;
+import javax.validation.Payload;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * JSON工具类
+ * 用户名不能重复
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
  * @version 2019/2/28
- * @since 2019/2/28
+ * @since 2018/7/30
  */
-public class JSONUtil {
-
-    private static ObjectMapper objectMapper = new ObjectMapper();
+@Target({ElementType.METHOD, ElementType.FIELD})
+@Retention(RetentionPolicy.RUNTIME)
+@Constraint(validatedBy = AccountNotRepeatProcess.class)
+public @interface AccountNotRepeat {
 
     /**
-     * 对象转换成JSON字符串
-     * @param o
+     * 返回异常code,具体查阅ResultCodeEnum
      * @return
-     * @throws JsonProcessingException
      */
-    public static String objectToJSONString(Object o) throws JsonProcessingException {
-        String str = objectMapper.writeValueAsString(o);
-        return str;
-    }
+    String message() default "1001";
+
+    Class<?>[] groups() default { };
+
+    Class<? extends Payload>[] payload() default { };
 }

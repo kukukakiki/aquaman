@@ -31,4 +31,10 @@ public interface UserMapper extends BaseMapper<User> {
      * @return
      */
     Page<User> findUserByPage(UserQuery query);
+
+    /**
+     * 更新最后登录时间
+     * @param id
+     */
+    void updateLoginTime(Long id);
 }

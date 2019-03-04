@@ -24,7 +24,7 @@ SOFTWARE.
 package com.aquaman.security.admin.controller.base;
 
 import com.aquaman.security.admin.entity.vo.ResultVO;
-import com.aquaman.security.admin.enums.ResultCodeEnum;
+import com.aquaman.security.common.enums.ResultCodeEnum;
 import org.slf4j.Logger;
 import org.springframework.validation.BindingResult;
 

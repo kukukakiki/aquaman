@@ -23,7 +23,7 @@ SOFTWARE.
  */
 package com.aquaman.security.admin.entity.vo;
 
-import com.aquaman.security.admin.enums.ResultCodeEnum;
+import com.aquaman.security.common.enums.ResultCodeEnum;
 import lombok.Data;
 
 /**

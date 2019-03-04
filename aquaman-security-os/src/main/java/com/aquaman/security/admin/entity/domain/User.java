@@ -2,7 +2,7 @@ package com.aquaman.security.admin.entity.domain;
 
 import com.aquaman.security.admin.enums.StatusEnum;
 import com.aquaman.security.admin.enums.UserRegistTypeEnmu;
-import com.aquaman.security.admin.validator.user.AccountNotRepeat;
+import com.aquaman.security.admin.validator.annotation.AccountNotRepeat;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;

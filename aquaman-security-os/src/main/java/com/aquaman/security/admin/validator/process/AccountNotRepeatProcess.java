@@ -21,13 +21,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.aquaman.security.admin.validator.user;
+package com.aquaman.security.admin.validator.process;
 
 import com.aquaman.security.admin.entity.domain.User;
 import com.aquaman.security.admin.entity.vo.ResultVO;
-import com.aquaman.security.admin.enums.ResultCodeEnum;
 import com.aquaman.security.admin.exception.ValidatorException;
 import com.aquaman.security.admin.service.IUserService;
+import com.aquaman.security.common.enums.ResultCodeEnum;
+import com.aquaman.security.admin.validator.annotation.AccountNotRepeat;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 

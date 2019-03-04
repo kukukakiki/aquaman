@@ -26,10 +26,12 @@ package com.aquaman.security.admin.handler.login;
 import com.aquaman.security.admin.entity.domain.User;
 import com.aquaman.security.admin.entity.vo.CurrentLoginUserVO;
 import com.aquaman.security.admin.entity.vo.ResultVO;
-import com.aquaman.security.admin.enums.ResultCodeEnum;
 import com.aquaman.security.admin.exception.PrincipalToUserConversionException;
-import com.aquaman.security.admin.util.JSONUtil;
+import com.aquaman.security.admin.service.IUserService;
+import com.aquaman.security.common.util.JSONUtil;
+import com.aquaman.security.common.enums.ResultCodeEnum;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -50,6 +52,9 @@ import java.io.IOException;
 @Slf4j
 public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
+    @Autowired
+    private IUserService userService;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
@@ -64,6 +69,12 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
             resultVO.setData(currentLoginUserVO);
             // JSON格式返回
             response.getWriter().print(JSONUtil.objectToJSONString(resultVO));
+            // 记录最后登录时间，就算失败也吃掉异常，记录错误日志
+            try{
+                userService.updateLoginTime(user.getId());
+            }catch (Exception ex) {
+                log.error("---------------------------------记录登录时间失败：{}", ex.getMessage());
+            }
         } else {
             log.error("---------------------------------Principal转换异常---------------------------------");
             // 如果authentication.getPrincipal()为空或authentication.getPrincipal()无法转换成User，抛出异常

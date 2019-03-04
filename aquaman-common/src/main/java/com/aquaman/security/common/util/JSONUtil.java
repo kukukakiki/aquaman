@@ -21,34 +21,30 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.aquaman.security.admin.validator.user;
+package com.aquaman.security.common.util;
 
-import javax.validation.Constraint;
-import javax.validation.Payload;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * 用户名不能重复
+ * JSON工具类
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
  * @version 2019/2/28
- * @since 2018/7/30
+ * @since 2019/2/28
  */
-@Target({ElementType.METHOD, ElementType.FIELD})
-@Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = AccountNotRepeatProcess.class)
-public @interface AccountNotRepeat {
+public class JSONUtil {
+
+    private static ObjectMapper objectMapper = new ObjectMapper();
 
     /**
-     * 返回异常code,具体查阅ResultCodeEnum
+     * 对象转换成JSON字符串
+     * @param o
      * @return
+     * @throws JsonProcessingException
      */
-    String message() default "1001";
-
-    Class<?>[] groups() default { };
-
-    Class<? extends Payload>[] payload() default { };
+    public static String objectToJSONString(Object o) throws JsonProcessingException {
+        String str = objectMapper.writeValueAsString(o);
+        return str;
+    }
 }
