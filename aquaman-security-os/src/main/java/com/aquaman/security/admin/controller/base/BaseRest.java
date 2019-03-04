@@ -41,7 +41,7 @@ public class BaseRest {
      * 操作成功
      * @return
      */
-    private ResultVO success(){
+    public ResultVO success(){
         ResultVO resultVO = new ResultVO(ResultCodeEnum.SUCCESS);
         return resultVO;
     }
@@ -50,7 +50,7 @@ public class BaseRest {
      * 未知异常
      * @return
      */
-    private ResultVO unknownError(){
+    public ResultVO unknownError(){
         ResultVO resultVO = new ResultVO(ResultCodeEnum.UNKNOWN_ERROR);
         return resultVO;
     }
