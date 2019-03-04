@@ -28,6 +28,7 @@ import com.aquaman.security.admin.entity.vo.CurrentLoginUserVO;
 import com.aquaman.security.admin.entity.vo.ResultVO;
 import com.aquaman.security.admin.exception.PrincipalToUserConversionException;
 import com.aquaman.security.admin.service.IUserService;
+import com.aquaman.security.common.constant.AquamanConstant;
 import com.aquaman.security.common.util.JSONUtil;
 import com.aquaman.security.common.enums.ResultCodeEnum;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +40,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.transform.Result;
 import java.io.IOException;
 
 /**
@@ -73,10 +75,11 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
             try{
                 userService.updateLoginTime(user.getId());
             }catch (Exception ex) {
-                log.error("---------------------------------记录登录时间失败：{}", ex.getMessage());
+                log.error("{}记录登录时间失败:{}-{}-{}", AquamanConstant.LOG_TAG,
+                    ResultCodeEnum.INERT_LOGIN_TIME_ERROR.getCode(), ResultCodeEnum.INERT_LOGIN_TIME_ERROR.getMsg(), ex.getMessage());
             }
         } else {
-            log.error("---------------------------------Principal转换异常---------------------------------");
+            log.error("{}Principal转换异常{}", AquamanConstant.LOG_TAG, AquamanConstant.LOG_TAG);
             // 如果authentication.getPrincipal()为空或authentication.getPrincipal()无法转换成User，抛出异常
             ResultVO resultVO = new ResultVO(ResultCodeEnum.PRINCIPAL_TO_USER_CONVERSION);
             throw new PrincipalToUserConversionException(resultVO);
