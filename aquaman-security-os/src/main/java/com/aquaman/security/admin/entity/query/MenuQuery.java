@@ -23,9 +23,8 @@ SOFTWARE.
  */
 package com.aquaman.security.admin.entity.query;
 
-import com.aquaman.security.admin.entity.domain.User;
-import com.aquaman.security.admin.enums.StatusEnum;
-import com.aquaman.security.admin.enums.UserRegistTypeEnmu;
+import com.aquaman.security.admin.entity.domain.Menu;
+import com.aquaman.security.admin.enums.DisplayMenu;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -33,81 +32,85 @@ import java.io.Serializable;
 /**
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
- * @version 2019/2/27
- * @since 2019/2/27
+ * @version 2019/3/4
+ * @since 2019/3/4
  */
 @Data
-public class UserQuery extends PageQuery<User> implements Serializable {
+public class MenuQuery extends PageQuery<Menu> implements Serializable {
 
-    private static final long serialVersionUID = 8874511002284155516L;
+    private static final long serialVersionUID = 2529460702876533867L;
 
-    private String password;
-
-    /**
-     * 主键ID
-     */
     private Long id;
 
+    /**
+     * 所属系统id
+     */
+    private Long systemId;
 
     /**
-     * 用户名
+     * 编码
      */
-    private String account;
-
+    private String code;
 
     /**
-     * 昵称
+     * 名称
      */
-    private String nickName;
-
+    private String name;
 
     /**
-     * 手机
+     * api地址
      */
-    private String mobile;
-
+    private String url;
 
     /**
-     * 邮箱
+     * 前端路由地址
      */
-    private String email;
-
+    private String router;
 
     /**
-     * 所属部门ID
+     * 图标类型
      */
-    private Long deptId;
+    private String iconType;
 
+    /**
+     * 类型(group:菜单组,menu:菜单,button:按钮,page:页面,)
+     */
+    private String type;
+
+    /**
+     * 0:隐藏,1:显示
+     */
+    private DisplayMenu display;
 
     /**
      * 状态
      */
-    private StatusEnum status;
-
-
-    /**
-     * 类型
-     */
-    private UserRegistTypeEnmu type;
-
+    private String status;
 
     /**
-     * 最后登录时间
+     * 父ID
      */
-    private Long loginTime;
+    private Long parentId;
 
+    /**
+     * 备注
+     */
+    private String remark;
+
+    /**
+     * 排序号
+     */
+    private Long sort;
 
     /**
      * 权限Code
      */
     private String permissionCode;
 
-
     /**
      * 创建时间
      */
     private Long gmtCreate;
-
 
     /**
      * 修改时间

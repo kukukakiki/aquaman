@@ -53,9 +53,9 @@ import java.util.List;
  * @version 2019/2/27
  * @since 2019/2/27
  */
+@Slf4j
 @RestController
 @RequestMapping("/user")
-@Slf4j
 public class UserController extends BaseController {
 
     @Autowired
@@ -82,7 +82,7 @@ public class UserController extends BaseController {
      * @return
      */
     @PostMapping
-    public ResultVO create(@Valid User user){
+    public ResultVO save(@Valid User user){
         encodePassword(user);
         boolean isSuccess = userService.save(user);
         if(!isSuccess){

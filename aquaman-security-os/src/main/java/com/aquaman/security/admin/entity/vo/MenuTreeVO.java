@@ -21,96 +21,99 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.aquaman.security.admin.entity.query;
+package com.aquaman.security.admin.entity.vo;
 
-import com.aquaman.security.admin.entity.domain.User;
+import com.aquaman.security.admin.enums.DisplayMenu;
+import com.aquaman.security.admin.enums.MenuTypeEnum;
 import com.aquaman.security.admin.enums.StatusEnum;
-import com.aquaman.security.admin.enums.UserRegistTypeEnmu;
 import lombok.Data;
 
-import java.io.Serializable;
+import java.util.List;
 
 /**
+ * 菜单树VO
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
- * @version 2019/2/27
- * @since 2019/2/27
+ * @version 2019/3/4
+ * @since 2019/3/4
  */
 @Data
-public class UserQuery extends PageQuery<User> implements Serializable {
+public class MenuTreeVO {
 
-    private static final long serialVersionUID = 8874511002284155516L;
-
-    private String password;
-
-    /**
-     * 主键ID
-     */
     private Long id;
 
+    /**
+     * 所属系统id
+     */
+    private Long systemId;
 
     /**
-     * 用户名
+     * 编码
      */
-    private String account;
-
+    private String code;
 
     /**
-     * 昵称
+     * 名称
      */
-    private String nickName;
-
+    private String name;
 
     /**
-     * 手机
+     * api地址
      */
-    private String mobile;
-
+    private String url;
 
     /**
-     * 邮箱
+     * 前端路由地址
      */
-    private String email;
-
+    private String router;
 
     /**
-     * 所属部门ID
+     * 图标类型
      */
-    private Long deptId;
+    private String iconType;
 
+    private MenuTypeEnum type;
+
+    /**
+     * 0:隐藏,1:显示
+     */
+    private DisplayMenu display;
 
     /**
      * 状态
      */
     private StatusEnum status;
 
+    /**
+     * 父ID
+     */
+    private Long parentId;
 
     /**
-     * 类型
+     * 备注
      */
-    private UserRegistTypeEnmu type;
-
+    private String remark;
 
     /**
-     * 最后登录时间
+     * 排序号
      */
-    private Long loginTime;
-
+    private Long sort;
 
     /**
      * 权限Code
      */
     private String permissionCode;
 
-
-    /**
-     * 创建时间
-     */
     private Long gmtCreate;
-
 
     /**
      * 修改时间
      */
     private Long gmtModify;
+
+    /**
+     * 子集合
+     */
+    private List<MenuTreeVO> children;
+
 }

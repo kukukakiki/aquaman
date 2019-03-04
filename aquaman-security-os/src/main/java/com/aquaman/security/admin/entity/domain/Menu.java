@@ -1,5 +1,8 @@
 package com.aquaman.security.admin.entity.domain;
 
+import com.aquaman.security.admin.enums.DisplayMenu;
+import com.aquaman.security.admin.enums.MenuTypeEnum;
+import com.aquaman.security.admin.enums.StatusEnum;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -63,17 +66,17 @@ public class Menu implements Serializable {
     /**
      * 类型(group:菜单组,menu:菜单,button:按钮,page:页面,)
      */
-    private String type;
+    private MenuTypeEnum type;
 
     /**
      * 0:隐藏,1:显示
      */
-    private String display;
+    private DisplayMenu display;
 
     /**
      * 状态
      */
-    private String status;
+    private StatusEnum status;
 
     /**
      * 父ID
