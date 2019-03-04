@@ -10,7 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
+ * 用于MyBatis-Plus框架自动填充功能
+ * 1、用户密码加密
+ * 2、操作时间设置
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
  * @version 2019/3/1
@@ -18,7 +27,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Slf4j
-public class UserSaveOrUpdatePasswordHandler implements MetaObjectHandler {
+public class MyBatisPlusFillHandler implements MetaObjectHandler {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -26,14 +35,27 @@ public class UserSaveOrUpdatePasswordHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         log.info("UserSaveOrUpdatePasswordHandler insert fill ....");
+        // insert操作设置gmt_create和gmt_modify时间
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+        String newDateTime = simpleDateFormat.format(new Date());
         // 获取原始对象
         Object originalObj = metaObject.getOriginalObject();
-        // 原始对象不为空，并且为User类型
-        if(originalObj != null && originalObj instanceof User){
-            User user = (User) originalObj;
-            if(StringUtils.isNotEmpty(user.getPassword())){
-                encodePassword(metaObject, user.getPassword());
-            }
+        // 反射获取公共属性ps：由于setFieldValByName方式无法将值设置到对象中。官网参考：https://mp.baomidou.com/guide/auto-fill-metainfo.html
+        try {
+            Method createMethod = originalObj.getClass().getMethod("setGmtCreate", Long.class);
+            createMethod.invoke(originalObj, Long.parseLong(newDateTime));
+            Method modifyMethod = originalObj.getClass().getMethod("setGmtModify", Long.class);
+            modifyMethod.invoke(originalObj, Long.parseLong(newDateTime));
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        // 原始对象不为空，并且为User类型、密码为空
+        if(originalObj != null && originalObj instanceof User && StringUtils.isNotEmpty(((User) originalObj).getPassword())){
+            encodePassword(metaObject, ((User) originalObj).getPassword());
         }
     }
 
@@ -49,7 +71,11 @@ public class UserSaveOrUpdatePasswordHandler implements MetaObjectHandler {
             Object object =  paramMap.get("param1");
             if(object != null && object instanceof User){
                 User user = (User) object;
-                encodePassword(metaObject, user.getPassword());
+                if(StringUtils.isNotEmpty(user.getPassword())) {
+                    encodePassword(metaObject, user.getPassword());
+                } else {
+                    this.setFieldValByName("password", null, metaObject);
+                }
             }
         }
 

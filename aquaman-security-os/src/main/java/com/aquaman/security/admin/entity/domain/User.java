@@ -42,7 +42,7 @@ public class User implements UserDetails, Serializable {
     private String account;
 
     /**
-     * 处理逻辑查阅{@link com.aquaman.security.admin.handler.mybatisplus.UserSaveOrUpdatePasswordHandler}
+     * 处理逻辑查阅{@link com.aquaman.security.admin.handler.mybatisplus.MyBatisPlusFillHandler}
      * 密码
      */
     @TableField(fill = FieldFill.INSERT_UPDATE)
@@ -91,8 +91,7 @@ public class User implements UserDetails, Serializable {
     /**
      * 创建时间
      */
-    //@TableField(el = "now()", fill = FieldFill.INSERT)
-    @DateTimeFormat(pattern = "yyyyMMddHHmmss")
+    @TableField(fill = FieldFill.INSERT)
     private Long gmtCreate;
 
     /**
