@@ -35,7 +35,7 @@ import org.springframework.validation.BindingResult;
  * @version 2019/2/28
  * @since 2018/7/30
  */
-public class BaseRest {
+public class BaseController {
 
     /**
      * 操作成功

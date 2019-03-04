@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2019/2/28
  */
 @RestController
-public class LoginRest {
+public class LoginController {
 
     @RequestMapping("/login")
     public ResultVO login() {

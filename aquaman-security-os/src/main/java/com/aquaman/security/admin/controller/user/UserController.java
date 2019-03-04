@@ -23,14 +23,13 @@ SOFTWARE.
  */
 package com.aquaman.security.admin.controller.user;
 
-import com.aquaman.security.admin.controller.base.BaseRest;
+import com.aquaman.security.admin.controller.base.BaseController;
 import com.aquaman.security.admin.entity.domain.User;
 import com.aquaman.security.admin.entity.query.UserQuery;
 import com.aquaman.security.admin.entity.vo.ResultVO;
 import com.aquaman.security.admin.enums.ResultCodeEnum;
 import com.aquaman.security.admin.enums.StatusEnum;
 import com.aquaman.security.admin.service.IUserService;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -57,7 +56,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 @Slf4j
-public class UserOperatorRest extends BaseRest {
+public class UserController extends BaseController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
