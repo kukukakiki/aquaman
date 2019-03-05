@@ -33,7 +33,7 @@ public class CodeGeneratorApplication {
 
     private static final String MYSQL_DRIVER_NAME = "com.mysql.jdbc.Driver";
 
-    private static final String PROJECT_AUTHOR = "kukukakiki";
+    private static final String PROJECT_AUTHOR = "wei wang";
 
     private static final String PROJECT_MODULE_PAGE = "admin";
 
