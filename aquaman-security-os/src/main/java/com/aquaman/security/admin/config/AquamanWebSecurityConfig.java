@@ -87,7 +87,7 @@ public class AquamanWebSecurityConfig extends WebSecurityConfigurerAdapter {
             // 请求授权
             .authorizeRequests()
             // 过滤OPTIONS请求
-            .antMatchers(HttpMethod.OPTIONS).permitAll()
+            .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
             // 过滤该URL
             .antMatchers(aquamanSecurityProperties.getAuthorization().getLoginPage()).permitAll()
             // 任何请求

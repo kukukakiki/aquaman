@@ -11,11 +11,21 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {},
 
+    // 反向代理配置处
+    proxyTable: {
+      '/api': {
+        target: 'http://aquaman.leerzoom.com:8001/',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api/': '/api/'
+        }
+      },
+    },
     // Various Dev Server settings
 
     // can be overwritten by process.env.HOST
     // if you want dev by ip, please set host: '0.0.0.0'
-    host: 'localhost',
+    host: 'aquaman.leerzoom.com',
     port: 9527, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: true,
     errorOverlay: true,
