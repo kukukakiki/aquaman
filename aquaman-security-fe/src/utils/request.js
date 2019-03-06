@@ -1,12 +1,14 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
-// import store from '@/store'
-// import { getToken } from '@/utils/auth'
+import store from '@/store'
+import { getToken } from '@/utils/auth'
+import qs from 'qs'
 
 // create an axios instance
 const service = axios.create({
   baseURL: process.env.BASE_API, // api 的 base_url
-  timeout: 5000 // request timeout
+  timeout: 5000, // 请求超时时间
+  withCredentials: true
 })
 
 // request interceptor
@@ -17,8 +19,40 @@ service.interceptors.request.use(
     // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
     // config.headers['X-Token'] = getToken()
     // }
-    config.headers['Content-Type'] = 'application/json'
-    config.headers['Request-Ajax'] = 'true'
+    // 首先从sessionStorage中获取accessToken
+    const accountToken = sessionStorage.getItem('accessToken')
+    // 页面级缓存store获取或sessionStorage中获取accessToken非空判断
+    if (store.getters.token || accountToken !== undefined) {
+      config.headers['Authorization'] = 'Bearer ' + (store.getters.token ? getToken() : accountToken) // 让每个请求携带自定义token 请根据实际情况自行修改
+    } else {
+      config.headers['Authorization'] = process.env.HEANER_AUTHO_BASIC
+    }
+    config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+    if (config.method === 'post' || config.method === 'put') {
+      if (config.data !== undefined && config.data !== null) {
+        if (config.data.form !== undefined && config.data.form !== null) {
+          config.data = qs.stringify({
+            ...config.data.form
+          })
+        } else {
+          config.data = qs.stringify({
+            ...config.data
+          })
+        }
+      }
+    } else if (config.method === 'get') {
+      if (config.params !== undefined && config.params !== null) {
+        if (config.params.formQuery !== undefined && config.params.formQuery !== null) {
+          config.params = {
+            ...config.params.formQuery
+          }
+        } else {
+          config.params = {
+            ...config.params.formQuery
+          }
+        }
+      }
+    }
     return config
   },
   error => {

@@ -28,7 +28,7 @@ spring:
     # session存储方式采用redis
     #store-type: redis
 
-#mybatis:
+  #mybatis:
   # 设置mybatis配置文件路径
   #config-location: classpath:mybatis/mybatis-config.xml
   # 设置mybatis sql脚本文件路径

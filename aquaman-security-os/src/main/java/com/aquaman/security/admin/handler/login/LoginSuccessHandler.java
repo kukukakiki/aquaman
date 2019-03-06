@@ -32,16 +32,28 @@ import com.aquaman.security.common.constant.AquamanConstant;
 import com.aquaman.security.common.util.JSONUtil;
 import com.aquaman.security.common.enums.ResultCodeEnum;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.MapUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.common.exceptions.UnapprovedClientAuthenticationException;
+import org.springframework.security.oauth2.provider.*;
+import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.transform.Result;
 import java.io.IOException;
+import java.util.Base64;
 
 /**
  * 登录成功后spring security将会调用该处理器
@@ -57,9 +69,38 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
     @Autowired
     private IUserService userService;
 
+    @Autowired
+    private ClientDetailsService clientDetailsService;
+
+    @Autowired
+    private AuthorizationServerTokenServices authorizationServerTokenServices;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
+        // token鉴权
+        String header = request.getHeader("Authorization");
+        // 消息头前缀
+        String prefixKey = "Basic ";
+        if(header == null || !header.startsWith(prefixKey)) {
+            throw new UnapprovedClientAuthenticationException("请求头中无client信息");
+        }
+        String[] tokens = extractAndDecodeHeader(header, request);
+        assert tokens.length == 2;
+        String clientId = tokens[0];
+        String clientSecret = tokens[1];
+        ClientDetails clientDetails = clientDetailsService.loadClientByClientId(clientId);
+        if(clientDetails == null) {
+            throw new UnapprovedClientAuthenticationException("clientId信息不存在信息");
+        } else if(!StringUtils.equals(clientSecret, clientDetails.getClientSecret())) {
+            throw new UnapprovedClientAuthenticationException("clientSecret不匹配");
+        }
+
+        TokenRequest tokenRequest = new TokenRequest(MapUtils.EMPTY_MAP, clientId, clientDetails.getScope(), "custom");
+        OAuth2Request oAuth2Request = tokenRequest.createOAuth2Request(clientDetails);
+        OAuth2Authentication oAuth2Authentication = new OAuth2Authentication(oAuth2Request, authentication);
+        // 获取当前登录人的OAuth2AccessToken对象
+        OAuth2AccessToken oAuth2AccessToken = authorizationServerTokenServices.getAccessToken(oAuth2Authentication);
         // 获取登录成功对象
         if (authentication.getPrincipal() != null && authentication.getPrincipal() instanceof User){
             User user = (User) authentication.getPrincipal();
@@ -84,5 +125,24 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
             ResultVO resultVO = new ResultVO(ResultCodeEnum.PRINCIPAL_TO_USER_CONVERSION);
             throw new PrincipalToUserConversionException(resultVO);
         }
+    }
+
+    private String[] extractAndDecodeHeader(String header, HttpServletRequest request)
+            throws IOException {
+        byte[] base64Token = header.substring(6).getBytes("UTF-8");
+        byte[] decoded;
+        try {
+            decoded = Base64.getDecoder().decode(base64Token);
+        }
+        catch (IllegalArgumentException e) {
+            throw new BadCredentialsException(
+                    "Failed to decode basic authentication token");
+        }
+        String token = new String(decoded, "UTF-8");
+        int delim = token.indexOf(":");
+        if (delim == -1) {
+            throw new BadCredentialsException("Invalid basic authentication token");
+        }
+        return new String[] { token.substring(0, delim), token.substring(delim + 1) };
     }
 }

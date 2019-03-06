@@ -21,27 +21,35 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.aquaman.security.admin;
+package com.aquaman.security.admin.config;
 
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
+import com.aquaman.security.admin.entity.domain.User;
+import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * 引导类
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
- * @version 2019/2/26
- * @since 2019/2/26
+ * @version 2019/3/6
+ * @since 2019/3/6
  */
-@MapperScan("com.aquaman.security.admin.mapper")
-@SpringBootApplication
-public class AquamanSecurityOsApplication {
+public class AquamanTokenEnhancer implements TokenEnhancer {
 
-    public static void main(String[] args) {
-        SpringApplication.run(AquamanSecurityOsApplication.class, args);
+    @Override
+    public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
+
+        Map<String, Object> informationMap = new HashMap<>();
+        if(authentication.getPrincipal() != null && authentication.getPrincipal() instanceof User){
+            User currentUser = (User)authentication.getPrincipal();
+            informationMap.put("user_id", currentUser.getId());
+        }
+        // jwt增加附加信息
+        ((DefaultOAuth2AccessToken)accessToken).setAdditionalInformation(informationMap);
+        return accessToken;
     }
-
 }

@@ -32,19 +32,22 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
+import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 
 /**
- * 资源服务器配置
+ * 资源服务器配置类
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
  * @version 2019/2/26
  * @since 2019/2/26
  */
 @Configuration
-public class AquamanWebSecurityConfig extends WebSecurityConfigurerAdapter {
+@EnableResourceServer
+public class AquamanResourceConfig extends ResourceServerConfigurerAdapter {
 
     @Autowired
     private LoginSuccessHandler loginSuccessHandler;
