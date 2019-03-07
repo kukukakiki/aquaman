@@ -56,7 +56,7 @@ public class AquamanJwtTokenStoreConfig {
     public JwtAccessTokenConverter jwtAccessTokenConverter(){
         JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
         // 签名串
-        // jwtAccessTokenConverter.setSigningKey("leerzoom");
+        jwtAccessTokenConverter.setSigningKey("aquamanSystem");
         return jwtAccessTokenConverter;
     }
 
