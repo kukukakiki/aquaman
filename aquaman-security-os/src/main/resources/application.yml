@@ -55,4 +55,8 @@ logging:
 aquaman:
   security:
     authorization:
+      # 登陆访问uri路径
       login-page: /login
+    oauth2:
+      # jwt盐值
+      jwt-salt: aquamanSystem

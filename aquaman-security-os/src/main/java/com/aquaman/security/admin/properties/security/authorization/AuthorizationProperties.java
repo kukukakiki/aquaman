@@ -23,21 +23,17 @@ SOFTWARE.
  */
 package com.aquaman.security.admin.properties.security.authorization;
 
+import lombok.Data;
+
 /**
+ * yml中所有authorization配置对象
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
  * @version 2019/2/28
  * @since 2019/2/28
  */
+@Data
 public class AuthorizationProperties {
 
     private String loginPage;
-
-    public String getLoginPage() {
-        return loginPage;
-    }
-
-    public void setLoginPage(String loginPage) {
-        this.loginPage = loginPage;
-    }
 }

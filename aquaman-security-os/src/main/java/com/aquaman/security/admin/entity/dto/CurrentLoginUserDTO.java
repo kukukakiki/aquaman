@@ -21,22 +21,49 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.aquaman.security.admin.entity.vo;
+package com.aquaman.security.admin.entity.dto;
 
 import lombok.Data;
 
+import java.util.Map;
+
 /**
- * 当前登录用户
+ * 当前登陆用户DTO
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
- * @version 2019/2/28
- * @since 2019/2/28
+ * @version 2019/3/7
+ * @since 2019/3/7
  */
 @Data
-public class CurrentLoginUserVO {
+public class CurrentLoginUserDTO {
 
     /**
-     * 用户名
+     * 登陆用户ID
+     */
+    private Long id;
+
+    /**
+     * 登陆用户名
      */
     private String account;
+
+    /**
+     * token值
+     */
+    private String token;
+
+    /**
+     * 刷新token
+     */
+    private String RefreshToken;
+
+    /**
+     * Token有效期/毫秒
+     */
+    private int expires;
+
+    /**
+     * 扩展属性
+     */
+    private Map<String, String> extendAttribute;
 }

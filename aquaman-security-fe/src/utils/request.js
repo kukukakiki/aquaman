@@ -19,11 +19,9 @@ service.interceptors.request.use(
     // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
     // config.headers['X-Token'] = getToken()
     // }
-    // 首先从sessionStorage中获取accessToken
-    const accountToken = sessionStorage.getItem('accessToken')
-    // 页面级缓存store获取或sessionStorage中获取accessToken非空判断
-    if (store.getters.token || accountToken !== undefined) {
-      config.headers['Authorization'] = 'Bearer ' + (store.getters.token ? getToken() : accountToken) // 让每个请求携带自定义token 请根据实际情况自行修改
+    // 页面级缓存store获取或sessionStorage中获取token非空判断
+    if (store.getters.token) {
+      config.headers['Authorization'] = 'Bearer ' + getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
     } else {
       config.headers['Authorization'] = process.env.HEANER_AUTHO_BASIC
     }

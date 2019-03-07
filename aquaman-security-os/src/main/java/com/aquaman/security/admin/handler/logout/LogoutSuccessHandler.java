@@ -26,7 +26,13 @@ package com.aquaman.security.admin.handler.logout;
 import com.aquaman.security.admin.entity.vo.ResultVO;
 import com.aquaman.security.common.util.JSONUtil;
 import com.aquaman.security.common.enums.ResultCodeEnum;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.common.exceptions.UnapprovedClientAuthenticationException;
+import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 import org.springframework.stereotype.Component;
 
@@ -43,13 +49,24 @@ import java.io.IOException;
  * @since 2019/2/28
  */
 @Component("logoutSuccessHandler")
+@Slf4j
 public class LogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
+
+    @Autowired
+    private DefaultTokenServices defaultTokenServices;
+
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         response.setContentType("application/json;charset=UTF-8");
-            // 组装返回VO
-            ResultVO resultVO = new ResultVO(ResultCodeEnum.LOGOUT_SUCCESS);
-            // JSON格式返回
-            response.getWriter().print(JSONUtil.objectToJSONString(resultVO));
+        // 消息头中获取授权码
+        String header = request.getHeader("Authorization");
+        String token = StringUtils.substringAfter(header, "Bearer ");
+        // 移除当前登陆用户token
+        boolean isSuccess = defaultTokenServices.revokeToken(token);
+        log.info("移除当前登陆用户token[{}]是否成功：{}", token, isSuccess);
+        // 组装返回VO
+        ResultVO resultVO = new ResultVO(ResultCodeEnum.LOGOUT_SUCCESS);
+        // JSON格式返回
+        response.getWriter().print(JSONUtil.objectToJSONString(resultVO));
     }
 }

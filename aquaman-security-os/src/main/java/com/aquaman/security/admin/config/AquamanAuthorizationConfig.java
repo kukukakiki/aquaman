@@ -37,6 +37,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.expression.OAuth2WebSecurityExpressionHandler;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -65,6 +66,9 @@ public class AquamanAuthorizationConfig extends AuthorizationServerConfigurerAda
     private TokenStore jwtTokenStore;
 
     @Autowired(required = false)
+    private AuthenticationManager authenticationManager;
+
+    @Autowired(required = false)
     private JwtAccessTokenConverter jwtAccessTokenConverter;
 
     @Autowired(required = false)
@@ -89,6 +93,7 @@ public class AquamanAuthorizationConfig extends AuthorizationServerConfigurerAda
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints.tokenStore(jwtTokenStore)
+                .authenticationManager(authenticationManager)
                 .userDetailsService(userService);
         if(jwtAccessTokenConverter != null && jwtTokenEnhancer != null){
             // 创建一个enhancer的链
@@ -107,5 +112,12 @@ public class AquamanAuthorizationConfig extends AuthorizationServerConfigurerAda
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
         security.tokenKeyAccess("isAuthenticated()").allowFormAuthenticationForClients();
+    }
+
+    @Bean
+    public DefaultTokenServices defaultTokenServices() {
+        DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
+        defaultTokenServices.setTokenStore(jwtTokenStore);
+        return defaultTokenServices;
     }
 }

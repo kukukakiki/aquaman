@@ -23,6 +23,8 @@ SOFTWARE.
  */
 package com.aquaman.security.admin.config;
 
+import com.aquaman.security.admin.properties.security.AquamanSecurityProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -47,6 +49,10 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @ConditionalOnProperty(prefix = "aquaman.security.authorization.oauth2", name = "storeType", havingValue = "jwt", matchIfMissing = true)
 public class AquamanJwtTokenStoreConfig {
 
+
+    @Autowired
+    private AquamanSecurityProperties aquamanSecurityProperties;
+
     @Bean
     public TokenStore jwtTokenStore(){
         return new JwtTokenStore(jwtAccessTokenConverter());
@@ -55,8 +61,8 @@ public class AquamanJwtTokenStoreConfig {
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter(){
         JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
-        // 签名串
-        jwtAccessTokenConverter.setSigningKey("aquamanSystem");
+        // 盐值签名串->JWT解密需要此盐值
+        jwtAccessTokenConverter.setSigningKey(aquamanSecurityProperties.getOauth2().getJwtSalt());
         return jwtAccessTokenConverter;
     }
 

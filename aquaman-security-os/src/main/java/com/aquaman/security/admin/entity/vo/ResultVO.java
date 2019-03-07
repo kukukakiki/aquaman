@@ -49,7 +49,7 @@ public class ResultVO<T> {
     /**
      * 返回数据
      */
-    private T data;
+    private T result;
 
     public ResultVO() {
         super();
@@ -60,10 +60,10 @@ public class ResultVO<T> {
         this.msg = resultCodeEnum.getMsg();
     }
 
-    public ResultVO(ResultCodeEnum resultCodeEnum, T data) {
+    public ResultVO(ResultCodeEnum resultCodeEnum, T result) {
         this.code = resultCodeEnum.getCode();
         this.msg = resultCodeEnum.getMsg();
-        this.data = data;
+        this.result = result;
     }
 
     public ResultVO(String code, String msg) {
@@ -71,9 +71,9 @@ public class ResultVO<T> {
         this.msg = msg;
     }
 
-    public ResultVO(String code, String msg, T data) {
+    public ResultVO(String code, String msg, T result) {
         this.code = code;
         this.msg = msg;
-        this.data = data;
+        this.result = result;
     }
 }

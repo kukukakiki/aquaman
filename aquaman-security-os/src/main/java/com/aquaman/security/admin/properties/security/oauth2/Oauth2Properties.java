@@ -21,24 +21,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.aquaman.security.admin.properties.security;
+package com.aquaman.security.admin.properties.security.oauth2;
 
-import com.aquaman.security.admin.properties.security.authorization.AuthorizationProperties;
-import com.aquaman.security.admin.properties.security.oauth2.Oauth2Properties;
 import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
+ * yml中所有oauth2配置对象
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
- * @version 2019/2/28
- * @since 2019/2/28
+ * @version 2019/3/7
+ * @since 2019/3/7
  */
-@ConfigurationProperties(prefix = "aquaman.security")
 @Data
-public class AquamanSecurityProperties {
+public class Oauth2Properties {
 
-    AuthorizationProperties authorization = new AuthorizationProperties();
-
-    Oauth2Properties oauth2 = new Oauth2Properties();
+    private String jwtSalt;
 }
