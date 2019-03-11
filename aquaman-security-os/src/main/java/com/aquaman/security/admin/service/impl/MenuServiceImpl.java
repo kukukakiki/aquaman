@@ -3,12 +3,13 @@ package com.aquaman.security.admin.service.impl;
 import com.aquaman.security.admin.entity.domain.Menu;
 import com.aquaman.security.admin.entity.query.MenuQuery;
 import com.aquaman.security.admin.entity.vo.MenuTreeVO;
+import com.aquaman.security.admin.enums.MenuTypeEnum;
 import com.aquaman.security.admin.mapper.MenuMapper;
 import com.aquaman.security.admin.service.IMenuService;
 import com.aquaman.security.common.constant.AquamanConstant;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,16 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     public List<MenuTreeVO> getMenuByTree(MenuQuery query) {
         List<MenuTreeVO> list = recursionMenuTree(query);
         return list;
+    }
+
+    @Override
+    public List<MenuTreeVO> findMenuByIds(List<Long> ids) {
+        MenuQuery query = new MenuQuery();
+        List<Menu> list = menuMapper.selectList(query.instanceQueryWrapper().in("id", ids));
+        if(CollectionUtils.isNotEmpty(list)){
+
+        }
+        return null;
     }
 
     /**

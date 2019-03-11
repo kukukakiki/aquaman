@@ -21,4 +21,6 @@ public interface IMenuService extends IService<Menu> {
      */
     List<MenuTreeVO> getMenuByTree(MenuQuery query);
 
+    List<MenuTreeVO> findMenuByIds(List<Long> ids);
+
 }

@@ -25,6 +25,9 @@ package com.aquaman.security.admin.handler.exception;
 
 import com.aquaman.security.admin.entity.vo.ResultVO;
 import com.aquaman.security.admin.exception.AquamanBasicException;
+import com.aquaman.security.common.enums.ResultCodeEnum;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -37,6 +40,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @since 2019/2/28
  */
 @ControllerAdvice
+@Slf4j
 public class AquamanExceptionHandler {
 
     @ExceptionHandler(AquamanBasicException.class)
@@ -44,4 +48,15 @@ public class AquamanExceptionHandler {
     public ResultVO handlerAquamanBasicException(AquamanBasicException e){
         return e.getResultVO();
     }
+
+    /* TODO 未生效
+    @ExceptionHandler(InvalidTokenException.class)
+    @ResponseBody
+    public ResultVO handlerInvalidTokenException(InvalidTokenException e) {
+        log.error("token[{}]校验失败，原因：{}", e.getOAuth2ErrorCode(), e.getMessage());
+        ResultVO resultVO = new ResultVO();
+        resultVO.setCode(ResultCodeEnum.USER_INVALID_TOKEN.getCode());
+        resultVO.setMsg(ResultCodeEnum.USER_INVALID_TOKEN.getMsg());
+        return resultVO;
+    }*/
 }
