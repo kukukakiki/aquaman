@@ -35,7 +35,7 @@ public class MenuController extends BaseController {
 
     @GetMapping
     public ResultVO<List<MenuTreeVO>> get(MenuQuery query){
-        List<MenuTreeVO> list = menuService.getMenuByTree(query);
+        List<MenuTreeVO> list = menuService.findMMenuTreeVOByQuery(query);
         ResultVO<List<MenuTreeVO>> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, list);
         return resultVO;
     }

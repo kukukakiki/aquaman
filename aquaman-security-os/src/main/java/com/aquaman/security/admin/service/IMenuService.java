@@ -19,8 +19,13 @@ public interface IMenuService extends IService<Menu> {
      * @param query
      * @return
      */
-    List<MenuTreeVO> getMenuByTree(MenuQuery query);
+    List<MenuTreeVO> findMMenuTreeVOByQuery(MenuQuery query);
 
-    List<MenuTreeVO> findMenuByIds(List<Long> ids);
+    /**
+     * 通过菜单ID集合获取菜单VO
+     * @param ids
+     * @return
+     */
+    List<MenuTreeVO> findMenuTreeVOByIds(List<Long> ids);
 
 }

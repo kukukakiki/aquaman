@@ -10,6 +10,7 @@ import com.aquaman.security.common.constant.AquamanConstant;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,17 +34,45 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     private MenuMapper menuMapper;
 
     @Override
-    public List<MenuTreeVO> getMenuByTree(MenuQuery query) {
+    public List<MenuTreeVO> findMMenuTreeVOByQuery(MenuQuery query) {
         List<MenuTreeVO> list = recursionMenuTree(query);
         return list;
     }
 
     @Override
-    public List<MenuTreeVO> findMenuByIds(List<Long> ids) {
+    public List<MenuTreeVO> findMenuTreeVOByIds(List<Long> ids) {
         MenuQuery query = new MenuQuery();
+        // 通过id集合获取菜单集合
         List<Menu> list = menuMapper.selectList(query.instanceQueryWrapper().in("id", ids));
         if(CollectionUtils.isNotEmpty(list)){
+            List<MenuTreeVO> menuTreeVOList = recursionMenuTree(list, -1L);
+            return menuTreeVOList;
+        }
+        return null;
+    }
 
+    /**
+     *
+     * @param menuAll 所有菜单集合
+     * @param parentId 需要遍历的父节点ID
+     * @return
+     */
+    private List<MenuTreeVO> recursionMenuTree(List<Menu> menuAll, Long parentId) {
+        if(CollectionUtils.isNotEmpty(menuAll)) {
+            // 菜单VO集合
+            List<MenuTreeVO> menuTreeVOList = new ArrayList<>();
+            for(Menu menu : menuAll) {
+                // 如果当前菜单为根结点
+                if(menu.getParentId().equals(parentId)) {
+                    // 将Menu构建成MenuTreeVO对象
+                    MenuTreeVO menuTreeVO = buildMenuTreeVO(menu);
+                    // MenuTreeVO增加到集合中
+                    menuTreeVOList.add(menuTreeVO);
+                    // 递归该节点
+                    menuTreeVO.setChildren(recursionMenuTree(menuAll, menu.getId()));
+                }
+            }
+            return menuTreeVOList;
         }
         return null;
     }

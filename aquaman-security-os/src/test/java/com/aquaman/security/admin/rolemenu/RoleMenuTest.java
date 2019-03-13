@@ -30,13 +30,18 @@ import com.aquaman.security.common.util.JSONUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -53,13 +58,30 @@ public class RoleMenuTest {
     @Autowired
     private IRoleMenuService roleMenuService;
 
+    @Autowired
+    private IMenuService menuService;
+
+    /**
+     * 通过角色ID获取菜单树VO
+     * @throws JsonProcessingException
+     */
     @Test
     public void getMenuTreeVO() throws JsonProcessingException {
         List<Long> list = new ArrayList<>();
-        list.add(111L);
-        list.add(1911L);
+        list.add(1L);
+        list.add(19L);
+        list.add(5L);
         List<String> result =  roleMenuService.findMenuIdsByRoleIds(list);
+        List<Long> menuIds = new ArrayList<>();
+        if(CollectionUtils.isNotEmpty(result)) {
+            for(String menuId : result) {
+                if(StringUtils.isNotEmpty(menuId)) {
+                    menuIds.add(Long.valueOf(menuId));
+                }
+            }
+        }
+        List<MenuTreeVO> voList = menuService.findMenuTreeVOByIds(menuIds);
         ObjectMapper objectMapper = new ObjectMapper();
-        log.info(objectMapper.writeValueAsString(result));
+        log.info(objectMapper.writeValueAsString(voList));
     }
 }
