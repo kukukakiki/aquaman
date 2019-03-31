@@ -25,15 +25,25 @@ package com.aquaman.security.admin.controller.user;
 
 import com.aquaman.security.admin.controller.base.BaseController;
 import com.aquaman.security.admin.entity.domain.User;
+import com.aquaman.security.admin.entity.domain.UserRole;
+import com.aquaman.security.admin.entity.query.RoleQuery;
 import com.aquaman.security.admin.entity.query.UserQuery;
+import com.aquaman.security.admin.entity.query.UserRoleQuery;
+import com.aquaman.security.admin.entity.vo.MenuTreeVO;
 import com.aquaman.security.admin.entity.vo.ResultVO;
 import com.aquaman.security.admin.enums.StatusEnum;
+import com.aquaman.security.admin.service.IMenuService;
+import com.aquaman.security.admin.service.IRoleMenuService;
+import com.aquaman.security.admin.service.IUserRoleService;
 import com.aquaman.security.admin.service.IUserService;
+import com.aquaman.security.admin.utils.CollectionUtil;
+import com.aquaman.security.admin.utils.CurrentUserUtil;
 import com.aquaman.security.common.enums.ResultCodeEnum;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,6 +54,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -64,6 +76,15 @@ public class UserController extends BaseController {
     @Autowired
     private IUserService userService;
 
+    @Autowired
+    private IUserRoleService userRoleService;
+
+    @Autowired
+    private IRoleMenuService roleMenuService;
+
+    @Autowired
+    private IMenuService menuService;
+
     /**
      * 获取用户列表
      * @param userQuery
@@ -73,6 +94,33 @@ public class UserController extends BaseController {
     public ResultVO<List<User>> getByPage(UserQuery userQuery){
         IPage<User> page1 = userService.page(userQuery);
         ResultVO<List<User>> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, page1);
+        return resultVO;
+    }
+
+    /**
+     * 根据当前登陆用户获取菜单
+     * @return
+     */
+    @GetMapping("/menu")
+    public ResultVO<List<MenuTreeVO>> getMenuByCurrentLoginUser() {
+        ResultVO<List<MenuTreeVO>> resultVO = new ResultVO<>(ResultCodeEnum.SUCCESS);
+        try {
+            User user = CurrentUserUtil.getLoginUserInfo();
+            if(user != null) {
+                UserRoleQuery userRoleQuery = new UserRoleQuery();
+                userRoleQuery.setUserId(user.getId());
+                UserRole userRole = userRoleService.getOne(userRoleQuery.instanceQueryWrapper());
+                List<String> list = Arrays.asList(userRole.getRoleIds().split(","));
+                List<String> menuIds = roleMenuService.findMenuIdsByRoleIds(CollectionUtil.stringToLong(list));
+                List<MenuTreeVO> menuTreeVOList = menuService.findMenuTreeVOByIds(CollectionUtil.stringToLong(menuIds));
+                log.info("{}", menuTreeVOList);
+                resultVO.setResult(menuTreeVOList);
+            }
+        } catch (Exception e) {
+            log.error("{}", e.getMessage());
+            resultVO = new ResultVO<>(ResultCodeEnum.UNKNOWN_ERROR);
+        }
+
         return resultVO;
     }
 

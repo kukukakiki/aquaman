@@ -10,6 +10,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,6 +32,7 @@ public class RoleMenuServiceImpl extends ServiceImpl<RoleMenuMapper, RoleMenu> i
 
     @Override
     public List<String> findMenuIdsByRoleIds(List<Long> roleIds) {
+        Assert.notNull(roleIds, "角色ID集合不能为空");
         RoleMenuQuery query = new RoleMenuQuery();
         // 通过角色ID集合查询所有菜单ID
         List<RoleMenu> list = roleMenuMapper.selectList(query.instanceQueryWrapper().in("role_id", roleIds));

@@ -26,7 +26,7 @@ import java.util.Map;
  * @author kukukakiki
  * @since 2019-03-01
  */
-@Service
+@Service("userService")
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
 
 

@@ -21,30 +21,36 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.aquaman.security.admin;
+package com.aquaman.security.admin.utils;
 
-import com.aquaman.security.admin.utils.SpringUtil;
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.aquaman.security.admin.entity.domain.User;
+import com.aquaman.security.admin.entity.query.UserQuery;
+import com.aquaman.security.admin.service.IUserService;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
- * 引导类
+ * 当前登陆用户
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
- * @version 2019/2/26
- * @since 2019/2/26
+ * @version 2019/3/31
+ * @since 2019/3/31
  */
-@MapperScan("com.aquaman.security.admin.mapper")
-@SpringBootApplication
-public class AquamanSecurityOsApplication {
+public class CurrentUserUtil {
 
-    public static void main(String[] args) {
-        ApplicationContext applicationContext = SpringApplication.run(AquamanSecurityOsApplication.class, args);
-        SpringUtil.setApplicationContext(applicationContext);
+    /**
+     * 获取当前登陆用户
+     * TODO 改造编号201903311114
+     * @return
+     */
+    public static User getLoginUserInfo() {
+        IUserService userService = SpringUtil.getBean(IUserService.class);
+        String userName =  (String) SecurityContextHolder.getContext().getAuthentication() .getPrincipal();
+        UserQuery query = new UserQuery();
+        query.setAccount(userName);
+        IPage<User> user =  userService.page(query);
+        User currentUser = user.getRecords().get(0);
+        return currentUser;
     }
-
 }

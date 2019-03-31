@@ -21,30 +21,45 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.aquaman.security.admin;
+package com.aquaman.security.admin.utils;
 
-import com.aquaman.security.admin.utils.SpringUtil;
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
 
 /**
- * 引导类
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
- * @version 2019/2/26
- * @since 2019/2/26
+ * @version 2019/3/31
+ * @since 2019/3/31
  */
-@MapperScan("com.aquaman.security.admin.mapper")
-@SpringBootApplication
-public class AquamanSecurityOsApplication {
+public class SpringUtil {
 
-    public static void main(String[] args) {
-        ApplicationContext applicationContext = SpringApplication.run(AquamanSecurityOsApplication.class, args);
-        SpringUtil.setApplicationContext(applicationContext);
+    private static ApplicationContext applicationContext;
+
+    static final private Object lock = new Object();
+
+    public static void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        synchronized (lock) {
+            if (SpringUtil.applicationContext == null) {
+                SpringUtil.applicationContext = applicationContext;
+            }
+        }
+    }
+
+    public static ApplicationContext getApplicationContext() {
+        return applicationContext;
+    }
+
+    public static Object getBean(String name) {
+        return getApplicationContext().getBean(name);
+    }
+
+    public static <T> T getBean(Class<T> clazz) {
+        return getApplicationContext().getBean(clazz);
+    }
+
+    public static <T> T getBean(String name, Class<T> clazz) {
+        return getApplicationContext().getBean(name, clazz);
     }
 
 }
