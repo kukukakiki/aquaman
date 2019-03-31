@@ -2,6 +2,10 @@
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
+## 声明
+
+本项目会长期更新并维护，不定期提交更新，可能会因为工作，生活等原因导致更新不及时问题请谅解）
+
 ## 开发进度
 
 需要使用[XMind](https://www.xmind.cn/xmind8-pro/)打开查阅
@@ -13,7 +17,7 @@
 [表设计及SQL语句](https://github.com/kukukakiki/aquaman/tree/master/aquaman-doc/2.design/1.db%20design)
 
 
-## 前端fe工程(暂未提交)
+## 前端fe工程
 
 前端工程基于[vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)开发
 
