@@ -25,6 +25,7 @@ router.beforeEach((to, from, next) => {
           sidebarMap.concat([{ path: '/404', component: () => import('@/views/404'), hidden: true }, { path: '*', redirect: '/404', hidden: true }])
           // 将最后合并的菜单map复制给routes用户右侧的菜单显示
           router.options.routes = sidebarMap
+          store.dispatch('permission/generateRoutes', sidebarMap)
           // 该设置是用来控制
           router.addRoutes(sidebarMap)
           // 避免页面刷新菜单重复加载，如不测试会出现：重复加载/页面死循环
