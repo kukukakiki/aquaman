@@ -5,6 +5,7 @@ import 'nprogress/nprogress.css' // progress bar style
 import { Message } from 'element-ui'
 import { getToken } from '@/utils/auth' // getToken from cookie
 import { settingSidebar } from '@/utils/sidebar'
+import { constantRouterMap } from '@/router'
 
 NProgress.configure({ showSpinner: false })// NProgress configuration
 
@@ -22,7 +23,7 @@ router.beforeEach((to, from, next) => {
           // 动态添加菜单代码，测试需要从后台获取
           const sidebarMap = settingSidebar(res.result)
           // 合并默认菜单和后台获取的动态菜单
-          sidebarMap.concat([{ path: '/404', component: () => import('@/views/404'), hidden: true }, { path: '*', redirect: '/404', hidden: true }])
+          sidebarMap.concat(constantRouterMap)
           // 将最后合并的菜单map复制给routes用户右侧的菜单显示
           router.options.routes = sidebarMap
           store.dispatch('permission/generateRoutes', sidebarMap)

@@ -34,13 +34,13 @@ service.interceptors.request.use(
       }
     } else if (config.method === 'get') {
       if (config.params !== undefined && config.params !== null) {
-        if (config.params.formQuery !== undefined && config.params.formQuery !== null) {
+        if (config.params.query !== undefined && config.params.query !== null) {
           config.params = {
-            ...config.params.formQuery
+            ...config.params.query
           }
         } else {
           config.params = {
-            ...config.params.formQuery
+            ...config.params.query
           }
         }
       }

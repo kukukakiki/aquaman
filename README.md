@@ -23,3 +23,6 @@
 
 在此鸣谢vue-element-admin贡献者们
 
+## 问题记录跟踪
+
+[有道笔记传送门](http://note.youdao.com/noteshare?id=d212a2fa2f7850518572b904e28d05ad)
