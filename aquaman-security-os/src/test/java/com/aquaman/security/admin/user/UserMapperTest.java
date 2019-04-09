@@ -40,7 +40,7 @@ public class UserMapperTest {
     @Test
     public void save() {
         User user = new User();
-        user.setAccount("test2009");
+        user.setAccount("");
         user.setPassword("123456");
         user.setStatus(StatusEnum.START);
         userMapper.insert(user);
@@ -84,7 +84,7 @@ public class UserMapperTest {
     public void defaultPage() throws JsonProcessingException {
 
         UserQuery query =new UserQuery();
-        query.setAccount("test3");
+        query.setAccount("");
 
         IPage<User> page1 = userService.page(query);
 

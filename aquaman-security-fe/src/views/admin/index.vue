@@ -1,5 +1,19 @@
 <template>
   <div class="app-container">
+    <el-form :inline="true" :model="query" class="demo-form-inline">
+      <el-form-item label="用户名">
+        <el-input v-model="query.account" placeholder="用户名" />
+      </el-form-item>
+      <el-form-item label="用户状态">
+        <el-select v-model="query.status" placeholder="选择状态">
+          <el-option label="启用" value="START" />
+          <el-option label="停用" value="STOP" />
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="fetchData">查询</el-button>
+      </el-form-item>
+    </el-form>
     <el-table v-loading="loading" :data="items" border style="width: 100%" highlight-current-row @current-change="handleCurrentChange">
       <el-table-column prop="account" label="用户名" />
       <el-table-column prop="nickName" label="昵称" />
@@ -11,33 +25,29 @@
         </template>
       </el-table-column>
     </el-table>
-    <commons-page :total="query.total" :page-size="query.size" />
+    <pagination :total="query.total" :page.sync="query.current" :limit.sync="query.size" @pagination="fetchData" />
   </div>
 </template>
 
 <script>
 import { queryUserByPage } from '@/api/user'
-import commonsPage from '@/components/Commons/Page'
+import Pagination from '@/components/Pagination'
 
 export default {
   components: {
-    commonsPage
+    Pagination
   },
   data() {
     return {
-      loading: false,
-      /**
-       * 列表查询对象
-       */
-      query: {
-        total: 0,
-        size: 10,
-        current: 1
+      loading: false, // 页面loading标示
+      query: { // 列表查询对象
+        total: 0, // 总条数
+        size: 10, // 每页条数
+        current: 1, // 当前页码数
+        account: '', // 用户名
+        status: '' // 用户状态
       },
-      /**
-       * 列表集合
-       */
-      items: []
+      items: [] // 列表集合
     }
   },
   created() {

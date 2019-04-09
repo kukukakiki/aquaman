@@ -26,7 +26,9 @@ package com.aquaman.security.admin.entity.query;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 
+import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.List;
 
@@ -239,6 +241,23 @@ public class PageQuery<T> implements IPage<T> {
      */
     public QueryWrapper<T> instanceQueryWrapper() {
         // 调用Mybatis-plus底层分页方法需要QueryWrapper对象，此处为了方便实例化查询对象
+        Class clazz = this.getClass();
+        Field[] fields = clazz.getDeclaredFields();
+        if(fields != null && fields.length > 0){
+            for(Field field : fields) {
+                try {
+                    field.setAccessible(true);
+                    if(StringUtils.equals("java.lang.String", field.getType().getCanonicalName())) {
+                        String value = (String)field.get(this);
+                        if(StringUtils.equals("", value)) {
+                            field.set(this, null);
+                        }
+                    }
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         return new QueryWrapper(this);
     }
 }

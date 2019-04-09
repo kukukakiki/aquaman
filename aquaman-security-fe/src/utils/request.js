@@ -36,12 +36,14 @@ service.interceptors.request.use(
       if (config.params !== undefined && config.params !== null) {
         if (config.params.query !== undefined && config.params.query !== null) {
           config.params = {
-            ...config.params.query
+            ...config.params.query === '' ? null : config.params.query
           }
         } else {
-          config.params = {
-            ...config.params.query
-          }
+          Message({
+            message: '查询入参必须为Query对象',
+            type: 'error',
+            duration: 5 * 1000
+          })
         }
       }
     }
