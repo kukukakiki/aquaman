@@ -9,17 +9,3 @@ export function getMenuByCurrentLoginUser() {
     method: 'get'
   })
 }
-
-/**
- * 用户列表查询
- * @param {*} params
- */
-export function queryUserByPage(query) {
-  return request({
-    url: '/user',
-    method: 'get',
-    params: {
-      query
-    }
-  })
-}

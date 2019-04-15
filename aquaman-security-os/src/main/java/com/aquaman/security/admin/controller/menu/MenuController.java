@@ -4,6 +4,7 @@ package com.aquaman.security.admin.controller.menu;
 import com.aquaman.security.admin.controller.base.BaseController;
 import com.aquaman.security.admin.entity.domain.Menu;
 import com.aquaman.security.admin.entity.domain.User;
+import com.aquaman.security.admin.entity.dto.MenuDTO;
 import com.aquaman.security.admin.entity.query.MenuQuery;
 import com.aquaman.security.admin.entity.vo.MenuTreeVO;
 import com.aquaman.security.admin.entity.vo.ResultVO;
@@ -37,6 +38,18 @@ public class MenuController extends BaseController {
     public ResultVO<List<MenuTreeVO>> get(MenuQuery query){
         List<MenuTreeVO> list = menuService.findMMenuTreeVOByQuery(query);
         ResultVO<List<MenuTreeVO>> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, list);
+        return resultVO;
+    }
+
+    /**
+     * 根据ID查询菜单信息
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id:\\d+}")
+    public ResultVO<MenuDTO> getById(@PathVariable Long id) {
+       MenuDTO menuDTO = menuService.findParentNameByPrimaryKey(id);
+        ResultVO<MenuDTO> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, menuDTO);
         return resultVO;
     }
 

@@ -1,6 +1,7 @@
 package com.aquaman.security.admin.service;
 
 import com.aquaman.security.admin.entity.domain.Menu;
+import com.aquaman.security.admin.entity.dto.MenuDTO;
 import com.aquaman.security.admin.entity.query.MenuQuery;
 import com.aquaman.security.admin.entity.vo.MenuTreeVO;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -27,5 +28,19 @@ public interface IMenuService extends IService<Menu> {
      * @return
      */
     List<MenuTreeVO> findMenuTreeVOByIds(List<Long> ids);
+
+    /**
+     * 通过ID查询菜单
+     * @param id
+     * @return
+     */
+    Menu findMenuById(Long id);
+
+    /**
+     * 根据主键ID查询当前菜单信息和父节点菜单名称
+     * @param id
+     * @return
+     */
+    MenuDTO findParentNameByPrimaryKey(Long id);
 
 }

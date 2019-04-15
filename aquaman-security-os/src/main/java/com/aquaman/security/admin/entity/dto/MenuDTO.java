@@ -21,24 +21,21 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.aquaman.security.admin.entity.vo;
+package com.aquaman.security.admin.entity.dto;
 
 import com.aquaman.security.admin.enums.DisplayMenu;
 import com.aquaman.security.admin.enums.MenuTypeEnum;
 import com.aquaman.security.admin.enums.StatusEnum;
 import lombok.Data;
 
-import java.util.List;
-
 /**
- * 菜单树VO
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
- * @version 2019/3/4
- * @since 2019/3/4
+ * @version 2019/4/13
+ * @since 2019/4/13
  */
 @Data
-public class MenuTreeVO {
+public class MenuDTO {
 
     private Long id;
 
@@ -72,6 +69,9 @@ public class MenuTreeVO {
      */
     private String iconType;
 
+    /**
+     * 类型(group:菜单组,menu:菜单,button:按钮,page:页面,)
+     */
     private MenuTypeEnum type;
 
     /**
@@ -104,6 +104,9 @@ public class MenuTreeVO {
      */
     private String permissionCode;
 
+    /**
+     * 创建时间
+     */
     private Long gmtCreate;
 
     /**
@@ -112,13 +115,7 @@ public class MenuTreeVO {
     private Long gmtModify;
 
     /**
-     * 子集合
+     * 父节点名称
      */
-    private List<MenuTreeVO> children;
-
-    /**
-     * 前端扩展属性，例：图标，名称
-     */
-    private MetaVO meta;
-
+    private String parentName;
 }

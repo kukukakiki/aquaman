@@ -2,4 +2,42 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aquaman.security.admin.mapper.MenuMapper">
 
+    <resultMap id="MenuDTOResultMap" type="com.aquaman.security.admin.entity.dto.MenuDTO">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="system_id" jdbcType="BIGINT" property="systemId" />
+        <result column="code" jdbcType="VARCHAR" property="code" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="url" jdbcType="VARCHAR" property="url" />
+        <result column="router" jdbcType="VARCHAR" property="router" />
+        <result column="icon_type" jdbcType="VARCHAR" property="iconType" />
+        <result column="type" jdbcType="VARCHAR" property="type" />
+        <result column="display" jdbcType="CHAR" property="display" />
+        <result column="status" jdbcType="VARCHAR" property="status" />
+        <result column="remark" jdbcType="VARCHAR" property="remark" />
+        <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+        <result column="permission_code" jdbcType="VARCHAR" property="permissionCode" />
+        <result column="gmt_create" jdbcType="BIGINT" property="gmtCreate" />
+        <result column="gmt_modify" jdbcType="BIGINT" property="gmtModify" />
+        <result column="sort" jdbcType="BIGINT" property="sort" />
+        <result column="parent_name" jdbcType="VARCHAR" property="parentName" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+      t.id, t.system_id, t.code, t.name, t.url, t.router, t.icon_type, t.type, t.display, t.status, t.remark, t.parent_id, t.permission_code, t.gmt_create, t.gmt_modify, t.sort
+    </sql>
+
+    <select id="selectParentNameByPrimaryKey" parameterType="java.lang.Long" resultMap="MenuDTOResultMap">
+        select
+        <include refid="Base_Column_List" />
+        ,
+        case
+        when p.name=t.name then '根节点'
+        else p.name
+        end parent_name
+        from ad_menu t, ad_menu p
+        where
+        if(t.parent_id != -1, p.id = t.parent_id , p.id = t.id)
+        and t.id = #{id,jdbcType=BIGINT}
+    </select>
+
 </mapper>

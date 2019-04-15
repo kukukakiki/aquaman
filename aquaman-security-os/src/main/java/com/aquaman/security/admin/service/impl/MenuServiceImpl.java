@@ -1,8 +1,10 @@
 package com.aquaman.security.admin.service.impl;
 
 import com.aquaman.security.admin.entity.domain.Menu;
+import com.aquaman.security.admin.entity.dto.MenuDTO;
 import com.aquaman.security.admin.entity.query.MenuQuery;
 import com.aquaman.security.admin.entity.vo.MenuTreeVO;
+import com.aquaman.security.admin.entity.vo.MetaVO;
 import com.aquaman.security.admin.enums.MenuTypeEnum;
 import com.aquaman.security.admin.mapper.MenuMapper;
 import com.aquaman.security.admin.service.IMenuService;
@@ -14,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +38,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 
     @Override
     public List<MenuTreeVO> findMMenuTreeVOByQuery(MenuQuery query) {
-        List<MenuTreeVO> list = recursionMenuTree(query);
+        List<MenuTreeVO> list = recursionMenuTreeByMenuQuery(query);
         return list;
     }
 
@@ -45,19 +48,30 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
         // 通过id集合获取菜单集合
         List<Menu> list = menuMapper.selectList(query.instanceQueryWrapper().in("id", ids));
         if(CollectionUtils.isNotEmpty(list)){
-            List<MenuTreeVO> menuTreeVOList = recursionMenuTree(list, -1L);
+            List<MenuTreeVO> menuTreeVOList = recursionMenuTreeByMenuAllAndParentId(list, -1L);
             return menuTreeVOList;
         }
         return null;
     }
 
+    @Override
+    public Menu findMenuById(Long id) {
+        Assert.notNull(id, "ID不能为空");
+        return menuMapper.selectById(id);
+    }
+
+    @Override
+    public MenuDTO findParentNameByPrimaryKey(Long id) {
+        return menuMapper.selectParentNameByPrimaryKey(id);
+    }
+
     /**
-     *
+     * 递归菜单树VO-菜单集合和父节点
      * @param menuAll 所有菜单集合
      * @param parentId 需要遍历的父节点ID
      * @return
      */
-    private List<MenuTreeVO> recursionMenuTree(List<Menu> menuAll, Long parentId) {
+    private List<MenuTreeVO> recursionMenuTreeByMenuAllAndParentId(List<Menu> menuAll, Long parentId) {
         if(CollectionUtils.isNotEmpty(menuAll)) {
             // 菜单VO集合
             List<MenuTreeVO> menuTreeVOList = new ArrayList<>();
@@ -69,7 +83,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
                     // MenuTreeVO增加到集合中
                     menuTreeVOList.add(menuTreeVO);
                     // 递归该节点
-                    menuTreeVO.setChildren(recursionMenuTree(menuAll, menu.getId()));
+                    menuTreeVO.setChildren(recursionMenuTreeByMenuAllAndParentId(menuAll, menu.getId()));
                 }
             }
             return menuTreeVOList;
@@ -78,11 +92,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     }
 
     /**
-     * 递归查询菜单树
+     * 递归查询菜单树-根据菜单Query对象查询菜单树
      * @param query
      * @return
      */
-    private List<MenuTreeVO> recursionMenuTree(MenuQuery query) {
+    private List<MenuTreeVO> recursionMenuTreeByMenuQuery(MenuQuery query) {
         // 如果parentId（父节点ID）为空则默认查询-1节点
         if(query == null) {
             query = new MenuQuery();
@@ -101,7 +115,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
                 // 设置父菜单ID
                 query.setParentId(menu.getId());
                 // 递归查询下一级菜单,子节点集合
-                menuTreeVO.setChildren(recursionMenuTree(query));
+                menuTreeVO.setChildren(recursionMenuTreeByMenuQuery(query));
 
             }
             // 返回集合=》用于设置子节点
@@ -119,6 +133,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
         if(menu != null){
             MenuTreeVO menuTreeVO = new MenuTreeVO();
             BeanUtils.copyProperties(menu, menuTreeVO);
+            // 构建扩展信息
+            MetaVO meta = new MetaVO();
+            meta.setTitle(menu.getName());
+            meta.setIncon(menu.getIconType());
+            menuTreeVO.setMeta(meta);
             return menuTreeVO;
         } else {
             log.warn("{}入参Menu为空", AquamanConstant.LOG_TAG);

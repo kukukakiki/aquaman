@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { queryUserByPage } from '@/api/user'
+import { queryByPage } from '@/api/common'
 import Pagination from '@/components/Pagination'
 
 export default {
@@ -59,7 +59,7 @@ export default {
      */
     fetchData() {
       this.loading = true
-      queryUserByPage(this.query).then(response => {
+      queryByPage('user', this.query).then(response => {
         const data = response.result
         if (response.code === '0000') {
           this.items = data.records

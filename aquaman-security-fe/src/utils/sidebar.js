@@ -26,7 +26,7 @@ function childrenComponent(rootPath, children) {
       asyncRouterMapChildren.push({
         path: '/' + rootPath + '/' + citem.code,
         name: citem.name,
-        component: () => import('@/views' + citem.url),
+        component: () => import('@/views' + citem.router),
         meta: { title: citem.name }
       })
       if (citem.children !== undefined && citem.children !== null && citem.children.length > 0) {
@@ -43,7 +43,7 @@ function cildrenButton(rootPath, children) {
     asyncRouterMapButton.push({
       path: '/' + rootPath + '/' + citem.code,
       name: citem.name,
-      component: () => import('@/views' + citem.url),
+      component: () => import('@/views' + citem.router),
       meta: { title: citem.name },
       hidden: true
     })
