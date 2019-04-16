@@ -42,7 +42,7 @@ public class UserMapperTest {
         User user = new User();
         user.setAccount("");
         user.setPassword("123456");
-        user.setStatus(StatusEnum.START);
+        user.setStatus(StatusEnum.START.getValue());
         userMapper.insert(user);
     }
 

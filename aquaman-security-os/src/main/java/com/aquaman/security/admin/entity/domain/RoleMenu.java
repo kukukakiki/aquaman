@@ -38,7 +38,7 @@ public class RoleMenu implements Serializable {
     /**
      * 状态
      */
-    private StatusEnum status;
+    private String status;
 
     /**
      * 权限Code

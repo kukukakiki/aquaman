@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div v-loading.fullscreen.lock="loading" class="app-container">
     <el-row>
       <el-col :span="6">
         <el-input v-model="filterText" placeholder="输入关键字进行过滤" />
@@ -8,7 +8,7 @@
       <el-col :span="18">
         <el-form ref="form" :rules="rules" :model="form" label-width="100px">
           <el-form-item label="上级菜单">
-            <el-input v-model="form.parentName" />
+            <el-input v-model="form.parentName" disabled="disabled" />
           </el-form-item>
           <el-form-item label="菜单名称" prop="name">
             <el-input v-model="form.name" />
@@ -58,8 +58,8 @@
             <aq-select :business-type="'display'" :bind-value.sync="form.display" />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSubmit">立即创建</el-button>
-            <el-button>取消</el-button>
+            <el-button type="primary" @click="onSubmit">{{ btnName }}</el-button>
+            <el-button>重置</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -69,15 +69,23 @@
 
 <script>
 import { queryByTree, queryById } from '@/api/menu'
+import { save, edit } from '@/api/common'
 import aqSelect from '@/components/Element/Select'
+import { isNotEmpty, resultValidate, resultSuccessShowMsg } from '@/utils/validate'
+// import aqPrompt from '@/components/Element/Prompt'
 
 export default {
   components: {
     aqSelect
   },
   data() {
+    var validateType = (rule, value, callback) => {
+      // 修改菜单类型需要验证能够调低级别
+      callback()
+    }
     return {
       filterText: '',
+      btnName: '创建',
       loading: false, // 页面loading标示
       query: { // 列表查询对象
         parentId: -1 // 从根节点查询菜单树
@@ -97,7 +105,7 @@ export default {
         iconType: '',
         type: '',
         display: '',
-        status: 'START',
+        status: '',
         parentId: -1,
         remark: '',
         sort: ''
@@ -110,7 +118,7 @@ export default {
           { required: true, message: '请输入编码', trigger: 'blur' }
         ],
         type: [
-          { required: true, message: '请选择菜单类型', trigger: 'change' }
+          { required: true, validator: validateType, message: '请选择菜单类型', trigger: 'change' }
         ]
       }
     }
@@ -131,16 +139,9 @@ export default {
       this.loading = true
       queryByTree(this.query).then(response => {
         const data = response.result
-        if (response.code === '0000') {
+        if (resultValidate(response.code)) {
           this.items = data
         }
-        this.loading = false
-      }).catch(error => {
-        this.$message({
-          message: error.msg,
-          type: 'error',
-          duration: 5 * 1000
-        })
         this.loading = false
       })
     },
@@ -150,15 +151,10 @@ export default {
     handleNodeClick(data) {
       queryById(data.id).then(response => {
         const data = response.result
-        this.form = data
-        console.log(this.form)
-      }).catch(error => {
-        this.$message({
-          message: error.msg,
-          type: 'error',
-          duration: 5 * 1000
-        })
-        this.loading = false
+        if (resultValidate(response.code)) {
+          this.form = data
+          this.btnName = '更新'
+        }
       })
     },
     /**
@@ -167,7 +163,17 @@ export default {
     onSubmit() {
       this.$refs['form'].validate((valid) => {
         if (valid) {
-          console.log(this.form)
+          this.loading = true
+          if (isNotEmpty(this.form.id)) {
+            edit('menu', this.form).then(response => {
+              resultSuccessShowMsg(response)
+            })
+          } else {
+            save('menu', this.form).then(response => {
+              resultSuccessShowMsg(response)
+            })
+          }
+          this.fetchData()
         } else {
           console.log('error submit!!')
           return false

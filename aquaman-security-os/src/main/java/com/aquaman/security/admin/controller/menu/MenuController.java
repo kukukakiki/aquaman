@@ -76,7 +76,7 @@ public class MenuController extends BaseController {
     public ResultVO delete(@PathVariable Long id) {
         Menu menu = new Menu();
         menu.setId(id);
-        menu.setStatus(StatusEnum.STOP);
+        menu.setStatus(StatusEnum.STOP.getValue());
         boolean isSuccess = menuService.updateById(menu);
         if(!isSuccess){
             return unknownError();

@@ -49,7 +49,7 @@ export function save(type, form) {
  */
 export function edit(type, form) {
   return request({
-    url: '/' + type,
+    url: '/' + type + '/' + form.id,
     method: 'put',
     data: {
       form

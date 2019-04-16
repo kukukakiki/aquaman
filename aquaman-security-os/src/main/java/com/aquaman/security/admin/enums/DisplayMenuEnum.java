@@ -23,7 +23,6 @@ SOFTWARE.
  */
 package com.aquaman.security.admin.enums;
 
-import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.HashMap;
@@ -34,13 +33,13 @@ import java.util.HashMap;
  * @version 2019/3/4
  * @since 2019/3/4
  */
-public enum  DisplayMenu {
+public enum DisplayMenuEnum {
 
     SHOW("1", "显示"),
     HIDE("0", "隐藏"),
             ;
 
-    DisplayMenu(String value, String desc){
+    DisplayMenuEnum(String value, String desc){
         this.value = value;
         this.desc = desc;
     }
@@ -48,7 +47,7 @@ public enum  DisplayMenu {
     /**
      * mybatis-plus通用枚举，标记数据库存的值是value
      */
-    @EnumValue
+    // @EnumValue
     private String value;
 
     /**
@@ -75,7 +74,7 @@ public enum  DisplayMenu {
 
     public static HashMap<String , String> toMap(){
         HashMap<String, String> map = new HashMap();
-        for(DisplayMenu displayMenu : DisplayMenu.values()){
+        for(DisplayMenuEnum displayMenu : DisplayMenuEnum.values()){
             map.put(displayMenu.getValue(), displayMenu.getDesc());
         }
         return  map;

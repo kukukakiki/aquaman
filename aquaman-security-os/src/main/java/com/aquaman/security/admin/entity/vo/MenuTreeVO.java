@@ -23,7 +23,7 @@ SOFTWARE.
  */
 package com.aquaman.security.admin.entity.vo;
 
-import com.aquaman.security.admin.enums.DisplayMenu;
+import com.aquaman.security.admin.enums.DisplayMenuEnum;
 import com.aquaman.security.admin.enums.MenuTypeEnum;
 import com.aquaman.security.admin.enums.StatusEnum;
 import lombok.Data;
@@ -77,7 +77,7 @@ public class MenuTreeVO {
     /**
      * 0:隐藏,1:显示
      */
-    private DisplayMenu display;
+    private DisplayMenuEnum display;
 
     /**
      * 状态

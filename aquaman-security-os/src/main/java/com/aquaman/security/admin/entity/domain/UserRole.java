@@ -40,7 +40,7 @@ public class UserRole implements Serializable {
     /**
      * 状态
      */
-    private StatusEnum status;
+    private String status;
 
     private String permissionCode;
 

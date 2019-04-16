@@ -50,7 +50,7 @@ public enum MenuTypeEnum {
     /**
      * mybatis-plus通用枚举，标记数据库存的值是value
      */
-    @EnumValue
+    // @EnumValue
     private String value;
 
     /**

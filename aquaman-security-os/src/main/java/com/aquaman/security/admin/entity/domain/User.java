@@ -71,12 +71,12 @@ public class User implements UserDetails, Serializable {
     /**
      * 状态
      */
-    private StatusEnum status;
+    private String status;
 
     /**
      * 会员类型
      */
-    private UserRegistTypeEnmu type;
+    private String type;
 
     /**
      * 登录时间

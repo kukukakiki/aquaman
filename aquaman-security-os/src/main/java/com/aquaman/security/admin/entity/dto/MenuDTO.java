@@ -23,7 +23,7 @@ SOFTWARE.
  */
 package com.aquaman.security.admin.entity.dto;
 
-import com.aquaman.security.admin.enums.DisplayMenu;
+import com.aquaman.security.admin.enums.DisplayMenuEnum;
 import com.aquaman.security.admin.enums.MenuTypeEnum;
 import com.aquaman.security.admin.enums.StatusEnum;
 import lombok.Data;
@@ -72,17 +72,17 @@ public class MenuDTO {
     /**
      * 类型(group:菜单组,menu:菜单,button:按钮,page:页面,)
      */
-    private MenuTypeEnum type;
+    private String type;
 
     /**
      * 0:隐藏,1:显示
      */
-    private DisplayMenu display;
+    private String display;
 
     /**
      * 状态
      */
-    private StatusEnum status;
+    private String status;
 
     /**
      * 父ID

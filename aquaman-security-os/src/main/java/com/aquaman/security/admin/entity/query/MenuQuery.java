@@ -24,7 +24,7 @@ SOFTWARE.
 package com.aquaman.security.admin.entity.query;
 
 import com.aquaman.security.admin.entity.domain.Menu;
-import com.aquaman.security.admin.enums.DisplayMenu;
+import com.aquaman.security.admin.enums.DisplayMenuEnum;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -80,7 +80,7 @@ public class MenuQuery extends PageQuery<Menu> implements Serializable {
     /**
      * 0:隐藏,1:显示
      */
-    private DisplayMenu display;
+    private DisplayMenuEnum display;
 
     /**
      * 状态

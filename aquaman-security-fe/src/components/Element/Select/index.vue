@@ -27,30 +27,30 @@ export default {
       currentItem: [],
       options: {
         status: [{
-          value: 'START',
+          value: 'start',
           label: '启用'
         }, {
-          value: 'STOP',
+          value: 'stop',
           label: '停用'
         }],
         type: [{
-          value: 'GROUP',
+          value: 'group',
           label: '菜单组'
         }, {
-          value: 'MENU',
+          value: 'menu',
           label: '菜单'
         }, {
-          value: 'BUTTON',
+          value: 'button',
           label: '按钮'
         }, {
-          value: 'PAGE',
+          value: 'page',
           label: '弹出页'
         }],
         display: [{
-          value: 'SHOW',
+          value: '1',
           label: '显示'
         }, {
-          value: 'HIDE',
+          value: '0',
           label: '隐藏'
         }]
       }
@@ -59,6 +59,9 @@ export default {
   computed: {
   },
   watch: {
+    bindValue(val) {
+      this.currentValue = val
+    },
     currentValue(val) {
       this.$emit('update:bindValue', val)
     }
