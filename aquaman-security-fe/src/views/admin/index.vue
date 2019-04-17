@@ -42,7 +42,7 @@ export default {
       loading: false, // 页面loading标示
       query: { // 列表查询对象
         total: 0, // 总条数
-        size: 10, // 每页条数
+        size: 5, // 每页条数
         current: 1, // 当前页码数
         account: '', // 用户名
         status: '' // 用户状态

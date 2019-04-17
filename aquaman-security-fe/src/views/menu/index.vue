@@ -1,5 +1,5 @@
 <template>
-  <div v-loading.fullscreen.lock="loading" class="app-container">
+  <div class="app-container">
     <el-row>
       <el-col :span="6">
         <el-input v-model="filterText" placeholder="输入关键字进行过滤" />
@@ -86,7 +86,6 @@ export default {
     return {
       filterText: '',
       btnName: '创建',
-      loading: false, // 页面loading标示
       query: { // 列表查询对象
         parentId: -1 // 从根节点查询菜单树
       },
@@ -136,13 +135,11 @@ export default {
      * 获取数据
      */
     fetchData() {
-      this.loading = true
       queryByTree(this.query).then(response => {
         const data = response.result
         if (resultValidate(response.code)) {
           this.items = data
         }
-        this.loading = false
       })
     },
     /**
@@ -163,7 +160,6 @@ export default {
     onSubmit() {
       this.$refs['form'].validate((valid) => {
         if (valid) {
-          this.loading = true
           if (isNotEmpty(this.form.id)) {
             edit('menu', this.form).then(response => {
               resultSuccessShowMsg(response)

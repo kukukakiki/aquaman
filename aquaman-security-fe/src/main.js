@@ -25,7 +25,7 @@ import '@/permission' // permission control
  */
 // import '../mock' // simulation data
 
-Vue.use(ElementUI, { locale })
+Vue.use(ElementUI, { size: 'small', locale })
 
 Vue.config.productionTip = false
 

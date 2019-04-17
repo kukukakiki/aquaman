@@ -2,6 +2,7 @@ import axios from 'axios'
 import { Message, MessageBox } from 'element-ui'
 import store from '../store'
 import { getToken } from '@/utils/auth'
+import Vue from 'vue'
 import qs from 'qs'
 
 // 创建axios实例
@@ -10,7 +11,7 @@ const service = axios.create({
   timeout: 5000, // 请求超时时间
   withCredentials: true
 })
-
+let loading = null
 // request拦截器
 service.interceptors.request.use(
   config => {
@@ -46,6 +47,11 @@ service.interceptors.request.use(
           })
         }
       }
+      // 开启loading遮照
+      loading = Vue.prototype.$loading({
+        lock: true,
+        text: '加载中'
+      })
     }
     return config
   },
@@ -59,8 +65,9 @@ service.interceptors.request.use(
 // response 拦截器
 service.interceptors.response.use(
   response => {
+    closeLoading()
     /**
-     * code为非20000是抛错 可结合自己业务进行修改
+     * code为非0000是抛错 可结合自己业务进行修改
      */
     const res = response.data
     if (res.code !== '0000') {
@@ -93,6 +100,7 @@ service.interceptors.response.use(
   },
   error => {
     console.log('err' + error) // for debug
+    closeLoading()
     Message({
       message: error.message,
       type: 'error',
@@ -101,5 +109,17 @@ service.interceptors.response.use(
     return Promise.reject(error)
   }
 )
+
+/**
+ * 关闭loading遮照
+ */
+function closeLoading() {
+  if (loading !== null) {
+    // 解决访问速度过快，视觉闪屏的问题
+    setTimeout(() => {
+      loading.close()
+    }, 1000)
+  }
+}
 
 export default service

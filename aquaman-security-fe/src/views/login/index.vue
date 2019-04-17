@@ -28,7 +28,7 @@
         </span>
       </el-form-item>
       <el-form-item>
-        <el-button :loading="loading" type="primary" style="width:100%;" @click.native.prevent="handleLogin">
+        <el-button type="primary" style="width:100%;" @click.native.prevent="handleLogin">
           登 陆
         </el-button>
       </el-form-item>
@@ -61,7 +61,6 @@ export default {
         username: [{ required: true, trigger: 'blur', message: '请输入用户名' }],
         password: [{ required: true, trigger: 'blur', validator: validatePass }]
       },
-      loading: false,
       pwdType: 'password',
       redirect: undefined
     }
@@ -85,12 +84,9 @@ export default {
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          this.loading = true
           this.$store.dispatch('Login', this.loginForm).then(() => {
-            this.loading = false
             this.$router.push({ path: this.redirect || '/' })
           }).catch(() => {
-            this.loading = false
           })
         } else {
           console.log('error submit!!')
