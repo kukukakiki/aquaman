@@ -12,7 +12,7 @@ export function isExternal(path) {
  * @param {*} val
  */
 export function isNotEmpty(val) {
-  return val !== undefined && val !== null
+  return val !== undefined && val !== null && val !== ''
 }
 
 /**

@@ -51,7 +51,7 @@ public class MenuTest {
 
     @Test
     public void getMenuTreeVO() throws JsonProcessingException {
-        List<MenuTreeVO> menuTreeVOList = menuService.findMMenuTreeVOByQuery(null);
+        List<MenuTreeVO> menuTreeVOList = menuService.findMenuTreeVOByQuery(null);
         System.out.println(JSONUtil.objectToJSONString(menuTreeVOList));
     }
 }

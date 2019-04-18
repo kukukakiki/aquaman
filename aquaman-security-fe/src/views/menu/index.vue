@@ -2,64 +2,55 @@
   <div class="app-container">
     <el-row>
       <el-col :span="6">
+        <div style="padding-bottom: 5px;">
+          <el-button v-show_button="'menuAdd'" type="primary" @click.stop="addHandler">新增</el-button>
+          <el-button v-show_button="'menuUpdate'" :disabled="!showButton" type="primary" @click.stop="updateHandler">修改</el-button>
+          <el-button :disabled="!showButton" type="primary" @click.stop="deleteHandler">删除</el-button>
+        </div>
         <el-input v-model="filterText" placeholder="输入关键字进行过滤" />
         <el-tree ref="menuTree" :data="items" :props="defaultTreeProps" :filter-node-method="filterNode" @node-click="handleNodeClick" />
       </el-col>
       <el-col :span="18">
         <el-form ref="form" :rules="rules" :model="form" label-width="100px">
-          <el-form-item label="上级菜单">
-            <el-input v-model="form.parentName" disabled="disabled" />
-          </el-form-item>
           <el-form-item label="菜单名称" prop="name">
             <el-input v-model="form.name" />
           </el-form-item>
           <el-form-item label="菜单编码" prop="code">
             <el-input v-model="form.code" />
           </el-form-item>
-          <el-form-item>
-            <span slot="label">
-              接口地址
-              <el-tooltip placement="top">
-                <div slot="content">
-                  <p>温馨提示：</p>
-                  1、访问后台服务端地址
-                </div>
-                <i class="el-icon-question" />
-              </el-tooltip>
-            </span>
+          <el-form-item label="接口地址" prop="url">
             <el-input v-model="form.url" />
           </el-form-item>
-          <el-form-item>
-            <span slot="label">
-              路由地址
-              <el-tooltip placement="top">
-                <div slot="content">
-                  <p>温馨提示：</p>
-                  1、前端页面跳转地址
-                </div>
-                <i class="el-icon-question" />
-              </el-tooltip>
-            </span>
+          <el-form-item label="路由地址" prop="router">
             <el-input v-model="form.router" />
           </el-form-item>
-          <el-form-item label="菜单类型" prop="type">
-            <aq-select :business-type="'type'" :bind-value.sync="form.type" />
-          </el-form-item>
-          <el-form-item label="菜单状态">
-            <aq-select :business-type="'status'" :bind-value.sync="form.status" />
-          </el-form-item>
-          <el-form-item label="菜单序号">
+          <el-form-item label="菜单序号" prop="sort">
             <el-input v-model="form.sort" />
           </el-form-item>
-          <el-form-item label="菜单图标">
+          <el-form-item label="菜单图标" prop="iconType">
             <el-input v-model="form.iconType" />
           </el-form-item>
-          <el-form-item label="是否显示">
-            <aq-select :business-type="'display'" :bind-value.sync="form.display" />
+          <el-form-item label="菜单类型" prop="type">
+            <aq-select :business-type="'type'" :bind-value.sync="form.type" style="width: 100%" />
+          </el-form-item>
+          <el-form-item label="是否显示" prop="display">
+            <aq-select :business-type="'display'" :bind-value.sync="form.display" style="width: 100%" />
+          </el-form-item>
+          <el-form-item label="菜单状态" prop="status">
+            <aq-select :business-type="'status'" :bind-value.sync="form.status" style="width: 100%" />
+          </el-form-item>
+          <el-form-item label="上级菜单" prop="parentId">
+            <el-select v-model="form.parentId" placeholder="请选择">
+              <el-option
+                v-for="item in parentList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id" />
+            </el-select>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSubmit">{{ btnName }}</el-button>
-            <el-button>重置</el-button>
+            <el-button v-if="showOperatorButton" type="primary" @click="submitHandler">{{ operatorButtonName }}</el-button>
+            <el-button v-if="showOperatorButton" @click="resetForm">重置</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -84,31 +75,46 @@ export default {
       callback()
     }
     return {
+      showButton: false, // 显示执行按钮
+      showOperatorButton: false, // 显示操作按钮
+      operatorButtonName: '创建', // 操作按钮名称
       filterText: '',
-      btnName: '创建',
-      query: { // 列表查询对象
+      /**
+       * 列表查询对象
+       */
+      query: {
         parentId: -1 // 从根节点查询菜单树
       },
       items: [], // 列表集合
-      defaultTreeProps: { // 默认树对应关系
+      /**
+       * 默认树对应关系
+       */
+      defaultTreeProps: {
         children: 'children', // 子菜单集合名称
         label: 'name' // 菜单显示名称
       },
-      form: { // 菜单属性
-        id: '',
-        systemId: '',
-        code: '',
-        name: '',
-        url: '',
-        router: '',
-        iconType: '',
-        type: '',
-        display: '',
-        status: '',
-        parentId: -1,
-        remark: '',
-        sort: ''
+      /**
+       * 菜单Form属性
+       */
+      form: {
+        id: '', // 主键ID
+        systemId: '', // 所属系统ID
+        code: '', // 菜单编码
+        name: '', // 菜单名称
+        url: '', // 菜单接口API地址
+        router: '', // 前端路由地址
+        iconType: '', // 前端菜单图标
+        type: '', // 菜单类型
+        display: '', // 前端菜单是否显示
+        remark: '', // 菜单备注
+        sort: '', // 菜单排序
+        status: 'start', // 菜单状态
+        parentId: -1 // 菜单父节点ID
       },
+      /**
+       * 父菜单集合
+       */
+      parentList: [],
       rules: {
         name: [
           { required: true, message: '请输入名称', trigger: 'blur' }
@@ -123,6 +129,9 @@ export default {
     }
   },
   watch: {
+    /**
+     * 监听菜单树搜索框输入事件
+     */
     filterText(val) {
       this.$refs.menuTree.filter(val)
     }
@@ -149,15 +158,17 @@ export default {
       queryById(data.id).then(response => {
         const data = response.result
         if (resultValidate(response.code)) {
-          this.form = data
-          this.btnName = '更新'
+          this.form = data.menu
+          this.parentList = data.parentList
+          console.log(this.parentList)
+          this.showButton = true
         }
       })
     },
     /**
      * 表单提交
      */
-    onSubmit() {
+    submitHandler() {
       this.$refs['form'].validate((valid) => {
         if (valid) {
           if (isNotEmpty(this.form.id)) {
@@ -176,9 +187,53 @@ export default {
         }
       })
     },
+    /**
+     * 过滤菜单树查询
+     */
     filterNode(value, data) {
       if (!value) return true
       return data.name.indexOf(value) !== -1
+    },
+    /**
+     * 新增处理器
+     */
+    addHandler() {
+      this.showOperatorButtonHandler()
+      this.operatorButtonName = '创建'
+      if (isNotEmpty(this.form.id)) {
+        const parentId = this.form.id
+        this.resetForm()
+        this.form.parentId = parentId
+      }
+    },
+    /**
+     * 修改处理器
+     */
+    updateHandler() {
+      this.showOperatorButtonHandler()
+      this.operatorButtonName = '更新'
+    },
+    /**
+     * 删除处理器
+     */
+    deleteHandler() {},
+    /**
+     * 显示操作按钮处理器
+     */
+    showOperatorButtonHandler() {
+      this.showOperatorButton = true
+    },
+    /**
+     * 隐藏才做按钮处理器
+     */
+    hiddenOperatorButtonHandler() {
+      this.showOperatorButton = false
+    },
+    /**
+     * 重置表单属性
+     */
+    resetForm() {
+      this.$refs['form'].resetFields()
     }
   }
 }

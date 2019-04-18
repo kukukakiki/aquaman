@@ -23,10 +23,10 @@ SOFTWARE.
  */
 package com.aquaman.security.admin.entity.dto;
 
-import com.aquaman.security.admin.enums.DisplayMenuEnum;
-import com.aquaman.security.admin.enums.MenuTypeEnum;
-import com.aquaman.security.admin.enums.StatusEnum;
+import com.aquaman.security.admin.entity.domain.Menu;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * @author 创建者 wei.wang
@@ -37,85 +37,10 @@ import lombok.Data;
 @Data
 public class MenuDTO {
 
-    private Long id;
+    private Menu menu;
 
     /**
-     * 所属系统id
+     * 父节点集合
      */
-    private Long systemId;
-
-    /**
-     * 编码
-     */
-    private String code;
-
-    /**
-     * 名称
-     */
-    private String name;
-
-    /**
-     * api地址
-     */
-    private String url;
-
-    /**
-     * 前端路由地址
-     */
-    private String router;
-
-    /**
-     * 图标类型
-     */
-    private String iconType;
-
-    /**
-     * 类型(group:菜单组,menu:菜单,button:按钮,page:页面,)
-     */
-    private String type;
-
-    /**
-     * 0:隐藏,1:显示
-     */
-    private String display;
-
-    /**
-     * 状态
-     */
-    private String status;
-
-    /**
-     * 父ID
-     */
-    private Long parentId;
-
-    /**
-     * 备注
-     */
-    private String remark;
-
-    /**
-     * 排序号
-     */
-    private Long sort;
-
-    /**
-     * 权限Code
-     */
-    private String permissionCode;
-
-    /**
-     * 创建时间
-     */
-    private Long gmtCreate;
-
-    /**
-     * 修改时间
-     */
-    private Long gmtModify;
-
-    /**
-     * 父节点名称
-     */
-    private String parentName;
+    private List<Menu> parentList;
 }

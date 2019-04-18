@@ -12,6 +12,9 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="fetchData">查询</el-button>
+        <el-button v-show_button="'adminAdd'" type="primary" @click.stop="toAdd">新增</el-button>
+        <el-button v-show_button="'adminUpdate'" type="primary" @click.stop="toUpdate">修改</el-button>
+        <el-button v-show_button="'setRole'" type="primary" @click.stop="toSetRoles">角色</el-button>
       </el-form-item>
     </el-form>
     <el-table v-loading="loading" :data="items" border style="width: 100%" highlight-current-row @current-change="handleCurrentChange">

@@ -36,7 +36,7 @@ public class MenuController extends BaseController {
 
     @GetMapping
     public ResultVO<List<MenuTreeVO>> get(MenuQuery query){
-        List<MenuTreeVO> list = menuService.findMMenuTreeVOByQuery(query);
+        List<MenuTreeVO> list = menuService.findMenuTreeVOByQuery(query);
         ResultVO<List<MenuTreeVO>> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, list);
         return resultVO;
     }
@@ -48,9 +48,18 @@ public class MenuController extends BaseController {
      */
     @GetMapping("/{id:\\d+}")
     public ResultVO<MenuDTO> getById(@PathVariable Long id) {
-       MenuDTO menuDTO = menuService.findParentNameByPrimaryKey(id);
+        try {
+        MenuDTO menuDTO = new MenuDTO();
+        Menu menu = menuService.findMenuById(id);
+        List<Menu> parentList = menuService.findParentMenuByType(menu.getType());
+        menuDTO.setMenu(menu);
+        menuDTO.setParentList(parentList);
         ResultVO<MenuDTO> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, menuDTO);
         return resultVO;
+        } catch (Exception e) {
+            log.error("根据ID：{}查询菜单信息：{}", id, e.getMessage());
+        }
+        return unknownError();
     }
 
     @PostMapping

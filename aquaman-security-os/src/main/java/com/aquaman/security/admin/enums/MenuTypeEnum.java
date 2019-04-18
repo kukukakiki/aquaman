@@ -23,8 +23,8 @@ SOFTWARE.
  */
 package com.aquaman.security.admin.enums;
 
-import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.fasterxml.jackson.annotation.JsonValue;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
 
@@ -36,27 +36,38 @@ import java.util.HashMap;
  */
 public enum MenuTypeEnum {
 
-    GROUP("group", "菜单组"),
-    MENU("menu", "菜单"),
-    BUTTON("button", "按钮"),
-    PAGE("page", "弹出页")
+    GROUP("group", "菜单组", 1),
+    MENU("menu", "菜单", 2),
+    BUTTON("button", "按钮", 3),
+    PAGE("page", "弹出页", 2)
     ;
 
-    MenuTypeEnum(String value, String desc){
+    MenuTypeEnum(String key, String value, int level){
+        this.key = key;
         this.value = value;
-        this.desc = desc;
+        this.level = level;
     }
 
     /**
      * mybatis-plus通用枚举，标记数据库存的值是value
      */
     // @EnumValue
-    private String value;
+    private String key;
 
     /**
      * 描述
      */
-    private String desc;
+    private String value;
+
+    private int level;
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
 
     public String getValue() {
         return value;
@@ -67,19 +78,37 @@ public enum MenuTypeEnum {
     }
 
     @JsonValue
-    public String getDesc() {
-        return desc;
+    public String getKey() {
+        return key;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setKey(String desc) {
+        this.key = key;
     }
 
     public static HashMap<String , String> toMap(){
         HashMap<String, String> map = new HashMap();
         for(MenuTypeEnum menuTypeEnum : MenuTypeEnum.values()){
-            map.put(menuTypeEnum.getValue(), menuTypeEnum.getDesc());
+            map.put(menuTypeEnum.getKey(), menuTypeEnum.getValue());
         }
         return  map;
+    }
+
+    public static String getKeyByLevel(int level) {
+        for(MenuTypeEnum menuTypeEnum : MenuTypeEnum.values()){
+            if(menuTypeEnum.getLevel() == level) {
+                return menuTypeEnum.getKey();
+            }
+        }
+        return null;
+    }
+
+    public static int getLevelByKey(String key) {
+        for(MenuTypeEnum menuTypeEnum : MenuTypeEnum.values()){
+            if(StringUtils.equals(key, menuTypeEnum.getKey())) {
+                return menuTypeEnum.getLevel();
+            }
+        }
+        return -1;
     }
 }

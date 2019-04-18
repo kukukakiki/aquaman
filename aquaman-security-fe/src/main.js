@@ -29,6 +29,31 @@ Vue.use(ElementUI, { size: 'small', locale })
 
 Vue.config.productionTip = false
 
+// 定义全局按钮验证指令
+Vue.directive('show_button', {
+  bind: function(el, binding) {
+    if (!Vue.prototype.$_show_button(binding.value)) {
+      el.parentNode.removeChild(el)
+    }
+  }
+})
+// 权限检查方法
+Vue.prototype.$_show_button = function(value) {
+  let isExist = false
+  const userButtonAuthority = sessionStorage.getItem('user_button_authority')
+  if (userButtonAuthority === undefined || userButtonAuthority === null) {
+    return false
+  }
+  const buttonperms = userButtonAuthority.split(',')
+  for (let i = 0; i < buttonperms.length; i++) {
+    if (buttonperms[i].indexOf(value) > -1) {
+      isExist = true
+      break
+    }
+  }
+  return isExist
+}
+
 new Vue({
   el: '#app',
   router,

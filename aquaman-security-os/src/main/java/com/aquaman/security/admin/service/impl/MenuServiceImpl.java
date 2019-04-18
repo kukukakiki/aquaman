@@ -37,7 +37,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     private MenuMapper menuMapper;
 
     @Override
-    public List<MenuTreeVO> findMMenuTreeVOByQuery(MenuQuery query) {
+    public List<MenuTreeVO> findMenuTreeVOByQuery(MenuQuery query) {
         List<MenuTreeVO> list = recursionMenuTreeByMenuQuery(query);
         return list;
     }
@@ -63,6 +63,18 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     @Override
     public MenuDTO findParentNameByPrimaryKey(Long id) {
         return menuMapper.selectParentNameByPrimaryKey(id);
+    }
+
+    @Override
+    public List<Menu> findParentMenuByType(String type) {
+        int menuLevel = MenuTypeEnum.getLevelByKey(type);
+        String menuType = MenuTypeEnum.getKeyByLevel(menuLevel - 1);
+        if(StringUtils.isNotEmpty(menuType)) {
+            MenuQuery menuQuery = new MenuQuery();
+            menuQuery.setType(menuType);
+            return menuMapper.selectList(menuQuery.instanceQueryWrapper());
+        }
+        return null;
     }
 
     /**

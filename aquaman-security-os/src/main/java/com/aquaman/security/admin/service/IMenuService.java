@@ -20,7 +20,7 @@ public interface IMenuService extends IService<Menu> {
      * @param query
      * @return
      */
-    List<MenuTreeVO> findMMenuTreeVOByQuery(MenuQuery query);
+    List<MenuTreeVO> findMenuTreeVOByQuery(MenuQuery query);
 
     /**
      * 通过菜单ID集合获取菜单VO
@@ -42,5 +42,12 @@ public interface IMenuService extends IService<Menu> {
      * @return
      */
     MenuDTO findParentNameByPrimaryKey(Long id);
+
+    /**
+     * 根据菜单类型获取当前节点的上级节点集合
+     * @param type
+     * @return
+     */
+    List<Menu> findParentMenuByType(String type);
 
 }
