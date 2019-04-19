@@ -35,7 +35,14 @@ import java.util.HashMap;
  */
 public enum DisplayMenuEnum {
 
+    /**
+     * 显示
+     */
     SHOW("1", "显示"),
+
+    /**
+     * 隐藏
+     */
     HIDE("0", "隐藏"),
             ;
 
@@ -72,6 +79,9 @@ public enum DisplayMenuEnum {
         this.desc = desc;
     }
 
+    /**
+     * 是否显示枚举转map
+     */
     public static HashMap<String , String> toMap(){
         HashMap<String, String> map = new HashMap();
         for(DisplayMenuEnum displayMenu : DisplayMenuEnum.values()){

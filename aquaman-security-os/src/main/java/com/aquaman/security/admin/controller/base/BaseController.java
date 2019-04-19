@@ -50,6 +50,15 @@ public class BaseController {
      * 未知异常
      * @return
      */
+    public ResultVO error(ResultCodeEnum codeEnum){
+        ResultVO resultVO = new ResultVO(codeEnum);
+        return resultVO;
+    }
+
+    /**
+     * 未知异常
+     * @return
+     */
     public ResultVO unknownError(){
         ResultVO resultVO = new ResultVO(ResultCodeEnum.UNKNOWN_ERROR);
         return resultVO;

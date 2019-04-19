@@ -14,7 +14,14 @@ import java.util.HashMap;
  */
 public enum StatusEnum {
 
+    /**
+     * 启用
+     */
     START("start", "启用"),
+
+    /**
+     * 停用
+     */
     STOP("stop", "停用"),
     ;
 
@@ -51,6 +58,10 @@ public enum StatusEnum {
         this.desc = desc;
     }
 
+
+    /**
+     * 状态枚举转map
+     */
     public static HashMap<String , String> toMap(){
         HashMap<String, String> map = new HashMap();
         for(StatusEnum statusEnum : StatusEnum.values()){

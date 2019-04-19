@@ -14,9 +14,24 @@ import java.util.HashMap;
  */
 public enum UserRegistTypeEnmu {
 
+    /**
+     * 网页
+     */
     WEB("web", "网页"),
+
+    /**
+     * 微信
+     */
     WEIXIN("weixin", "微信"),
+
+    /**
+     * 支付宝
+     */
     ALIPAY("alipay", "支付宝"),
+
+    /**
+     * GitHub
+     */
     GITHUB("github", "GitHub")
     ;
 
@@ -53,6 +68,9 @@ public enum UserRegistTypeEnmu {
         this.desc = desc;
     }
 
+    /**
+     * 注册渠道枚举转map
+     */
     public static HashMap<String , String> toMap(){
         HashMap<String, String> map = new HashMap();
         for(UserRegistTypeEnmu userTypeEnmu : UserRegistTypeEnmu.values()){

@@ -36,10 +36,25 @@ import java.util.HashMap;
  */
 public enum MenuTypeEnum {
 
+    /**
+     * 菜单组
+     */
     GROUP("group", "菜单组", 1),
+
+    /**
+     * 菜单
+     */
     MENU("menu", "菜单", 2),
+
+    /**
+     * 弹出页
+     */
+    PAGE("page", "弹出页", 2),
+
+    /**
+     * 按钮
+     */
     BUTTON("button", "按钮", 3),
-    PAGE("page", "弹出页", 2)
     ;
 
     MenuTypeEnum(String key, String value, int level){
@@ -59,6 +74,9 @@ public enum MenuTypeEnum {
      */
     private String value;
 
+    /**
+     * 级别
+     */
     private int level;
 
     public int getLevel() {
@@ -86,6 +104,9 @@ public enum MenuTypeEnum {
         this.key = key;
     }
 
+    /**
+     * 菜单枚举转换map集合
+     */
     public static HashMap<String , String> toMap(){
         HashMap<String, String> map = new HashMap();
         for(MenuTypeEnum menuTypeEnum : MenuTypeEnum.values()){
@@ -94,6 +115,9 @@ public enum MenuTypeEnum {
         return  map;
     }
 
+    /**
+     * 通过级别获取菜单键， 查询不到返回空
+     */
     public static String getKeyByLevel(int level) {
         for(MenuTypeEnum menuTypeEnum : MenuTypeEnum.values()){
             if(menuTypeEnum.getLevel() == level) {
@@ -103,6 +127,9 @@ public enum MenuTypeEnum {
         return null;
     }
 
+    /**
+     * 通过菜单键获取菜单级别，查询不到返回-1
+     */
     public static int getLevelByKey(String key) {
         for(MenuTypeEnum menuTypeEnum : MenuTypeEnum.values()){
             if(StringUtils.equals(key, menuTypeEnum.getKey())) {

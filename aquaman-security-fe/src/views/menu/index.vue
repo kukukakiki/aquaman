@@ -41,11 +41,7 @@
           </el-form-item>
           <el-form-item label="上级菜单" prop="parentId">
             <el-select v-model="form.parentId" placeholder="请选择">
-              <el-option
-                v-for="item in parentList"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id" />
+              <el-option v-for="item in parentList" :key="item.id" :label="item.name" :value="item.id" />
             </el-select>
           </el-form-item>
           <el-form-item>
@@ -114,7 +110,12 @@ export default {
       /**
        * 父菜单集合
        */
-      parentList: [],
+      parentList: [
+        {
+          id: -1,
+          name: '根节点'
+        }
+      ],
       rules: {
         name: [
           { required: true, message: '请输入名称', trigger: 'blur' }
@@ -159,8 +160,11 @@ export default {
         const data = response.result
         if (resultValidate(response.code)) {
           this.form = data.menu
-          this.parentList = data.parentList
-          console.log(this.parentList)
+          if (this.form.parentId !== -1) {
+            this.parentList = data.parentList
+          } else {
+            this.parentList = this.resetParentList()
+          }
           this.showButton = true
         }
       })
@@ -200,10 +204,14 @@ export default {
     addHandler() {
       this.showOperatorButtonHandler()
       this.operatorButtonName = '创建'
+      // 屏蔽修改，删除按钮
+      this.showButton = false
       if (isNotEmpty(this.form.id)) {
         const parentId = this.form.id
+        const name = this.form.name
         this.resetForm()
         this.form.parentId = parentId
+        this.parentList = [{ id: parentId, name: name }]
       }
     },
     /**
@@ -234,6 +242,15 @@ export default {
      */
     resetForm() {
       this.$refs['form'].resetFields()
+      this.form.id = ''
+      this.resetParentList()
+    },
+    /**
+     * 重置上级菜单
+     */
+    resetParentList() {
+      this.form.parentId = -1
+      this.parentList = [{ id: -1, name: '根节点' }]
     }
   }
 }

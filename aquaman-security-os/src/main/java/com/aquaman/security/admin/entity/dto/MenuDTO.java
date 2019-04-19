@@ -29,6 +29,7 @@ import lombok.Data;
 import java.util.List;
 
 /**
+ * 菜单DTO
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
  * @version 2019/4/13
@@ -37,6 +38,9 @@ import java.util.List;
 @Data
 public class MenuDTO {
 
+    /**
+     * 菜单实体类
+     */
     private Menu menu;
 
     /**
