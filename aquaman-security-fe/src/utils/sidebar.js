@@ -13,13 +13,12 @@ export function settingSidebar(items) {
         hidden: item.display === '0'
       })
     })
-    console.log(asyncRouterMap)
   }
   return constantRouterMap.concat(asyncRouterMap)
 }
 
 function childrenComponent(rootPath, children) {
-  const asyncRouterMapChildren = []
+  var asyncRouterMapChildren = []
   if (children !== undefined && children !== null) {
     children.forEach(citem => {
       asyncRouterMapChildren.push({
@@ -27,11 +26,11 @@ function childrenComponent(rootPath, children) {
         name: citem.name,
         component: () => import('@/views' + citem.router),
         meta: { title: citem.name },
-        children: childrenComponent(rootPath + '/' + citem.code, citem.children),
+        // children: cildrenButton(rootPath + '/' + citem.code, citem.children),
         hidden: citem.display === '0'
       })
       if (citem.children !== undefined && citem.children !== null && citem.children.length > 0) {
-        asyncRouterMapChildren.concat(cildrenButton(rootPath, citem.children))
+        asyncRouterMapChildren = asyncRouterMapChildren.concat(cildrenButton(rootPath, citem.children))
       }
     })
   }
@@ -39,7 +38,7 @@ function childrenComponent(rootPath, children) {
 }
 
 function cildrenButton(rootPath, children) {
-  const asyncRouterMapButton = []
+  var asyncRouterMapButton = []
   children.forEach(citem => {
     asyncRouterMapButton.push({
       path: '/' + rootPath + '/' + citem.code,

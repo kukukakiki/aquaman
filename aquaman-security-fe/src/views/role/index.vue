@@ -110,11 +110,11 @@ export default {
       }
     },
     addHandler() {
-      this.$router.push({ path: '/systemMessage/role/roleAdd' })
+      this.$router.push({ path: '/systemMessage/roleAdd' })
     },
     updateHandler() {
       this.$router.push({
-        path: '/role/roleUpdate',
+        path: '/systemMessage/roleUpdate',
         query: { id: this.selectId }
       })
     }
