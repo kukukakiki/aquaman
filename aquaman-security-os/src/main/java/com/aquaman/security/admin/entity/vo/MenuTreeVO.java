@@ -72,22 +72,25 @@ public class MenuTreeVO {
      */
     private String iconType;
 
-    private MenuTypeEnum type;
+    /**
+     * 菜单类型
+     */
+    private String type;
 
     /**
      * 0:隐藏,1:显示
      */
-    private DisplayMenuEnum display;
+    private String display;
 
     /**
      * 状态
      */
-    private StatusEnum status;
+    private String status;
 
     /**
      * 父ID
      */
-    private Long parentId;
+    private String parentId;
 
     /**
      * 备注

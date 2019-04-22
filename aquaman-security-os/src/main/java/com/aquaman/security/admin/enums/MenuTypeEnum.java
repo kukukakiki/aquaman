@@ -57,7 +57,7 @@ public enum MenuTypeEnum {
     BUTTON("button", "按钮", 3),
     ;
 
-    MenuTypeEnum(String key, String value, int level){
+    MenuTypeEnum(String key, String value, Integer level){
         this.key = key;
         this.value = value;
         this.level = level;
@@ -79,11 +79,11 @@ public enum MenuTypeEnum {
      */
     private int level;
 
-    public int getLevel() {
+    public Integer getLevel() {
         return level;
     }
 
-    public void setLevel(int level) {
+    public void setLevel(Integer level) {
         this.level = level;
     }
 
@@ -111,6 +111,17 @@ public enum MenuTypeEnum {
         HashMap<String, String> map = new HashMap();
         for(MenuTypeEnum menuTypeEnum : MenuTypeEnum.values()){
             map.put(menuTypeEnum.getKey(), menuTypeEnum.getValue());
+        }
+        return  map;
+    }
+
+    /**
+     * 菜单枚举转换map集合
+     */
+    public static HashMap<String , Integer> keyLevelToMap(){
+        HashMap<String, Integer> map = new HashMap();
+        for(MenuTypeEnum menuTypeEnum : MenuTypeEnum.values()){
+            map.put(menuTypeEnum.getKey(), menuTypeEnum.getLevel());
         }
         return  map;
     }

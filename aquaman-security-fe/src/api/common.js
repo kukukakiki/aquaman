@@ -47,12 +47,23 @@ export function save(type, form) {
  * @param {*} type
  * @param {*} form
  */
-export function edit(type, form) {
+export function update(type, form) {
   return request({
     url: '/' + type + '/' + form.id,
     method: 'put',
     data: {
       form
     }
+  })
+}
+
+/**
+ * 普通无条件查询
+ * @param {*} type
+ */
+export function queryNotConditions(type) {
+  return request({
+    url: '/' + type,
+    method: 'get'
   })
 }

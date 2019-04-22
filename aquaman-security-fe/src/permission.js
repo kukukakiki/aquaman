@@ -26,6 +26,7 @@ router.beforeEach((to, from, next) => {
           sidebarMap.concat(constantRouterMap)
           // 将最后合并的菜单map复制给routes用户右侧的菜单显示
           router.options.routes = sidebarMap
+          console.log(sidebarMap)
           store.dispatch('permission/generateRoutes', sidebarMap)
           // 该设置是用来控制
           router.addRoutes(sidebarMap)

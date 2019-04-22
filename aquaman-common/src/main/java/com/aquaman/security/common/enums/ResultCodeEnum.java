@@ -107,6 +107,11 @@ public enum  ResultCodeEnum {
      */
     MENU_DELETE_ERROR("4005", "菜单删除异常"),
 
+    /**
+     * 菜单删除异常
+     */
+    MENU_GET_ENUM_KEY_LEVEL_MAP_ERROR("4006", "获取菜单枚举中编码和级别map异常"),
+
     ;
 
     ResultCodeEnum(String code, String msg){

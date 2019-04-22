@@ -12,9 +12,13 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="fetchData">查询</el-button>
+        <el-button v-show_button="'roleAdd'" type="primary" @click.stop="addHandler">新增</el-button>
+        <el-button v-show_button="'roleUpdate'" :disabled="!showButton" type="primary" @click.stop="updateHandler">修改</el-button>
+        <el-button v-show_button="'roleAuthorization'" :disabled="!showButton" type="primary" @click.stop="authoHandler">授权</el-button>
+        <el-button :disabled="!showButton" type="primary" @click.stop="deleteHandler">删除</el-button>
       </el-form-item>
     </el-form>
-    <el-table v-loading="loading" :data="items" border style="width: 100%" highlight-current-row @current-change="handleCurrentChange">
+    <el-table :data="items" border style="width: 100%" highlight-current-row @current-change="handleCurrentChange">
       <el-table-column prop="code" label="编码" />
       <el-table-column prop="name" label="名称" />
       <el-table-column prop="gmtCreate" label="创建时间">
@@ -38,15 +42,16 @@ export default {
   },
   data() {
     return {
-      loading: false, // 页面loading标示
+      showButton: false, // 显示执行按钮
+      items: [], // 列表集合
+      selectId: '', // 选中ID
       query: { // 列表查询对象
         total: 0, // 总条数
         size: 5, // 每页条数
         current: 1, // 当前页码数
         account: '', // 用户名
         status: '' // 用户状态
-      },
-      items: [] // 列表集合
+      }
     }
   },
   created() {
@@ -57,7 +62,6 @@ export default {
      * 获取数据
      */
     fetchData() {
-      this.loading = true
       queryByPage('role', this.query).then(response => {
         const data = response.result
         if (response.code === '0000') {
@@ -65,21 +69,24 @@ export default {
           this.query.total = data.total
           this.query.size = data.size
         }
-        this.loading = false
       }).catch(error => {
         this.$message({
           message: error.msg,
           type: 'error',
           duration: 5 * 1000
         })
-        this.loading = false
       })
     },
     /**
      * 获取当前列表选中行
      */
     handleCurrentChange(val) {
-      console.log(val)
+      if (val) {
+        this.showButton = true
+        this.selectId = val.id
+      } else {
+        this.showButton = false
+      }
     },
     /**
      * 列表时间转换
@@ -101,6 +108,15 @@ export default {
       } else {
         return '暂无时间'
       }
+    },
+    addHandler() {
+      this.$router.push({ path: '/systemMessage/role/roleAdd' })
+    },
+    updateHandler() {
+      this.$router.push({
+        path: '/role/roleUpdate',
+        query: { id: this.selectId }
+      })
     }
   }
 }

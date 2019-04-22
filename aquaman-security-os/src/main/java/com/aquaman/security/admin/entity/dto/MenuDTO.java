@@ -27,6 +27,7 @@ import com.aquaman.security.admin.entity.domain.Menu;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 菜单DTO
@@ -47,4 +48,14 @@ public class MenuDTO {
      * 父节点集合
      */
     private List<Menu> parentList;
+
+    /**
+     * 菜单级别map
+     */
+    private Map<String, Integer> menuLevelMap;
+
+    /**
+     * 父节点级别
+     */
+    private Integer parentLevel;
 }

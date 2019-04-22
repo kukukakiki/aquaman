@@ -56,7 +56,7 @@
 
 <script>
 import { queryByTree, queryById } from '@/api/menu'
-import { save, edit } from '@/api/common'
+import { queryNotConditions, save, update } from '@/api/common'
 import aqSelect from '@/components/Element/Select'
 import { isNotEmpty, resultValidate, resultSuccessShowMsg } from '@/utils/validate'
 // import aqPrompt from '@/components/Element/Prompt'
@@ -67,6 +67,10 @@ export default {
   },
   data() {
     var validateType = (rule, value, callback) => {
+      const checkLevel = this.calculationMenuTypeLevel(value)
+      if (checkLevel < this.parentLeve) {
+        callback(new Error('当前级别不可高于上级节点'))
+      }
       // 修改菜单类型需要验证能够调低级别
       callback()
     }
@@ -74,14 +78,15 @@ export default {
       showButton: false, // 显示执行按钮
       showOperatorButton: false, // 显示操作按钮
       operatorButtonName: '创建', // 操作按钮名称
+      parentLeve: 1, // 父节点菜单类型级别
       filterText: '',
+      items: [], // 列表集合
       /**
        * 列表查询对象
        */
       query: {
         parentId: -1 // 从根节点查询菜单树
       },
-      items: [], // 列表集合
       /**
        * 默认树对应关系
        */
@@ -116,6 +121,10 @@ export default {
           name: '根节点'
         }
       ],
+      /**
+       * 菜单类型规则
+       */
+      menuTypeRules: {},
       rules: {
         name: [
           { required: true, message: '请输入名称', trigger: 'blur' }
@@ -124,7 +133,8 @@ export default {
           { required: true, message: '请输入编码', trigger: 'blur' }
         ],
         type: [
-          { required: true, validator: validateType, message: '请选择菜单类型', trigger: 'change' }
+          { required: true, message: '请选择菜单类型', trigger: 'change' },
+          { validator: validateType, trigger: 'change' }
         ]
       }
     }
@@ -139,6 +149,12 @@ export default {
   },
   created() {
     this.fetchData()
+    queryNotConditions('menu/keyLevelToMap').then(response => {
+      const data = response.result
+      if (resultValidate(response.code)) {
+        this.menuTypeRules = data
+      }
+    })
   },
   methods: {
     /**
@@ -160,6 +176,7 @@ export default {
         const data = response.result
         if (resultValidate(response.code)) {
           this.form = data.menu
+          this.parentLeve = this.calculationMenuTypeLevel(this.form.parentLeve)
           if (this.form.parentId !== -1) {
             this.parentList = data.parentList
           } else {
@@ -176,7 +193,7 @@ export default {
       this.$refs['form'].validate((valid) => {
         if (valid) {
           if (isNotEmpty(this.form.id)) {
-            edit('menu', this.form).then(response => {
+            update('menu', this.form).then(response => {
               resultSuccessShowMsg(response)
             })
           } else {
@@ -250,7 +267,16 @@ export default {
      */
     resetParentList() {
       this.form.parentId = -1
+      this.parentLeve = 1
       this.parentList = [{ id: -1, name: '根节点' }]
+    },
+    /**
+     * 计算菜单级别
+     */
+    calculationMenuTypeLevel(type) {
+      if (this.menuTypeRules !== undefined && this.menuTypeRules !== null) {
+        return this.menuTypeRules[this.form.type]
+      }
     }
   }
 }

@@ -4,13 +4,13 @@ import { constantRouterMap, asyncRouterMap } from '@/router/index'
 export function settingSidebar(items) {
   if (items !== undefined && items !== null) {
     items.forEach(item => {
-      console.log(item.name)
       asyncRouterMap.push({
         path: '/' + item.code,
         component: Layout,
         name: item.name,
         meta: { title: item.name },
-        children: childrenComponent(item.code, item.children)
+        children: childrenComponent(item.code, item.children),
+        hidden: item.display === '0'
       })
     })
     console.log(asyncRouterMap)
@@ -19,7 +19,6 @@ export function settingSidebar(items) {
 }
 
 function childrenComponent(rootPath, children) {
-  console.log(rootPath)
   const asyncRouterMapChildren = []
   if (children !== undefined && children !== null) {
     children.forEach(citem => {
@@ -27,7 +26,9 @@ function childrenComponent(rootPath, children) {
         path: '/' + rootPath + '/' + citem.code,
         name: citem.name,
         component: () => import('@/views' + citem.router),
-        meta: { title: citem.name }
+        meta: { title: citem.name },
+        children: childrenComponent(rootPath + '/' + citem.code, citem.children),
+        hidden: citem.display === '0'
       })
       if (citem.children !== undefined && citem.children !== null && citem.children.length > 0) {
         asyncRouterMapChildren.concat(cildrenButton(rootPath, citem.children))
@@ -45,7 +46,7 @@ function cildrenButton(rootPath, children) {
       name: citem.name,
       component: () => import('@/views' + citem.router),
       meta: { title: citem.name },
-      hidden: true
+      hidden: citem.display === '0'
     })
     // 将登陆用户所有按钮权限缓存
     const userButtonAuthority = sessionStorage.getItem('user_button_authority')
