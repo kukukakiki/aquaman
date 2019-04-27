@@ -40,6 +40,7 @@ export default {
       this.$refs.menuTree.filter(val)
     },
     keys(val) {
+      this.$refs.menuTree.setCheckedKeys(val)
       this.selectKeys = val
     },
     selectKeys(val) {
@@ -48,6 +49,8 @@ export default {
   },
   created() {
     this.fetchData()
+  },
+  mounted() {
   },
   methods: {
     fetchData() {
@@ -66,7 +69,7 @@ export default {
       console.log(this.$refs.menuTree.getCheckedKeys())
     },
     handleCheckChange(data, checked, indeterminate) {
-      this.selectKeys = this.$refs.menuTree.getCheckedKeys()
+      this.selectKeys = this.$refs.menuTree.getCheckedKeys().concat(this.$refs.menuTree.getHalfCheckedKeys())
     }
   }
 }

@@ -35,7 +35,9 @@ spring:
   #mapper-locations: classpath*:mapper/*.xml
   # 设置mybatis实体类包路径
   #type-aliases-package: com.aquaman.security.admin.entity.domain
-
+management:
+  server:
+    port: 8082
 mybatis-plus:
   # 设置mybatis配置文件路径
   config-location: classpath:mybatis/mybatis-config.xml
