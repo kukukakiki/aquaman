@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <menu-tree :keys.sync="keys" />
+    <menu-tree ref="menuTree" :keys.sync="keys" />
   </div>
 </template>
 
@@ -24,10 +24,12 @@ export default {
     this.form.id = this.$route.query.id
     if (this.form.id) {
       queryById('role', this.form.id).then(response => {
-        console.log(response)
         this.keys = response.result.menuIds.split(',')
       })
     }
+  },
+  mounted() {
+    this.$refs.menuTree.setCheckedKeys(this.keys)
   },
   methods: {
   }
