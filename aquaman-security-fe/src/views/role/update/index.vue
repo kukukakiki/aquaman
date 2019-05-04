@@ -28,9 +28,6 @@ export default {
       })
     }
   },
-  mounted() {
-    this.$refs.menuTree.setCheckedKeys(this.keys)
-  },
   methods: {
   }
 }

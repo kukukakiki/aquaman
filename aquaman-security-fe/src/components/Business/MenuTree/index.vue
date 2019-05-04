@@ -57,6 +57,7 @@ export default {
         const data = response.result
         if (resultValidate(response.code)) {
           this.items = data
+          this.setCheckedKeys()
         }
       })
     },
@@ -74,24 +75,25 @@ export default {
      * 设置树菜单，改设置采用递归方式，由下至上的方式进行check选中
      * @param keys
      */
-    setCheckedKeys(keys) {
+    setCheckedKeys() {
       // 判断当前DOM树树形菜单是否已经加载完成，未加载完成，隔3秒再次调用该方式
       if (this.$refs.menuTree !== undefined && this.$refs.menuTree.children !== undefined &&
           this.$refs.menuTree.children.length > 0) {
         // 遍历整个菜单树
         this.$refs.menuTree.children.forEach(node => {
           // 判断菜单扩展属性非等于system,并且入参选中keys不能为空
-          if (node.meta.type !== 'system' && keys !== undefined && keys.length > 0) {
-            // Tree方式，接收三个参数，1. 勾选节点的 key 或者 data 2. boolean 类型，节点是否选中 3. boolean 类型，是否设置子节点 ，默认为 false
-            this.$refs.menuTree.setChecked(node.id, true, false)
-          } else {
-            // 递归循环子菜单，入参子菜单对象
-            this.whileMenuIdsCheckedElTree(node)
+          if (node.meta.type === 'group') {
+            if (this.selectKeys.indexOf(String(node.id)) !== -1) {
+              // Tree方式，接收三个参数，1. 勾选节点的 key 或者 data 2. boolean 类型，节点是否选中 3. boolean 类型，是否设置子节点 ，默认为 false
+              this.$refs.menuTree.setChecked(node.id, true, false)
+            }
           }
+          // 递归循环子菜单，入参子菜单对象
+          this.whileMenuIdsCheckedElTree(node)
         })
       } else {
         setTimeout(() => {
-          this.setCheckedKeys(keys)
+          this.setCheckedKeys()
         }, 3000)
       }
     },

@@ -149,6 +149,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
             MetaVO meta = new MetaVO();
             meta.setTitle(menu.getName());
             meta.setIncon(menu.getIconType());
+            meta.setType(menu.getType());
             menuTreeVO.setMeta(meta);
             return menuTreeVO;
         } else {

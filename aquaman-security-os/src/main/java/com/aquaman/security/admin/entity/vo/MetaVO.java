@@ -45,4 +45,9 @@ public class MetaVO {
      */
     private String incon;
 
+    /**
+     * 菜单类型
+     */
+    private String type;
+
 }
