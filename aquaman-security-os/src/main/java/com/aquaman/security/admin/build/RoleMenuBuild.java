@@ -34,7 +34,7 @@ import org.springframework.util.Assert;
  * @version 2019/4/25
  * @since 2019/4/25
  */
-public class RoleMenuDTOBuild {
+public class RoleMenuBuild {
 
     public static Role buildRoleByDTO(RoleMenuDTO roleMenuDTO) {
         Assert.notNull(roleMenuDTO, "角色，角色菜单关系DTO对象不能为空");

@@ -12,7 +12,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="fetchData">查询</el-button>
-        <el-button v-show_button="'adminAdd'" type="primary" @click.stop="toAdd">新增</el-button>
+        <el-button v-show_button="'adminAdd'" type="primary" @click.stop="addHandler">新增</el-button>
         <el-button v-show_button="'adminUpdate'" type="primary" @click.stop="toUpdate">修改</el-button>
         <el-button v-show_button="'setRole'" type="primary" @click.stop="toSetRoles">角色</el-button>
       </el-form-item>
@@ -105,6 +105,9 @@ export default {
       } else {
         return '暂无时间'
       }
+    },
+    addHandler() {
+      this.$router.push({ path: '/systemMessage/adminAdd' })
     }
   }
 }

@@ -14,7 +14,7 @@
         <el-button type="primary" @click="fetchData">查询</el-button>
         <el-button v-show_button="'roleAdd'" type="primary" @click.stop="addHandler">新增</el-button>
         <el-button v-show_button="'roleUpdate'" :disabled="!showButton" type="primary" @click.stop="updateHandler">修改</el-button>
-        <el-button v-show_button="'roleAuthorization'" :disabled="!showButton" type="primary" @click.stop="authoHandler">授权</el-button>
+        <!--<el-button v-show_button="'roleAuthorization'" :disabled="!showButton" type="primary" @click.stop="authoHandler">授权</el-button>-->
         <el-button :disabled="!showButton" type="primary" @click.stop="deleteHandler">删除</el-button>
       </el-form-item>
     </el-form>

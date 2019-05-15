@@ -52,6 +52,19 @@ export default {
         }, {
           value: '0',
           label: '隐藏'
+        }],
+        register: [{
+          value: 'web',
+          label: '网页'
+        }, {
+          value: 'weixin',
+          label: '微信'
+        }, {
+          value: 'alipay',
+          label: '支付宝'
+        }, {
+          value: 'github',
+          label: 'GitHub'
         }]
       }
     }

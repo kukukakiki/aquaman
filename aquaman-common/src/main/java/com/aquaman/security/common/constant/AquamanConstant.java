@@ -10,6 +10,11 @@ package com.aquaman.security.common.constant;
 public class AquamanConstant {
 
     /**
+     * 数据库根结点ID
+     */
+    public static final transient Long DB_ROOT_NUM = -1L;
+
+    /**
      * 日志标识符
      */
     public static final transient String LOG_TAG = "---------------------------------";

@@ -1,6 +1,5 @@
 package com.aquaman.security.admin.enums;
 
-import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.HashMap;
@@ -12,7 +11,7 @@ import java.util.HashMap;
  * @version 2019/3/4
  * @since 2019/3/4
  */
-public enum UserRegistTypeEnmu {
+public enum UserRegisterTypeEnum {
 
     /**
      * 网页
@@ -35,7 +34,7 @@ public enum UserRegistTypeEnmu {
     GITHUB("github", "GitHub")
     ;
 
-    UserRegistTypeEnmu(String value, String desc){
+    UserRegisterTypeEnum(String value, String desc){
         this.value = value;
         this.desc = desc;
     }
@@ -73,7 +72,7 @@ public enum UserRegistTypeEnmu {
      */
     public static HashMap<String , String> toMap(){
         HashMap<String, String> map = new HashMap();
-        for(UserRegistTypeEnmu userTypeEnmu : UserRegistTypeEnmu.values()){
+        for(UserRegisterTypeEnum userTypeEnmu : UserRegisterTypeEnum.values()){
             map.put(userTypeEnmu.getValue(), userTypeEnmu.getDesc());
         }
         return  map;

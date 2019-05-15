@@ -61,6 +61,12 @@ public enum  ResultCodeEnum {
      */
     USER_INVALID_TOKEN("1002", "用户名Token失效"),
 
+    USER_ADD_ERROR("1003","用户新增异常"),
+
+    USER_UPDATE_ERROR("1004","用户修改异常"),
+
+    USER_DELETE_ERROR("1005","用户删除异常"),
+
     /**
      * 请联系管理员
      */
@@ -84,9 +90,15 @@ public enum  ResultCodeEnum {
     /**------------------------------角色业务异常编码【3***】------------------------------------------*/
     ROLE_SAVE_ERROR("3001", "角色新增异常"),
 
-    ROLE_MENU_SAVE_ERROR("3002", "角色权限对应关系设置异常"),
+    ROLE_DELETE_ERROR("3005", "角色删除异常"),
+
+    ROLE_UPDATE_ERROR("3006", "角色修改异常"),
+
+    ROLE_MENU_SAVE_ERROR("3002", "角色权限对应关系新增异常"),
 
     ROLE_GET_BY_ID_ERROR("3003", "角色根据ID获取详情异常"),
+
+    ROLE_MENU_UPDATE_ERROR("3004", "角色权限对应关系修改异常"),
 
     /**------------------------------菜单业务异常编码【4***】------------------------------------------*/
     /**
@@ -119,6 +131,10 @@ public enum  ResultCodeEnum {
      */
     MENU_GET_ENUM_KEY_LEVEL_MAP_ERROR("4006", "获取菜单枚举中编码和级别map异常"),
 
+    /**------------------------------菜单业务异常编码【5***】------------------------------------------*/
+    DEPT_TREE_GET_ALL_ERROR("5001", "获取部门树异常"),
+    DEPT_SAVE_ERROR("5002", "部门新增异常"),
+    DEPT_UPDATE_ERROR("5003", "部门修改异常"),
     ;
 
     ResultCodeEnum(String code, String msg){

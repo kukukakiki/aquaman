@@ -64,6 +64,14 @@ public class BaseController {
         return resultVO;
     }
 
+    public ResultVO defaultResult(boolean processResult, ResultCodeEnum codeEnum) {
+        ResultVO resultVO = new ResultVO(ResultCodeEnum.SUCCESS);
+        if(!processResult) {
+            resultVO = new ResultVO(codeEnum);
+        }
+        return resultVO;
+    }
+
     /**
      * Valid校验异常信息打印控制台
      * @param resultErrors

@@ -1,19 +1,17 @@
 package com.aquaman.security.admin.service.impl;
 
+import com.aquaman.security.admin.build.MenuTreeBuild;
 import com.aquaman.security.admin.entity.domain.Menu;
 import com.aquaman.security.admin.entity.dto.MenuDTO;
 import com.aquaman.security.admin.entity.query.MenuQuery;
 import com.aquaman.security.admin.entity.vo.MenuTreeVO;
-import com.aquaman.security.admin.entity.vo.MetaVO;
 import com.aquaman.security.admin.enums.MenuTypeEnum;
 import com.aquaman.security.admin.mapper.MenuMapper;
 import com.aquaman.security.admin.service.IMenuService;
-import com.aquaman.security.common.constant.AquamanConstant;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -91,7 +89,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
                 // 如果当前菜单为根结点
                 if(menu.getParentId().equals(parentId)) {
                     // 将Menu构建成MenuTreeVO对象
-                    MenuTreeVO menuTreeVO = buildMenuTreeVO(menu);
+                    MenuTreeVO menuTreeVO = MenuTreeBuild.buildMenuTreeVO(menu);
                     // MenuTreeVO增加到集合中
                     menuTreeVOList.add(menuTreeVO);
                     // 递归该节点
@@ -121,7 +119,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
             List<MenuTreeVO> menuTreeVOList = new ArrayList<>();
             for(Menu menu : parentMenuList) {
                 // 将Menu构建成MenuTreeVO对象
-                MenuTreeVO menuTreeVO = buildMenuTreeVO(menu);
+                MenuTreeVO menuTreeVO = MenuTreeBuild.buildMenuTreeVO(menu);
                 // MenuTreeVO增加到集合中
                 menuTreeVOList.add(menuTreeVO);
                 // 设置父菜单ID
@@ -132,28 +130,6 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
             }
             // 返回集合=》用于设置子节点
             return menuTreeVOList;
-        }
-        return null;
-    }
-
-    /**
-     * Menu构建成MenuTreeVO
-     * @param menu
-     * @return
-     */
-    private MenuTreeVO buildMenuTreeVO(Menu menu) {
-        if(menu != null){
-            MenuTreeVO menuTreeVO = new MenuTreeVO();
-            BeanUtils.copyProperties(menu, menuTreeVO);
-            // 构建扩展信息
-            MetaVO meta = new MetaVO();
-            meta.setTitle(menu.getName());
-            meta.setIncon(menu.getIconType());
-            meta.setType(menu.getType());
-            menuTreeVO.setMeta(meta);
-            return menuTreeVO;
-        } else {
-            log.warn("{}入参Menu为空", AquamanConstant.LOG_TAG);
         }
         return null;
     }
