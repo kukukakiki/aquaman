@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aquaman.security.admin.mapper.MenuMapper">
 
+    <!-- DTO改造属性废弃
     <resultMap id="MenuDTOResultMap" type="com.aquaman.security.admin.entity.dto.MenuDTO">
         <id column="id" jdbcType="BIGINT" property="id" />
         <result column="system_id" jdbcType="BIGINT" property="systemId" />
@@ -20,12 +21,13 @@
         <result column="gmt_modify" jdbcType="BIGINT" property="gmtModify" />
         <result column="sort" jdbcType="BIGINT" property="sort" />
         <result column="parent_name" jdbcType="VARCHAR" property="parentName" />
-    </resultMap>
+    </resultMap>-->
 
     <sql id="Base_Column_List">
       t.id, t.system_id, t.code, t.name, t.url, t.router, t.icon_type, t.type, t.display, t.status, t.remark, t.parent_id, t.permission_code, t.gmt_create, t.gmt_modify, t.sort
     </sql>
 
+    <!-- DTO改造废弃sql
     <select id="selectParentNameByPrimaryKey" parameterType="java.lang.Long" resultMap="MenuDTOResultMap">
         select
         <include refid="Base_Column_List" />
@@ -38,6 +40,6 @@
         where
         if(t.parent_id != -1, p.id = t.parent_id , p.id = t.id)
         and t.id = #{id,jdbcType=BIGINT}
-    </select>
+    </select>-->
 
 </mapper>

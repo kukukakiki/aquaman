@@ -42,16 +42,11 @@ public class MenuController extends BaseController {
      */
     @GetMapping
     public ResultVO<List<MenuTreeVO>> get(MenuQuery query){
-        try {
-            // 通过query查询对象获取菜单集合，并且底层组装成'菜单树'结构
-            List<MenuTreeVO> list = menuService.findMenuTreeVOByQuery(query);
-            // 组装成功信息
-            ResultVO<List<MenuTreeVO>> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, list);
-            return resultVO;
-        } catch (Exception e) {
-            log.error("参数信息：{}；错误信息：{}", query.toString(), e.getMessage());
-            return error(ResultCodeEnum.MENU_GET_ERROR);
-        }
+        // 通过query查询对象获取菜单集合，并且底层组装成'菜单树'结构
+        List<MenuTreeVO> list = menuService.findMenuTreeVOByQuery(query);
+        // 组装成功信息
+        ResultVO<List<MenuTreeVO>> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, list);
+        return resultVO;
     }
 
     /**
@@ -65,29 +60,24 @@ public class MenuController extends BaseController {
      */
     @GetMapping("/{id:\\d+}")
     public ResultVO<MenuDTO> getById(@PathVariable Long id) {
-        try {
-            MenuDTO menuDTO = new MenuDTO();
-            // step1
-            Menu menu = menuService.findMenuById(id);
-            // step2
-            List<Menu> parentList = menuService.findParentMenuByType(menu.getType());
-            if(CollectionUtils.isNotEmpty(parentList)) {
-                // step3
-                menuDTO.setParentLevel(
-                        MenuTypeEnum.getLevelByKey(parentList.get(0).getType()));
-            } else {
-                menuDTO.setParentLevel(-1);
-            }
-            // step4
-            menuDTO.setMenu(menu);
-            menuDTO.setParentList(parentList);
-            // 组装成功信息
-            ResultVO<MenuDTO> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, menuDTO);
-            return resultVO;
-        } catch (Exception e) {
-            log.error("参数信息：{}；错误信息：{}", id, e.getMessage());
-            return error(ResultCodeEnum.MENU_GET_BY_ID_ERROR);
+        MenuDTO menuDTO = new MenuDTO();
+        // step1
+        Menu menu = menuService.findMenuById(id);
+        // step2
+        List<Menu> parentList = menuService.findParentMenuByType(menu.getType());
+        if(CollectionUtils.isNotEmpty(parentList)) {
+            // step3
+            menuDTO.setParentLevel(
+                    MenuTypeEnum.getLevelByKey(parentList.get(0).getType()));
+        } else {
+            menuDTO.setParentLevel(-1);
         }
+        // step4
+        menuDTO.setMenu(menu);
+        menuDTO.setParentList(parentList);
+        // 组装成功信息
+        ResultVO<MenuDTO> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, menuDTO);
+        return resultVO;
     }
 
     /**
@@ -96,14 +86,9 @@ public class MenuController extends BaseController {
      */
     @GetMapping("/keyLevelToMap")
     public ResultVO<Map<String, Integer>> keyLevelToMap() {
-        try {
             Map<String, Integer> map = MenuTypeEnum.keyLevelToMap();
             ResultVO<Map<String, Integer>> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, map);
             return resultVO;
-        } catch (Exception e) {
-            log.error("错误信息：{}", e.getMessage());
-            return error(ResultCodeEnum.MENU_GET_ENUM_KEY_LEVEL_MAP_ERROR);
-        }
     }
 
     /**
