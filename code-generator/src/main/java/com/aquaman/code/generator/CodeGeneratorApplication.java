@@ -29,7 +29,7 @@ public class CodeGeneratorApplication {
 
     private static final String MYSQL_USER = "fanxiweb";
 
-    private static final String MYSQL_PWD = "*********";
+    private static final String MYSQL_PWD = "q1w2e3r4t5";
 
     private static final String MYSQL_DRIVER_NAME = "com.mysql.jdbc.Driver";
 
@@ -41,7 +41,7 @@ public class CodeGeneratorApplication {
 
     private static final String PROJECT_PARENT_PAGE = "com.aquaman.security";
 
-    private static final String CURRENT_EXECUTE_TABLE = "ad_user";
+    private static final String CURRENT_EXECUTE_TABLE = "ad_dept_user";
 
     private static final String PROJECT_NAME = "aquaman-security-os";
 
