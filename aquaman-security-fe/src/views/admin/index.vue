@@ -1,20 +1,29 @@
 <template>
   <div class="app-container">
     <el-form :inline="true" :model="query" class="demo-form-inline">
-      <el-form-item label="用户名">
-        <el-input v-model="query.account" placeholder="用户名" />
-      </el-form-item>
-      <el-form-item label="用户状态">
-        <el-select v-model="query.status" placeholder="选择状态">
-          <el-option label="启用" value="START" />
-          <el-option label="停用" value="STOP" />
-        </el-select>
-      </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="fetchData">查询</el-button>
-        <el-button v-show_button="'adminAdd'" type="primary" @click.stop="addHandler">新增</el-button>
-        <el-button v-show_button="'adminUpdate'" type="primary" @click.stop="toUpdate">修改</el-button>
-        <el-button v-show_button="'setRole'" type="primary" @click.stop="toSetRoles">角色</el-button>
+        <el-button-group>
+          <el-button type="primary" @click="fetchData">查询</el-button>
+          <el-button v-show_button="'adminAdd'" type="primary" @click.stop="addHandler">新增</el-button>
+          <el-button v-show_button="'adminUpdate'" :disabled="!showButton" type="primary" @click.stop="updateHandler">修改</el-button>
+          <el-button v-show_button="'setRole'" :disabled="!showButton" type="primary" @click.stop="toSetRoles">角色</el-button>
+        </el-button-group>
+      </el-form-item>
+      <el-form-item style="float:right">
+        <el-button-group>
+          <el-button type="primary" icon="el-icon-search" @click="fetchData" />
+          <el-button type="primary" icon="el-icon-more" />
+          <el-button type="primary" icon="el-icon-refresh" />
+        </el-button-group>
+      </el-form-item>
+      <el-form-item style="float:right">
+        <el-input v-model="query.account" placeholder="请输入内容" class="input-with-select">
+          <el-select slot="prepend" v-model="query.account" placeholder="请选择">
+            <el-option label="用户名" value="1" />
+            <el-option label="订单号" value="2" />
+            <el-option label="用户电话" value="3" />
+          </el-select>
+        </el-input>
       </el-form-item>
     </el-form>
     <el-table v-loading="loading" :data="items" border style="width: 100%" highlight-current-row @current-change="handleCurrentChange">
@@ -42,6 +51,7 @@ export default {
   },
   data() {
     return {
+      showButton: false, // 显示执行按钮
       loading: false, // 页面loading标示
       query: { // 列表查询对象
         total: 0, // 总条数
@@ -83,7 +93,12 @@ export default {
      * 获取当前列表选中行
      */
     handleCurrentChange(val) {
-      console.log(val)
+      if (val) {
+        this.showButton = true
+        this.selectId = val.id
+      } else {
+        this.showButton = false
+      }
     },
     /**
      * 列表时间转换
@@ -108,6 +123,9 @@ export default {
     },
     addHandler() {
       this.$router.push({ path: '/systemMessage/adminAdd' })
+    },
+    updateHandler() {
+      this.$router.push({ path: '/systemMessage/adminUpdate' })
     }
   }
 }
