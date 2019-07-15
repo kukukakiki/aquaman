@@ -3,6 +3,7 @@ package com.aquaman.security.admin.mapper;
 import com.aquaman.security.admin.entity.domain.User;
 import com.aquaman.security.admin.entity.query.UserQuery;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -30,11 +31,19 @@ public interface UserMapper extends BaseMapper<User> {
      * @param query
      * @return
      */
-    Page<User> findUserByPage(UserQuery query);
+    @Deprecated
+    IPage<User> findUserByPage(UserQuery query);
 
     /**
      * 更新最后登录时间
      * @param id
      */
     void updateLoginTime(Long id);
+
+    /**
+     * 根据部门ID分页查询用户信息
+     * @param query
+     * @return
+     */
+    IPage<User> findUserByDeptId(UserQuery query);
 }

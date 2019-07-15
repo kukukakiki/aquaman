@@ -6,6 +6,7 @@
     id, account, password, nick_name, mobile, email, dept_id, status, type, login_time,
     permission_code, gmt_create, gmt_modify
     </sql>
+
     <sql id="Base_Where_List">
         1=1
         <if test="account != null and account != ''">
@@ -52,6 +53,12 @@
         <include refid="Base_Column_List" />
         from ad_user
         where <include refid="Base_Where_List" />
+    </select>
+
+    <select id="findUserByDeptId" resultType="com.aquaman.security.admin.entity.domain.User">
+        select
+        <include refid="Base_Column_List" />
+        from ad_user where FIND_IN_SET(id, (select user_ids from ad_dept_user where dept_id = #{deptId,jdbcType=BIGINT}))
     </select>
 
     <update id="updateLoginTime" parameterType="java.lang.Long">

@@ -104,21 +104,16 @@ public class UserController extends BaseController {
     @GetMapping("/menu")
     public ResultVO<List<MenuTreeVO>> getMenuByCurrentLoginUser() {
         ResultVO<List<MenuTreeVO>> resultVO = new ResultVO<>(ResultCodeEnum.SUCCESS);
-        try {
-            User user = CurrentUserUtil.getLoginUserInfo();
-            if(user != null) {
-                UserRoleQuery userRoleQuery = new UserRoleQuery();
-                userRoleQuery.setUserId(user.getId());
-                UserRole userRole = userRoleService.getOne(userRoleQuery.instanceQueryWrapper());
-                List<String> list = Arrays.asList(userRole.getRoleIds().split(","));
-                List<String> menuIds = roleMenuService.findMenuIdsByRoleIds(CollectionUtil.stringToLong(list));
-                List<MenuTreeVO> menuTreeVOList = menuService.findMenuTreeVOByIds(CollectionUtil.stringToLong(menuIds));
-                log.info("{}", menuTreeVOList);
-                resultVO.setResult(menuTreeVOList);
-            }
-        } catch (Exception e) {
-            log.error("{}", e.getMessage());
-            resultVO = new ResultVO<>(ResultCodeEnum.UNKNOWN_ERROR);
+        User user = CurrentUserUtil.getLoginUserInfo();
+        if(user != null) {
+            UserRoleQuery userRoleQuery = new UserRoleQuery();
+            userRoleQuery.setUserId(user.getId());
+            UserRole userRole = userRoleService.getOne(userRoleQuery.instanceQueryWrapper());
+            List<String> list = Arrays.asList(userRole.getRoleIds().split(","));
+            List<String> menuIds = roleMenuService.findMenuIdsByRoleIds(CollectionUtil.stringToLong(list));
+            List<MenuTreeVO> menuTreeVOList = menuService.findMenuTreeVOByIds(CollectionUtil.stringToLong(menuIds));
+            log.info("{}", menuTreeVOList);
+            resultVO.setResult(menuTreeVOList);
         }
 
         return resultVO;
