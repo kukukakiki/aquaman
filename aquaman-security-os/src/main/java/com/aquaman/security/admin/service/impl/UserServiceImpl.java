@@ -7,12 +7,14 @@ import com.aquaman.security.admin.service.IUserService;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -52,5 +54,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public void updateLoginTime(Long id) {
         userMapper.updateLoginTime(id);
+    }
+
+    @Override
+    public IPage<User> findUserByDeptId(Long deptId) {
+        Assert.notNull(deptId, "部门ID不能为空");
+        UserQuery query = new UserQuery();
+        query.setDeptId(deptId);
+        return userMapper.findUserByDeptId(query);
     }
 }
