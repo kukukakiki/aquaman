@@ -24,6 +24,7 @@ SOFTWARE.
 package com.aquaman.security.admin.exception;
 
 import com.aquaman.security.admin.entity.vo.ResultVO;
+import lombok.Data;
 
 /**
  * 基本异常对象
@@ -32,17 +33,10 @@ import com.aquaman.security.admin.entity.vo.ResultVO;
  * @version 2019/2/28
  * @since 2019/2/28
  */
+@Data
 public class AquamanBasicException extends RuntimeException {
 
     private ResultVO resultVO;
-
-    public ResultVO getResultVO() {
-        return resultVO;
-    }
-
-    public void setResultVO(ResultVO resultVO) {
-        this.resultVO = resultVO;
-    }
 
     public AquamanBasicException(ResultVO resultVO) {
         this.resultVO = resultVO;
