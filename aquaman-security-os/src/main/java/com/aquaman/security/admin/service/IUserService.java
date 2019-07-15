@@ -4,6 +4,7 @@ import com.aquaman.security.admin.entity.domain.User;
 import com.aquaman.security.admin.entity.query.UserQuery;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -42,4 +43,11 @@ public interface IUserService extends IService<User>, UserDetailsService {
      * @param id
      */
     void updateLoginTime(Long id);
+
+    /**
+     * 根据部门ID分页查询用户信息
+     * @param deptId
+     * @return
+     */
+    IPage<User> findUserByDeptId(Long deptId);
 }
