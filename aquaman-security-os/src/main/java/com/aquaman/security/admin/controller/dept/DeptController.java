@@ -4,6 +4,7 @@ package com.aquaman.security.admin.controller.dept;
 import com.aquaman.security.admin.controller.base.BaseController;
 import com.aquaman.security.admin.entity.domain.Dept;
 import com.aquaman.security.admin.entity.vo.DeptVO;
+import com.aquaman.security.admin.entity.vo.MenuTreeVO;
 import com.aquaman.security.admin.entity.vo.ResultVO;
 import com.aquaman.security.admin.service.IDeptService;
 import com.aquaman.security.common.enums.ResultCodeEnum;
@@ -31,36 +32,29 @@ public class DeptController extends BaseController {
 
     @GetMapping("/all")
     public ResultVO<List<DeptVO>> getAllByDeptTree() {
-        try {
-            List<DeptVO> items = deptService.findDeptTreeVOByRoot();
-            ResultVO<List<DeptVO>> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, items);
-            return resultVO;
-        } catch (Exception e) {
-            log.error("参数信息：{}；错误信息：{}", null, e.getMessage());
-            return error(ResultCodeEnum.DEPT_TREE_GET_ALL_ERROR);
-        }
+        List<DeptVO> items = deptService.findDeptTreeVOByRoot();
+        ResultVO<List<DeptVO>> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, items);
+        return resultVO;
+    }
+
+    @GetMapping("/{id:\\d+}")
+    public ResultVO<Dept> get(@PathVariable Long id) {
+        Dept dept = deptService.getById(id);
+        // 组装成功信息
+        ResultVO<Dept> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, dept);
+        return resultVO;
     }
 
     @PostMapping
     public ResultVO save(Dept dept) {
-        try {
-            deptService.save(dept);
-            return success();
-        } catch (Exception e) {
-            log.error("参数信息：{}；错误信息：{}", dept, e.getMessage());
-            return error(ResultCodeEnum.DEPT_SAVE_ERROR);
-        }
+        deptService.save(dept);
+        return success();
     }
 
     @PutMapping("/{id:\\d+}")
     public ResultVO update(@PathVariable Long id, Dept dept) {
-        try {
-            dept.setId(id);
-            deptService.updateById(dept);
-            return success();
-        } catch (Exception e) {
-            log.error("参数信息：{}；错误信息：{}", dept, e.getMessage());
-            return error(ResultCodeEnum.DEPT_UPDATE_ERROR);
-        }
+        dept.setId(id);
+        deptService.updateById(dept);
+        return success();
     }
 }
