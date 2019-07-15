@@ -81,5 +81,16 @@
 			<artifactId>druid-spring-boot-starter</artifactId>
 			<version>${druid-version}</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.axonframework/axon-spring-boot-autoconfigure -->
+		<dependency>
+			<groupId>org.axonframework</groupId>
+			<artifactId>axon-spring-boot-autoconfigure</artifactId>
+			<version>3.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.lmax</groupId>
+			<artifactId>disruptor</artifactId>
+			<version>3.4.2</version>
+		</dependency>
 	</dependencies>
 </project>

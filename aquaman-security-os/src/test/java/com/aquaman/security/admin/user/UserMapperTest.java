@@ -38,7 +38,7 @@ public class UserMapperTest {
     private IUserService userService;
 
     @Test
-    public void save() {
+    public void testSave() {
         User user = new User();
         user.setAccount("");
         user.setPassword("123456");
@@ -47,7 +47,7 @@ public class UserMapperTest {
     }
 
     @Test
-    public void update() {
+    public void testUpdate() {
         User updateUser = new User();
         updateUser.setId(31L);
         updateUser.setNickName("一剪梅");
@@ -56,7 +56,7 @@ public class UserMapperTest {
     }
 
     @Test
-    public void findUserByPageTest(){
+    public void testFindUserByPage(){
         System.out.println("----- baseMapper 自带分页 start ------");
         Page<User> page = new Page<User>(1, 5);
         IPage<User> userIPage = userMapper.selectPage(page, new QueryWrapper<User>().eq("account", "test3"));
@@ -81,7 +81,13 @@ public class UserMapperTest {
     }
 
     @Test
-    public void defaultPage() throws JsonProcessingException {
+    public void testFindUserByDeptId() {
+        IPage<User> page = userService.findUserByDeptId(1L);
+        System.out.println(page);
+    }
+
+    @Test
+    public void testDefaultPage() throws JsonProcessingException {
 
         UserQuery query =new UserQuery();
         query.setAccount("");
