@@ -125,7 +125,7 @@ export default {
       this.$router.push({ path: '/systemMessage/adminAdd' })
     },
     updateHandler() {
-      this.$router.push({ path: '/systemMessage/adminUpdate' })
+      this.$router.push({ path: '/systemMessage/adminUpdate', query: { id: this.selectId }})
     }
   }
 }
