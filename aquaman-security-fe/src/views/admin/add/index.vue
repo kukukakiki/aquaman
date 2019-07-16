@@ -1,9 +1,9 @@
 <template>
   <div class="app-container">
     <el-button-group style="margin-bottom:15px;">
-      <el-button type="primary" @click="submitHandler">提交</el-button>
-      <el-button @click="resetForm">重置</el-button>
-      <el-button @click="goBack">返回</el-button>
+      <el-button :loading="submitLoading" type="primary" @click="submitHandler">提交</el-button>
+      <el-button :loading="submitLoading" @click="resetForm">重置</el-button>
+      <el-button :loading="submitLoading" @click="goBack">返回</el-button>
     </el-button-group>
     <el-tabs v-model="defaultTabName" type="border-card">
       <el-tab-pane name="first">
@@ -75,6 +75,7 @@ export default {
     return {
       defaultTabName: 'first',
       activeNames: ['1', '2'],
+      submitLoading: false,
       form: {
         account: '',
         password: '',
@@ -103,9 +104,13 @@ export default {
     submitHandler() {
       this.$refs['form'].validate(validate => {
         if (validate) {
-          this.form.menuIds = this.keys.join(',')
+          this.submitLoading = true
           save('user', this.form).then(response => {
+            this.submitLoading = false
             resultSuccessShowMsg(response)
+          }).catch(error => {
+            this.submitLoading = false
+            console.log(error)
           })
         }
       })
@@ -113,7 +118,9 @@ export default {
     resetForm() {
       this.$refs['form'].resetFields()
     },
-    goBack() {}
+    goBack() {
+      this.$router.push({ path: '/systemMessage/admin' })
+    }
   }
 }
 </script>
