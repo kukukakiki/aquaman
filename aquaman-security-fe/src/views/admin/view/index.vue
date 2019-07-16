@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
-    <el-form :inline="true" :model="query" class="demo-form-inline">
-    </el-form>
+    <!-- <el-form :inline="true" :model="query" class="demo-form-inline">
+    </el-form> -->
   </div>
 </template>
 
