@@ -98,6 +98,18 @@ public class UserController extends BaseController {
     }
 
     /**
+     * 根据ID获取用户详情
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id:\\d+}")
+    public ResultVO getDetail(@PathVariable Long id){
+        User user = userService.getById(id);
+        ResultVO<User> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, user);
+        return resultVO;
+    }
+
+    /**
      * 根据当前登陆用户获取菜单
      * @return
      */
