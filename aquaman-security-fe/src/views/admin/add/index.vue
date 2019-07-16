@@ -1,49 +1,64 @@
 <template>
   <div class="app-container">
-    <el-form ref="form" :rules="rules" :model="form" label-width="80px">
-      <el-card class="box-card">
-        <div slot="header" class="clearfix">
-          <span>基本信息</span>
-          <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
-        </div>
-        <div class="text item">
-          <el-form-item label="登陆账户" prop="account">
-            <el-input v-model="form.account" />
-          </el-form-item>
-          <el-form-item label="登陆密码" prop="password">
-            <el-input v-model="form.password" />
-          </el-form-item>
-          <el-form-item label="用户状态" prop="status">
-            <aq-select :business-type="'status'" :bind-value.sync="form.status" style="width: 100%" />
-          </el-form-item>
-          <el-form-item label="用户昵称">
-            <el-input v-model="form.nickName" />
-          </el-form-item>
-          <el-form-item label="注册类型" prop="type">
-            <aq-select :business-type="'register'" :bind-value.sync="form.type" style="width: 100%" />
-          </el-form-item>
-        </div>
-      </el-card>
-      <el-card class="box-card" style="margin-top: 10px;">
-        <div slot="header" class="clearfix">
-          <span>联系信息</span>
-          <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
-        </div>
-        <div class="text item">
-          <el-form-item label="用户手机">
-            <el-input v-model="form.mobile" />
-          </el-form-item>
-          <el-form-item label="用户邮箱">
-            <el-input v-model="form.email" />
-          </el-form-item>
-        </div>
-      </el-card>
-      <el-form-item>
-        <el-button type="primary" @click="submitHandler">提交</el-button>
-        <el-button @click="resetForm">重置</el-button>
-        <el-button @click="goBack">返回</el-button>
-      </el-form-item>
-    </el-form>
+    <el-button-group style="margin-bottom:15px;">
+      <el-button type="primary" @click="submitHandler">提交</el-button>
+      <el-button @click="resetForm">重置</el-button>
+      <el-button @click="goBack">返回</el-button>
+    </el-button-group>
+    <el-tabs v-model="defaultTabName" type="border-card">
+      <el-tab-pane name="first">
+        <span slot="label">
+          管理员详情
+        </span>
+        <el-form ref="form" :rules="rules" :model="form" label-width="80px">
+          <el-collapse v-model="activeNames">
+            <el-collapse-item title="账户信息" name="1">
+              <el-row class="my_row">
+                <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
+                  <el-form-item label="登陆账户" prop="account">
+                    <el-input v-model="form.account" />
+                  </el-form-item>
+                </el-col>
+                <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
+                  <el-form-item label="登陆密码" prop="password">
+                    <el-input v-model="form.password" />
+                  </el-form-item>
+                </el-col>
+                <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
+                  <el-form-item label="用户状态" prop="status">
+                    <aq-select :business-type="'status'" :bind-value.sync="form.status" style="width: 100%" />
+                  </el-form-item>
+                </el-col>
+                <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
+                  <el-form-item label="用户昵称">
+                    <el-input v-model="form.nickName" />
+                  </el-form-item>
+                </el-col>
+                <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
+                  <el-form-item label="注册类型" prop="type">
+                    <aq-select :business-type="'register'" :bind-value.sync="form.type" style="width: 100%" />
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </el-collapse-item>
+            <el-collapse-item title="联系信息" name="2">
+              <el-row class="my_row">
+                <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
+                  <el-form-item label="用户手机">
+                    <el-input v-model="form.mobile" />
+                  </el-form-item>
+                </el-col>
+                <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
+                  <el-form-item label="用户邮箱">
+                    <el-input v-model="form.email" />
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </el-collapse-item>
+          </el-collapse>
+        </el-form>
+      </el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 
@@ -58,6 +73,8 @@ export default {
   },
   data() {
     return {
+      defaultTabName: 'first',
+      activeNames: ['1', '2'],
       form: {
         account: '',
         password: '',

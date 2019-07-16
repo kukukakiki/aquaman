@@ -76,3 +76,16 @@ a:hover {
 .app-container {
   padding: 20px;
 }
+
+.el-collapse-item__header {
+  color: #409eff;
+  font-size: 15px;
+}
+.my_row .el-col .el-form-item {
+  height: 33px;
+}
+.el-collapse-item {
+  div[role='tab'] {
+    overflow: hidden;
+  }
+}
