@@ -49,10 +49,24 @@ export function options() {
  * 通过key值获取label值
  * @param {*} key
  */
-export function getLabel(key) {
-  const label = options().status.filter(item => item.value === key)
+export function getLabel(val, key) {
+  var label = ''
+  switch (val) {
+    case 'status':
+      label = options().status.filter(item => item.value === key)
+      break
+    case 'type':
+      label = options().type.filter(item => item.value === key)
+      break
+    case 'display':
+      label = options().display.filter(item => item.value === key)
+      break
+    case 'register':
+      label = options().register.filter(item => item.value === key)
+      break
+  }
   if (isCollectionNotEmpty(label)) {
     return label[0].label
   }
-  return ''
+  return label
 }

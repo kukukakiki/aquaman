@@ -24,7 +24,7 @@
                 </el-col>
                 <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
                   <el-form-item label="角色状态：" prop="status">
-                    {{ getLabel(form.status) }}
+                    {{ getLabel('status', form.status) }}
                   </el-form-item>
                 </el-col>
               </el-row>

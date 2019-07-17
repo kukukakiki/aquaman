@@ -47,8 +47,10 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-button v-if="showOperatorButton" type="primary" @click="submitHandler">{{ operatorButtonName }}</el-button>
-            <el-button v-if="showOperatorButton" @click="resetForm">重置</el-button>
+            <el-button-group>
+              <el-button v-if="showOperatorButton" type="primary" @click="submitHandler">{{ operatorButtonName }}</el-button>
+              <el-button v-if="showOperatorButton" @click="resetForm">重置</el-button>
+            </el-button-group>
           </el-form-item>
         </el-form>
       </el-col>

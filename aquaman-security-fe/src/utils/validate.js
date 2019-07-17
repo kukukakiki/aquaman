@@ -20,7 +20,7 @@ export function isNotEmpty(val) {
  * @param {*} val
  */
 export function isCollectionNotEmpty(val) {
-  return val !== undefined && val !== null && val.length > 0
+  return val !== undefined && val !== null && val !== '' && val.length > 0
 }
 
 /**

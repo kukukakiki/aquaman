@@ -13,9 +13,9 @@
         </el-col>
         <el-col :span="16">
           <el-button-group style="float:right">
-            <el-button type="primary" icon="el-icon-search" @click="fetchData" />
-            <el-button type="primary" icon="el-icon-more" @click="showMoreQuery" />
-            <el-button type="primary" icon="el-icon-refresh" @click="resetQuery" />
+            <el-button type="primary" icon="el-icon-search" title="查询列表" @click="fetchData" />
+            <el-button type="primary" icon="el-icon-more" title="更多条件" @click="showMoreQuery" />
+            <el-button type="primary" icon="el-icon-refresh" title="清空条件" @click="resetQuery" />
           </el-button-group>
           <el-form-item label="角色编码" style="float:right" prop="code">
             <el-input v-model="query.code" placeholder="角色编码" />
