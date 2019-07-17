@@ -24,7 +24,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/role/menu")
+@RequestMapping("/role_menu")
 public class RoleMenuController extends BaseController {
 
     @Autowired
@@ -42,6 +42,13 @@ public class RoleMenuController extends BaseController {
         return resultVO;
     }
 
+    @GetMapping("/role_id/{roleId:\\d+}")
+    public ResultVO<RoleMenu> getByRoleId(@PathVariable Long roleId) {
+        RoleMenu roleMenu = roleMenuService.findMenuIdsByRoleId(roleId);
+        ResultVO<RoleMenu> resultVO = new ResultVO<>(ResultCodeEnum.SUCCESS, roleMenu);
+        return resultVO;
+    }
+
     @PostMapping
     public ResultVO save(RoleMenu roleMenu) {
         boolean isSuccess = roleMenuService.save(roleMenu);
@@ -54,7 +61,7 @@ public class RoleMenuController extends BaseController {
 
     @PutMapping("/{id:\\d+}")
     public ResultVO update(RoleMenu roleMenu) {
-        boolean isSuccess = roleMenuService.updateById(roleMenu);
+        boolean isSuccess = roleMenuService.saveOrUpdate(roleMenu);
         if(!isSuccess){
             log.warn("修改用户失败，执行返回结果：", isSuccess);
             return unknownError();

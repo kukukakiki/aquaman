@@ -8,11 +8,19 @@ export function isExternal(path) {
 }
 
 /**
- * 非空校验
+ * 非空字符串校验
  * @param {*} val
  */
 export function isNotEmpty(val) {
   return val !== undefined && val !== null && val !== ''
+}
+
+/**
+ * 非空数字校验
+ * @param {*} val
+ */
+export function isCollectionNotEmpty(val) {
+  return val !== undefined && val !== null && val.length > 0
 }
 
 /**

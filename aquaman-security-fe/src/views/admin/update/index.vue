@@ -10,7 +10,7 @@
         <span slot="label">
           管理员详情
         </span>
-        <el-form ref="form" :rules="rules" :model="form" label-width="80px">
+        <el-form ref="form" :rules="rules" :model="form" label-width="120px">
           <el-collapse v-model="activeNames">
             <el-collapse-item title="账户信息" name="1">
               <el-row class="my_row">
@@ -30,7 +30,7 @@
                   </el-form-item>
                 </el-col>
                 <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
-                  <el-form-item label="用户昵称">
+                  <el-form-item label="用户昵称" prop="nickName">
                     <el-input v-model="form.nickName" />
                   </el-form-item>
                 </el-col>
@@ -44,12 +44,12 @@
             <el-collapse-item title="联系信息" name="2">
               <el-row class="my_row">
                 <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
-                  <el-form-item label="用户手机">
+                  <el-form-item label="用户手机" prop="mobile">
                     <el-input v-model="form.mobile" />
                   </el-form-item>
                 </el-col>
                 <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
-                  <el-form-item label="用户邮箱">
+                  <el-form-item label="用户邮箱" prop="emial">
                     <el-input v-model="form.email" />
                   </el-form-item>
                 </el-col>

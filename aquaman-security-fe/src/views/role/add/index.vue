@@ -10,7 +10,7 @@
         <span slot="label">
           角色详情
         </span>
-        <el-form ref="form" :rules="rules" :model="form" label-width="80px">
+        <el-form ref="form" :rules="rules" :model="form" label-width="120px">
           <el-collapse v-model="activeNames">
             <el-collapse-item title="基本信息" name="1">
               <el-row class="my_row">
@@ -32,7 +32,7 @@
               </el-row>
               <el-row class="my_row">
                 <el-col :span="24">
-                  <el-form-item label="备注">
+                  <el-form-item label="备注" prop="remarks">
                     <el-input v-model="form.remarks" type="textarea" />
                   </el-form-item>
                 </el-col>
@@ -95,7 +95,9 @@ export default {
     resetForm() {
       this.$refs['form'].resetFields()
     },
-    goBack() {}
+    goBack() {
+      this.$router.push({ path: '/systemMessage/role' })
+    }
   }
 }
 </script>

@@ -20,4 +20,10 @@ public interface IRoleMenuService extends IService<RoleMenu> {
      * @param roleIds
      */
     List<String> findMenuIdsByRoleIds(List<Long> roleIds);
+
+    /**
+     * 通过roleId查询菜单
+     * @param roleId
+     */
+    RoleMenu findMenuIdsByRoleId(Long roleId);
 }

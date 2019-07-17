@@ -1,22 +1,38 @@
 <template>
   <div class="app-container">
-    <el-form :inline="true" :model="query" class="demo-form-inline">
-      <el-form-item label="角色编码">
-        <el-input v-model="query.code" placeholder="用户名" />
-      </el-form-item>
-      <el-form-item label="角色状态">
-        <el-select v-model="query.status" placeholder="选择状态">
-          <el-option label="启用" value="START" />
-          <el-option label="停用" value="STOP" />
-        </el-select>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="fetchData">查询</el-button>
-        <el-button v-show_button="'roleAdd'" type="primary" @click.stop="addHandler">新增</el-button>
-        <el-button v-show_button="'roleUpdate'" :disabled="!showButton" type="primary" @click.stop="updateHandler">修改</el-button>
-        <!--<el-button v-show_button="'roleAuthorization'" :disabled="!showButton" type="primary" @click.stop="authoHandler">授权</el-button>-->
-        <el-button :disabled="!showButton" type="primary" @click.stop="deleteHandler">删除</el-button>
-      </el-form-item>
+    <el-form ref="queryForm" :inline="true" :model="query" class="demo-form-inline">
+      <el-row>
+        <el-col :span="8">
+          <el-button-group>
+            <el-button v-show_button="'roleAdd'" type="primary" @click.stop="addHandler">新增</el-button>
+            <el-button v-show_button="'roleView'" :disabled="!showButton" type="primary" @click.stop="viewHandler">查阅</el-button>
+            <el-button v-show_button="'roleUpdate'" :disabled="!showButton" type="primary" @click.stop="updateHandler">修改</el-button>
+            <el-button v-show_button="'roleAuthorization'" :disabled="!showButton" type="primary" @click.stop="authoHandler">授权</el-button>
+            <el-button :disabled="!showButton" type="primary" @click.stop="deleteHandler">删除</el-button>
+          </el-button-group>
+        </el-col>
+        <el-col :span="16">
+          <el-button-group style="float:right">
+            <el-button type="primary" icon="el-icon-search" @click="fetchData" />
+            <el-button type="primary" icon="el-icon-more" @click="showMoreQuery" />
+            <el-button type="primary" icon="el-icon-refresh" @click="resetQuery" />
+          </el-button-group>
+          <el-form-item label="角色编码" style="float:right" prop="code">
+            <el-input v-model="query.code" placeholder="角色编码" />
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <transition name="slide-fade">
+        <div v-if="hiddenQuery">
+          <el-row class="my_row">
+            <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
+              <el-form-item label="角色名称" prop="name">
+                <el-input v-model="query.name" placeholder="角色名称" />
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </div>
+      </transition>
     </el-form>
     <el-table :data="items" border style="width: 100%" highlight-current-row @current-change="handleCurrentChange">
       <el-table-column prop="code" label="编码" />
@@ -29,28 +45,53 @@
       </el-table-column>
     </el-table>
     <pagination :total="query.total" :page.sync="query.current" :limit.sync="query.size" @pagination="fetchData" />
+
+    <!-- 角色授权Dialog -->
+    <el-dialog
+      :visible.sync="dialogVisible"
+      :title="setRoleMenuTitle"
+      width="50%">
+      <menu-tree ref="menuTree" :keys.sync="roleMenuIds" />
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="setRoleMenuHandler">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { queryByPage } from '@/api/common'
+import { queryByPage, update } from '@/api/common'
+import { queryRoleMenuDetailByRoleId } from '@/api/role'
 import Pagination from '@/components/Pagination'
+import menuTree from '@/components/Business/MenuTree'
+import { resultSuccessShowMsg } from '@/utils/validate'
 
 export default {
   components: {
-    Pagination
+    Pagination,
+    menuTree
   },
   data() {
     return {
+      roleMenuIds: [],
+      setRoleMenuTitle: '',
       showButton: false, // 显示执行按钮
+      hiddenQuery: false,
       items: [], // 列表集合
       selectId: '', // 选中ID
+      dialogVisible: false,
       query: { // 列表查询对象
         total: 0, // 总条数
         size: 5, // 每页条数
         current: 1, // 当前页码数
         account: '', // 用户名
         status: '' // 用户状态
+      },
+      roleMenu: {
+        id: '',
+        roleId: '',
+        menuIds: ''
       }
     }
   },
@@ -58,6 +99,16 @@ export default {
     this.fetchData()
   },
   methods: {
+    showMoreQuery() {
+      if (this.hiddenQuery === true) {
+        this.hiddenQuery = false
+      } else if (this.hiddenQuery === false) {
+        this.hiddenQuery = true
+      }
+    },
+    resetQuery() {
+      this.$refs['queryForm'].resetFields()
+    },
     /**
      * 获取数据
      */
@@ -84,6 +135,7 @@ export default {
       if (val) {
         this.showButton = true
         this.selectId = val.id
+        this.setRoleMenuTitle = '【' + val.name + '】角色菜单授权'
       } else {
         this.showButton = false
       }
@@ -116,6 +168,35 @@ export default {
       this.$router.push({
         path: '/systemMessage/roleUpdate',
         query: { id: this.selectId }
+      })
+    },
+    viewHandler() {
+      this.$router.push({
+        path: '/systemMessage/roleView',
+        query: { id: this.selectId }
+      })
+    },
+    authoHandler() {
+      this.roleMenuIds = []
+      this.dialogVisible = true
+      queryRoleMenuDetailByRoleId(this.selectId).then(response => {
+        this.roleMenu = response.result
+        if (response.result.menuIds !== undefined && response.result.menuIds !== null) {
+          this.roleMenuIds = response.result.menuIds.split(',')
+        }
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+    setRoleMenuHandler() {
+      this.roleMenu.menuIds = this.roleMenuIds.join(',')
+      update('role_menu', this.roleMenu).then(response => {
+        resultSuccessShowMsg(response)
+        if (response.code === '0000') {
+          this.dialogVisible = false
+        }
+      }).catch(error => {
+        console.log(error)
       })
     }
   }

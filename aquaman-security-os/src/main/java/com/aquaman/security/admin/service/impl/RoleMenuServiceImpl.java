@@ -49,4 +49,12 @@ public class RoleMenuServiceImpl extends ServiceImpl<RoleMenuMapper, RoleMenu> i
         log.warn("角色集{}，查询菜单为空", roleIds);
         return null;
     }
+
+    @Override
+    public RoleMenu findMenuIdsByRoleId(Long roleId) {
+        RoleMenuQuery query = new RoleMenuQuery();
+        query.setRoleId(roleId);
+        RoleMenu roleMenu = roleMenuMapper.selectOne(query.instanceQueryWrapper());
+        return roleMenu;
+    }
 }

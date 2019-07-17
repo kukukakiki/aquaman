@@ -89,3 +89,13 @@ a:hover {
     overflow: hidden;
   }
 }
+
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+  transition: all 0.8s;
+}
+.slide-fade-enter,
+.slide-fade-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}

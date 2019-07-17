@@ -25,7 +25,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/user/role")
+@RequestMapping("/user_role")
 public class UserRoleController extends BaseController {
 
     @Autowired

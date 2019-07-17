@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2019-05-05
  */
 @RestController
-@RequestMapping("/dept/user")
+@RequestMapping("/dept_user")
 public class DeptUserController {
 
 }
