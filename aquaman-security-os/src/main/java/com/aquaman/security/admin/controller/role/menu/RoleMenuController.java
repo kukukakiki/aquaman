@@ -53,8 +53,7 @@ public class RoleMenuController extends BaseController {
     }
 
     @PutMapping("/{id:\\d+}")
-    public ResultVO update(@PathVariable Long id, RoleMenu roleMenu) {
-        roleMenu.setId(id);
+    public ResultVO update(RoleMenu roleMenu) {
         boolean isSuccess = roleMenuService.updateById(roleMenu);
         if(!isSuccess){
             log.warn("修改用户失败，执行返回结果：", isSuccess);

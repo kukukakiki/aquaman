@@ -1,47 +1,70 @@
 <template>
   <div class="app-container">
-    <el-form ref="form" :rules="rules" :model="form" label-width="80px">
-      <el-form-item label="角色名称" prop="name">
-        <el-input v-model="form.name" />
-      </el-form-item>
-      <el-form-item label="角色编码" prop="code">
-        <el-input v-model="form.code" />
-      </el-form-item>
-      <el-form-item label="角色状态" prop="status">
-        <aq-select :business-type="'status'" :bind-value.sync="form.status" style="width: 100%" />
-      </el-form-item>
-      <el-form-item label="分配权限">
-        <menu-tree :keys.sync="keys" />
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="submitHandler">提交</el-button>
-        <el-button @click="resetForm">重置</el-button>
-        <el-button @click="goBack">返回</el-button>
-      </el-form-item>
-    </el-form>
+    <el-button-group style="margin-bottom:15px;">
+      <el-button type="primary" @click="submitHandler">提交</el-button>
+      <el-button @click="resetForm">重置</el-button>
+      <el-button @click="goBack">返回</el-button>
+    </el-button-group>
+    <el-tabs v-model="defaultTabName" type="border-card">
+      <el-tab-pane name="first">
+        <span slot="label">
+          角色详情
+        </span>
+        <el-form ref="form" :rules="rules" :model="form" label-width="80px">
+          <el-collapse v-model="activeNames">
+            <el-collapse-item title="基本信息" name="1">
+              <el-row class="my_row">
+                <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
+                  <el-form-item label="角色名称" prop="name">
+                    <el-input v-model="form.name" />
+                  </el-form-item>
+                </el-col>
+                <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
+                  <el-form-item label="角色编码" prop="code">
+                    <el-input v-model="form.code" />
+                  </el-form-item>
+                </el-col>
+                <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
+                  <el-form-item label="角色状态" prop="status">
+                    <aq-select :business-type="'status'" :bind-value.sync="form.status" style="width: 100%" />
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row class="my_row">
+                <el-col :span="24">
+                  <el-form-item label="备注">
+                    <el-input v-model="form.remarks" type="textarea" />
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </el-collapse-item>
+          </el-collapse>
+        </el-form>
+      </el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 
 <script>
 import aqSelect from '@/components/Element/Select'
-import menuTree from '@/components/Business/MenuTree'
 import { save } from '@/api/common'
 import { resultSuccessShowMsg } from '@/utils/validate'
 
 export default {
   components: {
-    aqSelect,
-    menuTree
+    aqSelect
   },
   data() {
     return {
+      defaultTabName: 'first',
+      activeNames: ['1'],
       keys: [],
       form: {
         id: '',
         name: '',
         code: '',
         status: '',
-        menuIds: ''
+        remarks: ''
       },
       rules: {
         name: [

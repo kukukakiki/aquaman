@@ -86,9 +86,9 @@ public class MenuController extends BaseController {
      */
     @GetMapping("/keyLevelToMap")
     public ResultVO<Map<String, Integer>> keyLevelToMap() {
-            Map<String, Integer> map = MenuTypeEnum.keyLevelToMap();
-            ResultVO<Map<String, Integer>> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, map);
-            return resultVO;
+        Map<String, Integer> map = MenuTypeEnum.keyLevelToMap();
+        ResultVO<Map<String, Integer>> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, map);
+        return resultVO;
     }
 
     /**
@@ -98,37 +98,25 @@ public class MenuController extends BaseController {
      */
     @PostMapping
     public ResultVO save(Menu menu) {
-        try {
-            boolean isSuccess = menuService.save(menu);
-            if (!isSuccess) {
-                return error(ResultCodeEnum.MENU_SAVE_ERROR);
-            }
-            return success();
-        } catch (Exception e) {
-            log.error("参数信息：{}；错误信息：{}", menu.toString(), e.getMessage());
+        boolean isSuccess = menuService.save(menu);
+        if (!isSuccess) {
             return error(ResultCodeEnum.MENU_SAVE_ERROR);
         }
+        return success();
     }
 
     /**
      * 修改
-     * @param id
      * @param menu
      * @return
      */
     @PutMapping("/{id:\\d+}")
-    public ResultVO update(@PathVariable Long id, Menu menu) {
-        try {
-            menu.setId(id);
-            boolean isSuccess = menuService.updateById(menu);
-            if (!isSuccess) {
-                return error(ResultCodeEnum.MENU_UPDATE_ERROR);
-            }
-            return success();
-        } catch (Exception e) {
-            log.error("参数信息：{}；错误信息：{}", menu.toString(), e.getMessage());
+    public ResultVO update(Menu menu) {
+        boolean isSuccess = menuService.updateById(menu);
+        if (!isSuccess) {
             return error(ResultCodeEnum.MENU_UPDATE_ERROR);
         }
+        return success();
     }
 
     /**
@@ -138,18 +126,13 @@ public class MenuController extends BaseController {
      */
     @DeleteMapping("/{id:\\d+}")
     public ResultVO delete(@PathVariable Long id) {
-        try {
-            Menu menu = new Menu();
-            menu.setId(id);
-            menu.setStatus(StatusEnum.STOP.getValue());
-            boolean isSuccess = menuService.updateById(menu);
-            if(!isSuccess){
-                return error(ResultCodeEnum.MENU_DELETE_ERROR);
-            }
-            return success();
-        } catch (Exception e) {
-            log.error("参数信息：{}；错误信息：{}", id, e.getMessage());
+        Menu menu = new Menu();
+        menu.setId(id);
+        menu.setStatus(StatusEnum.STOP.getValue());
+        boolean isSuccess = menuService.updateById(menu);
+        if(!isSuccess){
             return error(ResultCodeEnum.MENU_DELETE_ERROR);
         }
+        return success();
     }
 }

@@ -3,9 +3,11 @@
     <el-row>
       <el-col :span="6">
         <div style="padding-bottom: 5px;">
-          <el-button v-show_button="'menuAdd'" type="primary" @click.stop="addHandler">新增</el-button>
-          <el-button v-show_button="'menuUpdate'" :disabled="!showButton" type="primary" @click.stop="updateHandler">修改</el-button>
-          <el-button :disabled="!showButton" type="primary" @click.stop="deleteHandler">删除</el-button>
+          <el-button-group>
+            <el-button v-show_button="'menuAdd'" type="primary" @click.stop="addHandler">新增</el-button>
+            <el-button v-show_button="'menuUpdate'" :disabled="!showButton" type="primary" @click.stop="updateHandler">修改</el-button>
+            <el-button :disabled="!showButton" type="primary" @click.stop="deleteHandler">删除</el-button>
+          </el-button-group>
         </div>
         <el-input v-model="filterText" placeholder="输入关键字进行过滤" />
         <el-tree ref="menuTree" :data="items" :props="defaultTreeProps" :filter-node-method="filterNode" @node-click="handleNodeClick" />

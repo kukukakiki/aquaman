@@ -52,8 +52,7 @@ public class DeptController extends BaseController {
     }
 
     @PutMapping("/{id:\\d+}")
-    public ResultVO update(@PathVariable Long id, Dept dept) {
-        dept.setId(id);
+    public ResultVO update(Dept dept) {
         deptService.updateById(dept);
         return success();
     }
