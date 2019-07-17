@@ -6,3 +6,10 @@ export function queryRoleMenuDetailByRoleId(id) {
     method: 'get'
   })
 }
+
+export function queryRoleByAll() {
+  return request({
+    url: '/role/all',
+    method: 'get'
+  })
+}

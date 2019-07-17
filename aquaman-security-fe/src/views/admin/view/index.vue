@@ -114,7 +114,9 @@ export default {
         this.loading = false
       })
     },
-    goBack() {}
+    goBack() {
+      this.$router.push({ path: '/systemMessage/admin' })
+    }
   }
 }
 </script>

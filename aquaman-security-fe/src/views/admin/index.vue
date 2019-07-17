@@ -38,8 +38,9 @@
     </el-form>
     <el-table v-loading="loading" :data="items" border style="width: 100%" highlight-current-row @current-change="handleCurrentChange">
       <el-table-column prop="account" label="用户名" />
+      <el-table-column prop="name" label="姓名" />
       <el-table-column prop="nickName" label="昵称" />
-      <el-table-column prop="email" label="昵称" />
+      <el-table-column prop="email" label="邮箱" />
       <el-table-column prop="gmtCreate" label="创建时间">
         <template slot-scope="scope">
           <i class="el-icon-time" />
@@ -52,7 +53,8 @@
     <el-dialog
       :visible.sync="dialogVisible"
       :title="setRoleUserTitle"
-      width="50%">
+      width="70%">
+      <check-box-role />
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="submitUserRolesHandler">确 定</el-button>
@@ -63,11 +65,14 @@
 
 <script>
 import { queryByPage } from '@/api/common'
+import { queryRoleByAll } from '@/api/role'
 import Pagination from '@/components/Pagination'
+import CheckBoxRole from '@/components/Business/Role/CheckBoxRole'
 
 export default {
   components: {
-    Pagination
+    Pagination,
+    CheckBoxRole
   },
   data() {
     return {
@@ -166,6 +171,9 @@ export default {
     },
     setRolesHandler() {
       this.dialogVisible = true
+      queryRoleByAll().then(response => {
+        console.log(response.result)
+      })
     },
     submitUserRolesHandler() {
     }
