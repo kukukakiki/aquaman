@@ -20,6 +20,11 @@
                   </el-form-item>
                 </el-col>
                 <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
+                  <el-form-item label="用户姓名" prop="name">
+                    <el-input v-model="form.name" />
+                  </el-form-item>
+                </el-col>
+                <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
                   <el-form-item label="登陆密码" prop="password">
                     <el-input v-model="form.password" />
                   </el-form-item>
@@ -81,6 +86,7 @@ export default {
         account: '',
         password: '',
         status: '',
+        name: '',
         type: '',
         nickName: '',
         mobile: '',

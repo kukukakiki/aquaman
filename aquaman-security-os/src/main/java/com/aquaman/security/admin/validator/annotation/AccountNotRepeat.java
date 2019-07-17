@@ -32,6 +32,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import com.aquaman.security.common.enums.ResultCodeEnum;
+
 /**
  * 用户名不能重复
  * @author 创建者 wei.wang
@@ -45,7 +47,7 @@ import java.lang.annotation.Target;
 public @interface AccountNotRepeat {
 
     /**
-     * 返回异常code,具体查阅ResultCodeEnum
+     * 返回异常code,具体查阅{@link ResultCodeEnum}
      * @return
      */
     String message() default "1001";

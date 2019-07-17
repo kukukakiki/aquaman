@@ -13,22 +13,27 @@
             <el-collapse-item title="账户信息" name="1">
               <el-row class="my_row">
                 <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
-                  <el-form-item label="登陆账户">
+                  <el-form-item label="登陆账户：">
                     {{ form.account }}
                   </el-form-item>
                 </el-col>
                 <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
-                  <el-form-item label="用户状态" prop="status">
+                  <el-form-item label="用户姓名：">
+                    {{ form.name }}
+                  </el-form-item>
+                </el-col>
+                <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
+                  <el-form-item label="用户状态：" prop="status">
                     {{ getLabel('status', form.status) }}
                   </el-form-item>
                 </el-col>
                 <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
-                  <el-form-item label="用户昵称">
+                  <el-form-item label="用户昵称：">
                     {{ form.nickName }}
                   </el-form-item>
                 </el-col>
                 <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
-                  <el-form-item label="注册类型">
+                  <el-form-item label="注册类型：">
                     {{ getLabel('register', form.type) }}
                   </el-form-item>
                 </el-col>
@@ -37,12 +42,12 @@
             <el-collapse-item title="联系信息" name="2">
               <el-row class="my_row">
                 <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
-                  <el-form-item label="用户手机" prop="mobile">
+                  <el-form-item label="用户手机：" prop="mobile">
                     {{ form.mobile }}
                   </el-form-item>
                 </el-col>
                 <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
-                  <el-form-item label="用户邮箱" prop="emial">
+                  <el-form-item label="用户邮箱：" prop="emial">
                     {{ form.email }}
                   </el-form-item>
                 </el-col>

@@ -7,7 +7,7 @@
             <el-button v-show_button="'adminAdd'" type="primary" @click.stop="addHandler">新增</el-button>
             <el-button v-show_button="'adminView'" :disabled="!showButton" type="primary" @click="viewHandler">查阅</el-button>
             <el-button v-show_button="'adminUpdate'" :disabled="!showButton" type="primary" @click.stop="updateHandler">修改</el-button>
-            <el-button v-show_button="'setRole'" :disabled="!showButton" type="primary" @click.stop="toSetRoles">角色</el-button>
+            <el-button v-show_button="'setRole'" :disabled="!showButton" type="primary" @click.stop="setRolesHandler">角色</el-button>
           </el-button-group>
         </el-col>
         <el-col :span="16">
@@ -48,6 +48,16 @@
       </el-table-column>
     </el-table>
     <pagination :total="query.total" :page.sync="query.current" :limit.sync="query.size" @pagination="fetchData" />
+
+    <el-dialog
+      :visible.sync="dialogVisible"
+      :title="setRoleUserTitle"
+      width="50%">
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="submitUserRolesHandler">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -64,6 +74,8 @@ export default {
       hiddenQuery: false,
       showButton: false, // 显示执行按钮
       loading: false, // 页面loading标示
+      setRoleUserTitle: '',
+      dialogVisible: false,
       query: { // 列表查询对象
         total: 0, // 总条数
         size: 5, // 每页条数
@@ -117,6 +129,7 @@ export default {
       if (val) {
         this.showButton = true
         this.selectId = val.id
+        this.setRoleUserTitle = '【' + val.name + '】分配角色'
       } else {
         this.showButton = false
       }
@@ -150,6 +163,11 @@ export default {
     },
     viewHandler() {
       this.$router.push({ path: '/systemMessage/adminView', query: { id: this.selectId }})
+    },
+    setRolesHandler() {
+      this.dialogVisible = true
+    },
+    submitUserRolesHandler() {
     }
   }
 }

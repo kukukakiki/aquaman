@@ -38,8 +38,13 @@ public class User implements UserDetails, Serializable {
     /**
      * 账号
      */
-    @AccountNotRepeat
+    // TODO @AccountNotRepeat 由于更新也会校验重复,导致更新失败
     private String account;
+
+    /**
+     * 用户姓名
+     */
+    private String name;
 
     /**
      * 密码
@@ -103,7 +108,8 @@ public class User implements UserDetails, Serializable {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return AuthorityUtils.commaSeparatedStringToAuthorityList("admin");
+        //TODO AuthorityUtils.commaSeparatedStringToAuthorityList("admin");无法获取到值,目前先屏蔽掉
+        return null;
     }
 
     @Override

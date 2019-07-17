@@ -54,6 +54,11 @@ public class UserQuery extends PageQuery<User> implements Serializable {
      */
     private String account;
 
+    /**
+     * 用户姓名
+     */
+    private String name;
+
 
     /**
      * 昵称
