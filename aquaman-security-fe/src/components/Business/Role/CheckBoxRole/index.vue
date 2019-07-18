@@ -18,8 +18,8 @@
         </el-button-group>
       </el-row>
     </el-form>
-    <el-table :data="items" border style="width: 100%" highlight-current-row @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" />
+    <el-table ref="multipleTable" :data="items" row-key="id" border style="width: 100%" highlight-current-row @select="selectHandler" @select-all="selectAllHandler">
+      <el-table-column :reserve-selection="true" type="selection" width="55" />
       <el-table-column prop="code" label="编码" />
       <el-table-column prop="name" label="名称" />
       <el-table-column prop="gmtCreate" label="创建时间">
@@ -41,10 +41,16 @@ export default {
   components: {
     Pagination
   },
+  props: {
+    keys: {
+      required: true,
+      type: Array
+    }
+  },
   data() {
     return {
       items: [], // 列表集合
-      selectId: '', // 选中ID
+      selectKeys: this.keys, // 选中对象
       query: { // 列表查询对象
         total: 0, // 总条数
         size: 5, // 每页条数
@@ -54,8 +60,23 @@ export default {
       }
     }
   },
+  watch: {
+    keys(val) {
+      this.selectKeys = val
+    },
+    selectKeys(val) {
+      this.$emit('update:keys', val)
+    }
+  },
   created() {
     this.fetchData()
+  },
+  mounted() {
+    if (this.selectKeys) {
+      this.selectKeys.forEach(row => {
+        this.$refs.multipleTable.toggleRowSelection(row)
+      })
+    }
   },
   methods: {
     resetQuery() {
@@ -80,8 +101,11 @@ export default {
         })
       })
     },
-    handleSelectionChange(val) {
-      console.log(val)
+    selectHandler(selection, row) {
+      this.selectKeys = selection
+    },
+    selectAllHandler(selection) {
+      this.selectKeys = selection
     },
     /**
      * 列表时间转换

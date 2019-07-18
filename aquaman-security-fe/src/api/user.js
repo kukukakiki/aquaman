@@ -9,3 +9,14 @@ export function getMenuByCurrentLoginUser() {
     method: 'get'
   })
 }
+
+/**
+ * 根据用户ID获取用户角色关系
+ */
+export function getUserRoleByUserId(userId) {
+  return request({
+    url: '/user_role/user_id/' + userId,
+    method: 'get'
+  })
+}
+

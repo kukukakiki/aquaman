@@ -54,7 +54,7 @@
       :visible.sync="dialogVisible"
       :title="setRoleUserTitle"
       width="70%">
-      <check-box-role />
+      <check-box-role :keys.sync="checkRole" />
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="submitUserRolesHandler">确 定</el-button>
@@ -64,10 +64,11 @@
 </template>
 
 <script>
-import { queryByPage } from '@/api/common'
-import { queryRoleByAll } from '@/api/role'
+import { queryByPage, update } from '@/api/common'
+import { getRoleByUserId } from '@/api/role'
 import Pagination from '@/components/Pagination'
 import CheckBoxRole from '@/components/Business/Role/CheckBoxRole'
+import { resultSuccessShowMsg } from '@/utils/validate'
 
 export default {
   components: {
@@ -88,7 +89,12 @@ export default {
         account: '', // 用户名
         status: '' // 用户状态
       },
-      items: [] // 列表集合
+      items: [], // 列表集合
+      checkRole: [], // 初始化选中角色
+      updateUserRole: {
+        id: '',
+        roleIds: ''
+      }
     }
   },
   created() {
@@ -170,12 +176,31 @@ export default {
       this.$router.push({ path: '/systemMessage/adminView', query: { id: this.selectId }})
     },
     setRolesHandler() {
-      this.dialogVisible = true
-      queryRoleByAll().then(response => {
+      getRoleByUserId(this.selectId).then(response => {
         console.log(response.result)
+        if (response && response.result) {
+          this.updateUserRole.id = response.result[0].userRoleId
+        }
+        this.checkRole = response.result
+        this.dialogVisible = true
       })
     },
     submitUserRolesHandler() {
+      if (this.checkRole) {
+        var checkRoleId = []
+        this.checkRole.forEach(item => {
+          checkRoleId.push(item.id)
+        })
+        this.updateUserRole.roleIds = checkRoleId.join()
+      }
+      update('user_role', this.updateUserRole).then(response => {
+        resultSuccessShowMsg(response)
+        if (response.code === '0000') {
+          this.dialogVisible = false
+        }
+      }).catch(error => {
+        console.log(error)
+      })
     }
   }
 }

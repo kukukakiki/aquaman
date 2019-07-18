@@ -43,6 +43,20 @@ public class UserRoleController extends BaseController {
         return resultVO;
     }
 
+    /**
+     * 根据用户ID获取用户角色关系
+     * @param userId
+     * @return
+     */
+    @GetMapping("/user_id/{userId:\\d+}")
+    public ResultVO<UserRole> getByUserId(@PathVariable Long userId) {
+        UserRoleQuery query = new UserRoleQuery();
+        query.setUserId(userId);
+        UserRole userRole = userRoleService.getOne(query.instanceQueryWrapper());
+        ResultVO<UserRole> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, userRole);
+        return resultVO;
+    }
+
     @PostMapping
     public ResultVO save(UserRole userRole) {
         boolean isSuccess = userRoleService.save(userRole);
@@ -54,8 +68,7 @@ public class UserRoleController extends BaseController {
     }
 
     @PutMapping("/{id:\\d+}")
-    public ResultVO update(@PathVariable Long id, UserRole userRole) {
-        userRole.setId(id);
+    public ResultVO update(UserRole userRole) {
         boolean isSuccess = userRoleService.updateById(userRole);
         if(!isSuccess){
             log.warn("修改用户失败，执行返回结果：", isSuccess);
