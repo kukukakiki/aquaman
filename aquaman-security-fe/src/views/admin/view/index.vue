@@ -62,21 +62,18 @@
 
 <script>
 import { queryById } from '@/api/common'
-import Pagination from '@/components/Pagination'
 import { getLabel } from '@/utils/constant'
 
 export default {
   components: {
-    Pagination
   },
   data() {
     return {
       defaultTabName: 'first',
       activeNames: ['1', '2'],
-      showButton: false, // 显示执行按钮
       loading: false, // 页面loading标示
       id: '', // 用户主键ID
-      form: {
+      form: { // 用户对象
         id: '',
         account: '',
         password: '',
@@ -85,7 +82,7 @@ export default {
         nickName: '',
         mobile: '',
         email: ''
-      } // 用户对象
+      }
     }
   },
   created() {

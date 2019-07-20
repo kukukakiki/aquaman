@@ -4,9 +4,9 @@
       <el-row>
         <el-col :span="8">
           <el-button-group>
-            <el-button v-show_button="'adminAdd'" type="primary" @click.stop="addHandler">新增</el-button>
-            <el-button v-show_button="'adminView'" :disabled="!showButton" type="primary" @click="viewHandler">查阅</el-button>
-            <el-button v-show_button="'adminUpdate'" :disabled="!showButton" type="primary" @click.stop="updateHandler">修改</el-button>
+            <el-button v-show_button="'systemAdd'" type="primary" @click.stop="addHandler">新增</el-button>
+            <el-button v-show_button="'systemView'" :disabled="!showButton" type="primary" @click="viewHandler">查阅</el-button>
+            <el-button v-show_button="'systemUpdate'" :disabled="!showButton" type="primary" @click.stop="updateHandler">修改</el-button>
           </el-button-group>
         </el-col>
         <el-col :span="16">
@@ -36,10 +36,10 @@
       </transition>
     </el-form>
     <el-table v-loading="loading" :data="items" border style="width: 100%" highlight-current-row @current-change="handleCurrentChange">
-      <el-table-column prop="account" label="用户名" />
-      <el-table-column prop="name" label="姓名" />
-      <el-table-column prop="nickName" label="昵称" />
-      <el-table-column prop="email" label="邮箱" />
+      <el-table-column prop="code" label="系统编码" />
+      <el-table-column prop="name" label="系统名称" />
+      <el-table-column prop="domain" label="系统域名" />
+      <el-table-column prop="serverIp" label="服务器地址" />
       <el-table-column prop="gmtCreate" label="创建时间">
         <template slot-scope="scope">
           <i class="el-icon-time" />
@@ -52,8 +52,10 @@
 </template>
 
 <script>
+import { queryByPage } from '@/api/common'
 import Pagination from '@/components/Pagination'
 import CheckBoxRole from '@/components/Business/Role/CheckBoxRole'
+import { resultValidate } from '@/utils/validate'
 
 export default {
   components: {
@@ -69,15 +71,10 @@ export default {
         total: 0, // 总条数
         size: 5, // 每页条数
         current: 1, // 当前页码数
-        account: '', // 用户名
-        status: '' // 用户状态
+        code: '', // 系统编码
+        status: '' // 系统状态
       },
-      items: [], // 列表集合
-      checkRole: [], // 初始化选中角色
-      updateUserRole: {
-        id: '',
-        roleIds: ''
-      }
+      items: [] // 列表集合
     }
   },
   created() {
@@ -99,7 +96,22 @@ export default {
      */
     fetchData() {
       this.loading = true
-      this.loading = false
+      queryByPage('system', this.query).then(response => {
+        const data = response.result
+        if (resultValidate(response.code)) {
+          this.items = data.records
+          this.query.total = data.total
+          this.query.size = data.size
+        }
+        this.loading = false
+      }).catch(error => {
+        this.$message({
+          message: error.msg,
+          type: 'error',
+          duration: 5 * 1000
+        })
+        this.loading = false
+      })
     },
     /**
      * 获取当前列表选中行
@@ -134,10 +146,13 @@ export default {
       }
     },
     addHandler() {
+      this.$router.push({ path: '/systemMessage/systemAdd' })
     },
     updateHandler() {
+      this.$router.push({ path: '/systemMessage/systemUpdate', query: { id: this.selectId }})
     },
     viewHandler() {
+      this.$router.push({ path: '/systemMessage/systemView', query: { id: this.selectId }})
     }
   }
 }

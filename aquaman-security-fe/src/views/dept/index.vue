@@ -10,7 +10,7 @@
           </el-button-group>
         </div>
         <el-input v-model="filterText" placeholder="输入关键字进行过滤" />
-        <el-tree ref="deptTree" :filter-node-method="filterNode" :data="deptTree" :props="defaultProps" class="filter-tree" default-expand-all @node-click="handleNodeClick" />
+        <el-tree ref="deptTree" :filter-node-method="filterNode" :data="deptTree" :props="defaultProps" class="filter-tree" default-expand-all="true" @node-click="handleNodeClick" />
       </el-col>
       <el-col :span="18">
         <el-row>
@@ -35,7 +35,7 @@
                     <el-input v-model="form.sort" />
                   </el-form-item>
                   <el-form-item label="上级部门" prop="parentName">
-                    <el-select v-model="form.parentId" placeholder="请选择">
+                    <el-select v-model="form.parentId" placeholder="请选择" style="width: 100%">
                       <el-option v-for="item in parentList" :key="item.id" :label="item.name" :value="item.id" />
                     </el-select>
                   </el-form-item>
