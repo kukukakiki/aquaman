@@ -60,21 +60,7 @@ public class MenuController extends BaseController {
      */
     @GetMapping("/{id:\\d+}")
     public ResultVO<MenuDTO> getById(@PathVariable Long id) {
-        MenuDTO menuDTO = new MenuDTO();
-        // step1
-        Menu menu = menuService.findMenuById(id);
-        // step2
-        List<Menu> parentList = menuService.findParentMenuByType(menu.getType());
-        if(CollectionUtils.isNotEmpty(parentList)) {
-            // step3
-            menuDTO.setParentLevel(
-                    MenuTypeEnum.getLevelByKey(parentList.get(0).getType()));
-        } else {
-            menuDTO.setParentLevel(-1);
-        }
-        // step4
-        menuDTO.setMenu(menu);
-        menuDTO.setParentList(parentList);
+        MenuDTO menuDTO = menuService.findMenuDTOByPrimaryKey(id);
         // 组装成功信息
         ResultVO<MenuDTO> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, menuDTO);
         return resultVO;

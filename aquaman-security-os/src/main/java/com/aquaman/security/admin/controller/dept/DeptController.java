@@ -3,6 +3,7 @@ package com.aquaman.security.admin.controller.dept;
 
 import com.aquaman.security.admin.controller.base.BaseController;
 import com.aquaman.security.admin.entity.domain.Dept;
+import com.aquaman.security.admin.entity.dto.DeptDTO;
 import com.aquaman.security.admin.entity.vo.DeptVO;
 import com.aquaman.security.admin.entity.vo.MenuTreeVO;
 import com.aquaman.security.admin.entity.vo.ResultVO;
@@ -38,10 +39,10 @@ public class DeptController extends BaseController {
     }
 
     @GetMapping("/{id:\\d+}")
-    public ResultVO<Dept> get(@PathVariable Long id) {
-        Dept dept = deptService.getById(id);
+    public ResultVO<DeptDTO> get(@PathVariable Long id) {
+        DeptDTO dept = deptService.findDeptDTOByPrimaryKey(id);
         // 组装成功信息
-        ResultVO<Dept> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, dept);
+        ResultVO<DeptDTO> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, dept);
         return resultVO;
     }
 

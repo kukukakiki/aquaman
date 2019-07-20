@@ -1,6 +1,7 @@
 package com.aquaman.security.admin.mapper;
 
 import com.aquaman.security.admin.entity.domain.User;
+import com.aquaman.security.admin.entity.dto.UserFullInfoDTO;
 import com.aquaman.security.admin.entity.query.UserQuery;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -46,4 +47,6 @@ public interface UserMapper extends BaseMapper<User> {
      * @return
      */
     IPage<User> findUserByDeptId(UserQuery query);
+
+    UserFullInfoDTO findUserFullInfoByAccount(String account);
 }

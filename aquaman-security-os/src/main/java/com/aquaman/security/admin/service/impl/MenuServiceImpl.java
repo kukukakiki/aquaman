@@ -75,6 +75,26 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
         return null;
     }
 
+    @Override
+    public MenuDTO findMenuDTOByPrimaryKey(Long id) {
+        MenuDTO menuDTO = new MenuDTO();
+        // step1
+        Menu menu = this.findMenuById(id);
+        // step2
+        List<Menu> parentList = this.findParentMenuByType(menu.getType());
+        if(CollectionUtils.isNotEmpty(parentList)) {
+            // step3
+            menuDTO.setParentLevel(
+                    MenuTypeEnum.getLevelByKey(parentList.get(0).getType()));
+        } else {
+            menuDTO.setParentLevel(-1);
+        }
+        // step4
+        menuDTO.setMenu(menu);
+        menuDTO.setParentList(parentList);
+        return menuDTO;
+    }
+
     /**
      * 递归菜单树VO-菜单集合和父节点
      * @param menuAll 所有菜单集合

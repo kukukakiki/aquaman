@@ -23,6 +23,7 @@ SOFTWARE.
  */
 package com.aquaman.security.admin.utils;
 
+import lombok.experimental.UtilityClass;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -35,6 +36,7 @@ import java.util.List;
  * @version 2019/3/31
  * @since 2019/3/31
  */
+@UtilityClass
 public class CollectionUtil {
 
     public static List<Long> stringToLong(List<String> list){

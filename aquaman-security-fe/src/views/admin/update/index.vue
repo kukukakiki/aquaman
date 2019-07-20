@@ -24,11 +24,11 @@
                     <el-input v-model="form.name" />
                   </el-form-item>
                 </el-col>
-                <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
+                <!-- <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
                   <el-form-item label="登陆密码" prop="password">
                     <el-input v-model="form.password" />
                   </el-form-item>
-                </el-col>
+                </el-col> -->
                 <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
                   <el-form-item label="用户状态" prop="status">
                     <aq-select :business-type="'status'" :bind-value.sync="form.status" style="width: 100%" />

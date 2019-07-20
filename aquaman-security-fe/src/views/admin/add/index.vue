@@ -26,7 +26,7 @@
                 </el-col>
                 <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
                   <el-form-item label="登陆密码" prop="password">
-                    <el-input v-model="form.password" />
+                    <el-input v-model="form.password" type="password" />
                   </el-form-item>
                 </el-col>
                 <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">

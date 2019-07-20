@@ -27,6 +27,7 @@ import com.aquaman.security.admin.entity.domain.User;
 import com.aquaman.security.admin.entity.query.UserQuery;
 import com.aquaman.security.admin.service.IUserService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import lombok.experimental.UtilityClass;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -37,6 +38,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
  * @version 2019/3/31
  * @since 2019/3/31
  */
+@UtilityClass
 public class CurrentUserUtil {
 
     /**

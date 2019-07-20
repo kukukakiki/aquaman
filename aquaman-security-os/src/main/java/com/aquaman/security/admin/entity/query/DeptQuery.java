@@ -20,6 +20,7 @@ import java.io.Serializable;
  * @since 2019-05-05
  */
 @Data
+@Accessors(chain = true)
 public class DeptQuery extends PageQuery<Dept> implements Serializable {
 
     private static final long serialVersionUID = 1L;

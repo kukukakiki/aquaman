@@ -10,3 +10,9 @@ export function queryAllByTree() {
     method: 'get'
   })
 }
+export function queryById(id) {
+  return request({
+    url: '/dept/' + id,
+    method: 'get'
+  })
+}

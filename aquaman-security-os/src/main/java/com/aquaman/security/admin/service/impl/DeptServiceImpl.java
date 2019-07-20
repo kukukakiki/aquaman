@@ -1,6 +1,7 @@
 package com.aquaman.security.admin.service.impl;
 
 import com.aquaman.security.admin.entity.domain.Dept;
+import com.aquaman.security.admin.entity.dto.DeptDTO;
 import com.aquaman.security.admin.entity.query.DeptQuery;
 import com.aquaman.security.admin.entity.vo.DeptVO;
 import com.aquaman.security.admin.mapper.DeptMapper;
@@ -32,6 +33,18 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements ID
     @Override
     public List<DeptVO> findDeptTreeVOByRoot() {
         return this.recursionDept(null);
+    }
+
+    @Override
+    public DeptDTO findDeptDTOByPrimaryKey(Long id) {
+        DeptDTO deptDTO = new DeptDTO();
+        // step1
+        Dept dept = getById(id);
+        // step2
+        List<Dept> parentList = deptMapper.selectList(new DeptQuery().setType(dept.getType()).instanceQueryWrapper());
+        // step3
+        deptDTO.setParentList(parentList).setDept(dept);
+        return deptDTO;
     }
 
     /**

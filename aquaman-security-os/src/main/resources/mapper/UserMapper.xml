@@ -7,6 +7,10 @@
     permission_code, gmt_create, gmt_modify
     </sql>
 
+
+    <resultMap id="ResultUserFullInfo" type="com.aquaman.security.admin.entity.dto.UserFullInfoDTO">
+    </resultMap>
+
     <sql id="Base_Where_List">
         1=1
         <if test="account != null and account != ''">
@@ -65,15 +69,14 @@
         update ad_user set login_time = DATE_FORMAT(NOW(), '%Y%m%d%H%i%s') where id = #{id,jdbcType=BIGINT}
     </update>
 
-    <select id="findUserFullInfoByAccount" parameterType="java.lang.String">
+    <select id="findUserFullInfoByAccount" parameterType="java.lang.String"  resultMap="ResultUserFullInfo">
         select u.id, account, u.password, u.nick_name, u.mobile, u.email, u.status, u.type, u.login_time,
             u.permission_code, u.gmt_create, u.gmt_modify, ur.id as user_role_id, ur.role_ids,
             GROUP_CONCAT(rm.menu_ids) as menu_ids,d.name, d.id dept_id
         from
-            ad_user,
+            ad_user u,
             ad_user_role ur,
             ad_role_menu rm,
-            ad_dept_user du,
             ad_dept d
         WHERE
             ur.user_id = id
@@ -81,6 +84,7 @@
         AND u.account = #{account,jdbcType=VARCHAR}
         AND FIND_IN_SET(rm.role_id, ur.role_ids)
         AND FIND_IN_SET(id, du.user_ids)
+        AND u.dept_id = d.id
     </select>
 
 

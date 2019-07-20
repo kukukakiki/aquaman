@@ -21,47 +21,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.aquaman.security.admin.utils;
-
-import lombok.experimental.UtilityClass;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
+package com.aquaman.security.admin.entity.dto;
 
 /**
+ * 用户详情DTO，包含部门，角色，等信息
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
- * @version 2019/3/31
- * @since 2019/3/31
+ * @version 2019-07-19
+ * @since 2019-07-19
  */
-@UtilityClass
-public class SpringUtil {
-
-    private static ApplicationContext applicationContext;
-
-    static final private Object lock = new Object();
-
-    public static void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        synchronized (lock) {
-            if (SpringUtil.applicationContext == null) {
-                SpringUtil.applicationContext = applicationContext;
-            }
-        }
-    }
-
-    public static ApplicationContext getApplicationContext() {
-        return applicationContext;
-    }
-
-    public static Object getBean(String name) {
-        return getApplicationContext().getBean(name);
-    }
-
-    public static <T> T getBean(Class<T> clazz) {
-        return getApplicationContext().getBean(clazz);
-    }
-
-    public static <T> T getBean(String name, Class<T> clazz) {
-        return getApplicationContext().getBean(name, clazz);
-    }
-
+public class UserFullInfoDTO {
 }

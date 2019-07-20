@@ -50,4 +50,11 @@ public interface IMenuService extends IService<Menu> {
      */
     List<Menu> findParentMenuByType(String type);
 
+    /**
+     * 根据主键ID查询当前菜单信息和父节菜单集合
+     * @param id
+     * @return
+     */
+    MenuDTO findMenuDTOByPrimaryKey(Long id);
+
 }

@@ -41,6 +41,25 @@ export function options() {
     }, {
       value: 'github',
       label: 'GitHub'
+    }],
+    deptType: [{
+      value: 'group',
+      label: '集团'
+    }, {
+      value: 'head',
+      label: '总公司'
+    }, {
+      value: 'branch',
+      label: '分公司'
+    }, {
+      value: 'child',
+      label: '子公司'
+    }, {
+      value: 'dept',
+      label: '部门'
+    }, {
+      value: 'team',
+      label: '组'
     }]
   })
 }
@@ -63,6 +82,9 @@ export function getLabel(val, key) {
       break
     case 'register':
       label = options().register.filter(item => item.value === key)
+      break
+    case 'deptType':
+      label = options().deptType.filter(item => item.value === key)
       break
   }
   if (isCollectionNotEmpty(label)) {

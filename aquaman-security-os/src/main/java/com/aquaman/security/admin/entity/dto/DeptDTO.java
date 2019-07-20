@@ -21,34 +21,28 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.aquaman.security.admin.dept;
+package com.aquaman.security.admin.entity.dto;
 
-import com.aquaman.security.admin.entity.domain.User;
-import com.aquaman.security.admin.service.IDeptUserService;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import com.aquaman.security.admin.entity.domain.Dept;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.util.List;
 
 /**
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
- * @version 2019-05-09
- * @since 2019-05-09
+ * @version 2019-07-20
+ * @since 2019-07-20
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class DeptUserTest {
+@Data
+@Accessors(chain = true)
+public class DeptDTO {
 
-    @Autowired
-    private IDeptUserService deptUserService;
+    private Dept dept;
 
-    @Test
-    public void testUserListByDeptId() {
-        List<User> list = deptUserService.queryUserListByDeptId(1L);
-        System.out.println(list);
-    }
+    /**
+     * 父节点集合
+     */
+    private List<Dept> parentList;
 }
