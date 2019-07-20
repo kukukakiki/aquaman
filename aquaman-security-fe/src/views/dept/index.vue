@@ -18,9 +18,9 @@
             <el-card class="box-card">
               <div slot="header" class="clearfix">
                 <span>菜单信息</span>
-                <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+                <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
               </div>
-              <div :key="o" class="text item">
+              <div class="text item">
                 <el-form ref="form" :rules="rules" :model="form" label-width="80px">
                   <el-form-item label="部门名称" prop="name">
                     <el-input v-model="form.name" />
@@ -40,7 +40,7 @@
                     </el-select>
                   </el-form-item>
                   <el-form-item label="备注" prop="remarks">
-                    <el-input v-model="form.remarks" type="textarea" />
+                    <el-input v-model="form.remarks" type="textarea" maxlength="100" show-word-limit />
                   </el-form-item>
                   <el-form-item label="部门状态" prop="status">
                     <aq-select :business-type="'status'" :bind-value.sync="form.status" style="width: 100%" />
@@ -59,15 +59,16 @@
             <el-card class="box-card">
               <div slot="header" class="clearfix">
                 <span>部门人员</span>
-                <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+                <!-- <el-button style="float: right; padding: 3px 0" type="text">添加人员</el-button> -->
               </div>
-              <div :key="o" class="text item">
+              <div class="text item">
                 <el-table :data="items" height="250" border style="width: 100%">
                   <el-table-column prop="id" label="序号" />
                   <el-table-column prop="name" label="名字" />
-                  <el-table-column prop="mobil" label="手机" />
+                  <el-table-column prop="mobile" label="手机" />
                   <el-table-column prop="email" label="邮箱" />
                 </el-table>
+                <pagination :total="queryUser.total" :page.sync="queryUser.current" :limit.sync="queryUser.size" @pagination="fetchUser" />
               </div>
             </el-card>
           </el-col>
@@ -79,13 +80,15 @@
 
 <script>
 import { save, update } from '@/api/common'
-import { queryAllByTree, queryById } from '@/api/dept'
+import { queryAllByTree, queryById, queryUserPageByDeptId } from '@/api/dept'
 import { isNotEmpty, resultValidate, resultSuccessShowMsg } from '@/utils/validate'
 import aqSelect from '@/components/Element/Select'
+import Pagination from '@/components/Pagination'
 
 export default {
   components: {
-    aqSelect
+    aqSelect,
+    Pagination
   },
   data() {
     return {
@@ -95,9 +98,15 @@ export default {
       filterText: '', // 部门树搜索
       items: [], // 人员信息集合
       deptTree: [], // 部门树
+      selectDeptId: '',
       defaultProps: { // 部门树显示配置
         children: 'children',
         label: 'name'
+      },
+      queryUser: { // 列表查询对象
+        total: 0, // 总条数
+        size: 5, // 每页条数
+        current: 1 // 当前页码数
       },
       parentList: [
         {
@@ -144,6 +153,17 @@ export default {
         this.deptTree = response.result
       })
     },
+    fetchUser() {
+      queryUserPageByDeptId(this.selectDeptId).then(response => {
+        if (resultValidate(response.code)) {
+          const data = response.result
+          console.log(data)
+          this.items = data.records
+          this.queryUser.total = data.total
+          this.queryUser.size = data.size
+        }
+      })
+    },
     filterNode(value, data) {
       if (!value) return true
       return data.name.indexOf(value) !== -1
@@ -181,6 +201,8 @@ export default {
           this.showButton = true
         }
       })
+      this.selectDeptId = data.id
+      this.fetchUser()
     },
     submitHandler() {
       this.$refs['form'].validate((valid) => {

@@ -69,6 +69,7 @@ import { getRoleByUserId } from '@/api/role'
 import Pagination from '@/components/Pagination'
 import CheckBoxRole from '@/components/Business/Role/CheckBoxRole'
 import { resultSuccessShowMsg } from '@/utils/validate'
+import { resultValidate } from '@/utils/validate'
 
 export default {
   components: {
@@ -118,7 +119,7 @@ export default {
       this.loading = true
       queryByPage('user', this.query).then(response => {
         const data = response.result
-        if (response.code === '0000') {
+        if (resultValidate(response.code)) {
           this.items = data.records
           this.query.total = data.total
           this.query.size = data.size

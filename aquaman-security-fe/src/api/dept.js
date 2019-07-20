@@ -16,3 +16,9 @@ export function queryById(id) {
     method: 'get'
   })
 }
+export function queryUserPageByDeptId(id) {
+  return request({
+    url: '/dept/user_page/' + id,
+    method: 'get'
+  })
+}
