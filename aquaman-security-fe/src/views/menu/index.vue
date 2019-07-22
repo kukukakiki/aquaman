@@ -13,6 +13,11 @@
         <el-tree ref="menuTree" :data="items" :props="defaultTreeProps" :filter-node-method="filterNode" @node-click="handleNodeClick" />
       </el-col>
       <el-col :span="18">
+        <el-form-item label="上级菜单" prop="parentId">
+          <el-select v-model="form.parentId" placeholder="请选择" style="width: 100%" >
+            <el-option v-for="item in parentList" :key="item.id" :label="item.name" :value="item.id" />
+          </el-select>
+        </el-form-item>
         <el-form ref="form" :rules="rules" :model="form" label-width="100px">
           <el-form-item label="菜单名称" prop="name">
             <el-input v-model="form.name" />
@@ -20,11 +25,14 @@
           <el-form-item label="菜单编码" prop="code">
             <el-input v-model="form.code" />
           </el-form-item>
-          <el-form-item label="接口地址" prop="url">
-            <el-input v-model="form.url" />
+          <el-form-item label="菜单类型" prop="type">
+            <aq-select :business-type="'type'" :bind-value.sync="form.type" style="width: 100%" />
           </el-form-item>
           <el-form-item label="路由地址" prop="router">
             <el-input v-model="form.router" />
+          </el-form-item>
+          <el-form-item label="接口地址" prop="url">
+            <el-input v-model="form.url" />
           </el-form-item>
           <el-form-item label="菜单序号" prop="sort">
             <el-input v-model="form.sort" />
@@ -32,19 +40,11 @@
           <el-form-item label="菜单图标" prop="iconType">
             <el-input v-model="form.iconType" />
           </el-form-item>
-          <el-form-item label="菜单类型" prop="type">
-            <aq-select :business-type="'type'" :bind-value.sync="form.type" style="width: 100%" />
-          </el-form-item>
           <el-form-item label="是否显示" prop="display">
             <aq-select :business-type="'display'" :bind-value.sync="form.display" style="width: 100%" />
           </el-form-item>
           <el-form-item label="菜单状态" prop="status">
             <aq-select :business-type="'status'" :bind-value.sync="form.status" style="width: 100%" />
-          </el-form-item>
-          <el-form-item label="上级菜单" prop="parentId">
-            <el-select v-model="form.parentId" placeholder="请选择">
-              <el-option v-for="item in parentList" :key="item.id" :label="item.name" :value="item.id" />
-            </el-select>
           </el-form-item>
           <el-form-item>
             <el-button-group>
@@ -139,6 +139,12 @@ export default {
         type: [
           { required: true, message: '请选择菜单类型', trigger: 'change' },
           { validator: validateType, trigger: 'change' }
+        ],
+        router: [
+          { required: true, message: '请输入路由地址', trigger: 'blur' }
+        ],
+        parentId: [
+          { required: true, message: '请输选择上级菜单', trigger: 'change' }
         ]
       }
     }
