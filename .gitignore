@@ -29,5 +29,6 @@ mvnw.cmd
 
 ### Aquaman ###
 /aquaman-doc/generator-mybatis-admin/src
+/aquaman-common/target
 /aquaman-security-os/target
 /code-generator/target
