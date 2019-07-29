@@ -39,7 +39,10 @@ import com.aquaman.security.admin.service.IUserService;
 import com.aquaman.security.admin.utils.CollectionUtil;
 import com.aquaman.security.admin.utils.CurrentUserUtil;
 import com.aquaman.security.common.enums.ResultCodeEnum;
+import com.aquaman.security.common.view.DetailView;
+import com.aquaman.security.common.view.ListView;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,6 +105,7 @@ public class UserController extends BaseController {
      * @param id
      * @return
      */
+    @JsonView(DetailView.class)
     @GetMapping("/{id:\\d+}")
     public ResultVO getById(@PathVariable Long id){
         User user = userService.getById(id);

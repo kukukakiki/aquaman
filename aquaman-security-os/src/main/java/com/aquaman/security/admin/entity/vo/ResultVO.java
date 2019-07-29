@@ -24,6 +24,8 @@ SOFTWARE.
 package com.aquaman.security.admin.entity.vo;
 
 import com.aquaman.security.common.enums.ResultCodeEnum;
+import com.aquaman.security.common.view.BaseView;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 
 /**
@@ -39,16 +41,19 @@ public class ResultVO<T> {
     /**
      * 返回编码
      */
+    @JsonView(BaseView.class)
     private String code;
 
     /**
      * 返回信息
      */
+    @JsonView(BaseView.class)
     private String msg;
 
     /**
      * 返回数据
      */
+    @JsonView(BaseView.class)
     private T result;
 
     public ResultVO() {
