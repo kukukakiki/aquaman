@@ -1,6 +1,7 @@
 # Aquaman Admin（海王管理系统）
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![SpringBoot](https://img.shields.io/badge/springboot-2.1.3.RELEASE-brightgreen)](SPRINGBOOT)
 
 ## 声明
 
