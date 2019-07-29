@@ -1,6 +1,5 @@
 package com.aquaman.security.admin.entity.domain;
 
-import com.aquaman.security.admin.enums.StatusEnum;
 import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
@@ -10,31 +9,51 @@ import lombok.experimental.Accessors;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
- * 角色菜单
+ * <p>
+ * 
+ * </p>
  *
  * @author wei wang
- * @since 2019-03-05
+ * @since 2019-07-27
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("ad_role_menu")
-public class RoleMenu implements Serializable {
+@TableName("ad_dictionary_item")
+public class DictionaryItem implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 5084343400928259893L;
 
+    /**
+     * 主键
+     */
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     /**
-     * 角色ID
+     * 父表(ad_dictionary_group)主键ID
      */
-    private Long roleId;
+    private Long groupId;
 
     /**
-     * 菜单ID集合
+     * 字典项编码
      */
-    private String menuIds;
+    private String code;
+
+    /**
+     * 字典项名称
+     */
+    private String name;
+
+    /**
+     * 字典项值
+     */
+    private String value;
+
+    /**
+     * 备注
+     */
+    private String remark;
 
     /**
      * 状态
@@ -42,12 +61,11 @@ public class RoleMenu implements Serializable {
     private String status;
 
     /**
-     * 权限Code
+     * 权限表示（暂未启用）
      */
     private String permissionCode;
 
     /**
-     * 处理逻辑查阅{@link com.aquaman.security.admin.handler.mybatisplus.MyBatisPlusFillHandler}
      * 创建时间
      */
     @TableField(fill = FieldFill.INSERT)

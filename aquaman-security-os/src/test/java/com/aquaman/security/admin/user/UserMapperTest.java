@@ -39,11 +39,11 @@ public class UserMapperTest {
 
     @Test
     public void testSave() {
-        User user = new User();
+        /*User user = new User();
         user.setAccount("");
         user.setPassword("123456");
         user.setStatus(StatusEnum.START.getValue());
-        userMapper.insert(user);
+        userMapper.insert(user);*/
     }
 
     @Test

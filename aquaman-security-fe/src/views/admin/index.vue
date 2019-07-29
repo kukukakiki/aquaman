@@ -68,8 +68,7 @@ import { queryByPage, update } from '@/api/common'
 import { getRoleByUserId } from '@/api/role'
 import Pagination from '@/components/Pagination'
 import CheckBoxRole from '@/components/Business/Role/CheckBoxRole'
-import { resultSuccessShowMsg } from '@/utils/validate'
-import { resultValidate } from '@/utils/validate'
+import { resultValidate, resultSuccessShowMsg } from '@/utils/validate'
 
 export default {
   components: {

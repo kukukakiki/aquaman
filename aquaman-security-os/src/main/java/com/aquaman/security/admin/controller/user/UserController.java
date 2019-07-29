@@ -23,6 +23,7 @@ SOFTWARE.
  */
 package com.aquaman.security.admin.controller.user;
 
+import com.aquaman.security.admin.annotation.AquamanLog;
 import com.aquaman.security.admin.controller.base.BaseController;
 import com.aquaman.security.admin.entity.domain.User;
 import com.aquaman.security.admin.entity.domain.UserRole;
@@ -94,6 +95,7 @@ public class UserController extends BaseController {
      * @return
      */
     @GetMapping
+    @AquamanLog
     public ResultVO<List<User>> getByPage(UserQuery userQuery){
         IPage<User> page1 = userService.page(userQuery);
         ResultVO<List<User>> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, page1);

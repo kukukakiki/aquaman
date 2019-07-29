@@ -13,12 +13,12 @@
         <el-tree ref="menuTree" :data="items" :props="defaultTreeProps" :filter-node-method="filterNode" @node-click="handleNodeClick" />
       </el-col>
       <el-col :span="18">
-        <el-form-item label="上级菜单" prop="parentId">
-          <el-select v-model="form.parentId" placeholder="请选择" style="width: 100%" >
-            <el-option v-for="item in parentList" :key="item.id" :label="item.name" :value="item.id" />
-          </el-select>
-        </el-form-item>
         <el-form ref="form" :rules="rules" :model="form" label-width="100px">
+          <el-form-item label="上级菜单" prop="parentId">
+            <el-select v-model="form.parentId" placeholder="请选择" style="width: 100%" >
+              <el-option v-for="item in parentList" :key="item.id" :label="item.name" :value="item.id" />
+            </el-select>
+          </el-form-item>
           <el-form-item label="菜单名称" prop="name">
             <el-input v-model="form.name" />
           </el-form-item>

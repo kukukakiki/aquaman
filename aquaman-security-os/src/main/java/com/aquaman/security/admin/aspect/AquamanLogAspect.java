@@ -21,32 +21,33 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.aquaman.security.common.util;
+package com.aquaman.security.admin.aspect;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.experimental.UtilityClass;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.springframework.stereotype.Component;
 
 /**
- * JSON工具类
+ * 日志记录切面
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
- * @version 2019/2/28
- * @since 2019/2/28
+ * @version 2019-07-28
+ * @since 2019-07-28
  */
-@UtilityClass
-public class JSONUtil {
+@Aspect
+@Component
+public class AquamanLogAspect {
 
-    private static ObjectMapper objectMapper = new ObjectMapper();
-
-    /**
-     * 对象转换成JSON字符串
-     * @param o
-     * @return
-     * @throws JsonProcessingException
-     */
-    public static String objectToJSONString(Object o) throws JsonProcessingException {
-        String str = objectMapper.writeValueAsString(o);
-        return str;
+    @Around("execution(* com.aquaman..controller.*.*.*(..))")
+    public Object processInsertLog(ProceedingJoinPoint pjp) throws Throwable {
+        // 开始时间/毫秒
+        long beginTimeMillis = System.currentTimeMillis();
+        // 出参
+        Object object = pjp.proceed();
+        // 结束时间/毫秒
+        long endTimeMillis = System.currentTimeMillis();
+        return object;
     }
+
 }

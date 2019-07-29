@@ -21,32 +21,24 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.aquaman.security.common.util;
+package com.aquaman.security.admin.annotation;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.experimental.UtilityClass;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * JSON工具类
+ * 日志记录annotation
+ * 该直接只能定义在方法上
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
- * @version 2019/2/28
- * @since 2019/2/28
+ * @version 2019-07-28
+ * @since 2019-07-28
  */
-@UtilityClass
-public class JSONUtil {
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface AquamanLog {
 
-    private static ObjectMapper objectMapper = new ObjectMapper();
 
-    /**
-     * 对象转换成JSON字符串
-     * @param o
-     * @return
-     * @throws JsonProcessingException
-     */
-    public static String objectToJSONString(Object o) throws JsonProcessingException {
-        String str = objectMapper.writeValueAsString(o);
-        return str;
-    }
 }
