@@ -7,7 +7,6 @@
             <el-button v-show_button="'adminAdd'" type="primary" @click.stop="addHandler">新增</el-button>
             <el-button v-show_button="'adminView'" :disabled="!showButton" type="primary" @click="viewHandler">查阅</el-button>
             <el-button v-show_button="'adminUpdate'" :disabled="!showButton" type="primary" @click.stop="updateHandler">修改</el-button>
-            <el-button v-show_button="'setRole'" :disabled="!showButton" type="primary" @click.stop="setRolesHandler">角色</el-button>
           </el-button-group>
         </el-col>
         <el-col :span="16">
@@ -49,26 +48,12 @@
       </el-table-column>
     </el-table>
     <pagination :total="query.total" :page.sync="query.current" :limit.sync="query.size" @pagination="fetchData" />
-
-    <el-dialog
-      :visible.sync="dialogVisible"
-      :title="setRoleUserTitle"
-      width="70%">
-      <check-box-role :keys.sync="checkRole" />
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="submitUserRolesHandler">确 定</el-button>
-      </span>
-    </el-dialog>
   </div>
 </template>
 
 <script>
-import { queryByPage, update } from '@/api/common'
-import { getRoleByUserId } from '@/api/role'
 import Pagination from '@/components/Pagination'
 import CheckBoxRole from '@/components/Business/Role/CheckBoxRole'
-import { resultValidate, resultSuccessShowMsg } from '@/utils/validate'
 
 export default {
   components: {
@@ -80,21 +65,12 @@ export default {
       hiddenQuery: false,
       showButton: false, // 显示执行按钮
       loading: false, // 页面loading标示
-      setRoleUserTitle: '',
-      dialogVisible: false,
       query: { // 列表查询对象
         total: 0, // 总条数
         size: 5, // 每页条数
-        current: 1, // 当前页码数
-        account: '', // 用户名
-        status: '' // 用户状态
+        current: 1 // 当前页码数
       },
-      items: [], // 列表集合
-      checkRole: [], // 初始化选中角色
-      updateUserRole: {
-        id: '',
-        roleIds: ''
-      }
+      items: [] // 列表集合
     }
   },
   created() {
@@ -116,22 +92,7 @@ export default {
      */
     fetchData() {
       this.loading = true
-      queryByPage('user', this.query).then(response => {
-        const data = response.result
-        if (resultValidate(response.code)) {
-          this.items = data.records
-          this.query.total = data.total
-          this.query.size = data.size
-        }
-        this.loading = false
-      }).catch(error => {
-        this.$message({
-          message: error.msg,
-          type: 'error',
-          duration: 5 * 1000
-        })
-        this.loading = false
-      })
+      this.loading = false
     },
     /**
      * 获取当前列表选中行
@@ -140,7 +101,6 @@ export default {
       if (val) {
         this.showButton = true
         this.selectId = val.id
-        this.setRoleUserTitle = '【' + val.name + '】分配角色'
       } else {
         this.showButton = false
       }
@@ -167,40 +127,10 @@ export default {
       }
     },
     addHandler() {
-      this.$router.push({ path: '/authorizeManager/adminAdd' })
     },
     updateHandler() {
-      this.$router.push({ path: '/authorizeManager/adminUpdate', query: { id: this.selectId }})
     },
     viewHandler() {
-      this.$router.push({ path: '/authorizeManager/adminView', query: { id: this.selectId }})
-    },
-    setRolesHandler() {
-      getRoleByUserId(this.selectId).then(response => {
-        console.log(response.result)
-        if (response && response.result) {
-          this.updateUserRole.id = response.result[0].userRoleId
-        }
-        this.checkRole = response.result
-        this.dialogVisible = true
-      })
-    },
-    submitUserRolesHandler() {
-      if (this.checkRole) {
-        var checkRoleId = []
-        this.checkRole.forEach(item => {
-          checkRoleId.push(item.id)
-        })
-        this.updateUserRole.roleIds = checkRoleId.join()
-      }
-      update('user_role', this.updateUserRole).then(response => {
-        resultSuccessShowMsg(response)
-        if (response.code === '0000') {
-          this.dialogVisible = false
-        }
-      }).catch(error => {
-        console.log(error)
-      })
     }
   }
 }

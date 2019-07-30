@@ -125,7 +125,7 @@ export default {
       this.$refs['form'].resetFields()
     },
     goBack() {
-      this.$router.push({ path: '/systemMessage/admin' })
+      this.$router.push({ path: '/authorizeManager/admin' })
     }
   }
 }

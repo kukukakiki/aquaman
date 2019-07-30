@@ -38,7 +38,8 @@
             <el-input v-model="form.sort" />
           </el-form-item>
           <el-form-item label="菜单图标" prop="iconType">
-            <el-input v-model="form.iconType" />
+            <!-- <el-input v-model="form.iconType" /> -->
+            <icon-list :icon-name.sync="form.iconType" />
           </el-form-item>
           <el-form-item label="是否显示" prop="display">
             <aq-select :business-type="'display'" :bind-value.sync="form.display" style="width: 100%" />
@@ -62,12 +63,14 @@
 import { queryByTree, queryById } from '@/api/menu'
 import { queryNotConditions, save, update } from '@/api/common'
 import aqSelect from '@/components/Element/Select'
+import iconList from '@/components/Business/IconList'
 import { isNotEmpty, resultValidate, resultSuccessShowMsg } from '@/utils/validate'
 // import aqPrompt from '@/components/Element/Prompt'
 
 export default {
   components: {
-    aqSelect
+    aqSelect,
+    iconList
   },
   data() {
     var validateType = (rule, value, callback) => {
@@ -189,8 +192,6 @@ export default {
           this.parentLeve = this.calculationMenuTypeLevel(this.form.parentLeve)
           if (this.form.parentId !== -1) {
             this.parentList = data.parentList
-          } else {
-            this.parentList = this.resetParentList()
           }
           this.showButton = true
         }

@@ -10,7 +10,7 @@
           </el-button-group>
         </div>
         <el-input v-model="filterText" placeholder="输入关键字进行过滤" />
-        <el-tree ref="deptTree" :filter-node-method="filterNode" :data="deptTree" :props="defaultProps" class="filter-tree" default-expand-all="true" @node-click="handleNodeClick" />
+        <el-tree ref="deptTree" :filter-node-method="filterNode" :data="deptTree" :props="defaultProps" :default-expand-all="true" class="filter-tree" @node-click="handleNodeClick" />
       </el-col>
       <el-col :span="18">
         <el-row>

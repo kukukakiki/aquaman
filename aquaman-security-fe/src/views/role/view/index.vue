@@ -79,7 +79,7 @@ export default {
       })
     },
     goBack() {
-      this.$router.push({ path: '/systemMessage/role' })
+      this.$router.push({ path: '/authorizeManager/role' })
     }
   }
 }

@@ -1,13 +1,32 @@
 <template>
   <div class="dashboard-container">
-    <el-alert title="首页待开发" type="warning" />
+    <el-upload
+      :show-file-list="false"
+      :on-success="handleAvatarSuccess"
+      list-type="picture-card"
+      action="https://jsonplaceholder.typicode.com/posts/">
+      <img v-if="imageUrl" :src="imageUrl" class="avatar">
+      <i v-else class="el-icon-plus avatar-uploader-icon" />
+    </el-upload>
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'Dashboard'
+  name: 'Dashboard',
+  data() {
+    return {
+      imageUrl: ''
+    }
+  },
+  created() {
+    this.fetchData()
+  },
+  methods: {
+    fetchData() {},
+    handleAvatarSuccess() {}
+  }
 }
 </script>
 

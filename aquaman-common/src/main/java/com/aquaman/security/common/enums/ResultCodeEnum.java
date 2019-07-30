@@ -44,7 +44,7 @@ public enum  ResultCodeEnum {
     /**
      * 登出成功
      */
-    LOGOUT_SUCCESS("0001", "登出成功"),
+    LOGOUT_SUCCESS("0000", "登出成功"),
 
     /**
      * 用户未登录

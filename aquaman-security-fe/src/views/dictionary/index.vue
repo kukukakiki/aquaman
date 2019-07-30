@@ -8,14 +8,14 @@
     <el-row>
       <!-- 字典组列表 -->
       <el-col :span="12" style="padding-right: 10px;">
-        <el-card shadow="always" style="min-height: 300px;">
+        <el-card shadow="always" style="height: 500px;">
           <div slot="header">
             <span>字典组</span>
           </div>
           <el-table v-loading="loading" :data="groupItems" border style="width: 100%" highlight-current-row @current-change="handleGroupCurrentChange">
             <el-table-column prop="name" label="名称" />
             <el-table-column prop="code" label="编码" />
-            <el-table-column prop="type" label="类型" />
+            <el-table-column prop="type" label="类型" width="70" />
             <el-table-column prop="status" label="状态" width="50" />
             <!-- <el-table-column prop="gmtCreate" label="创建时间">
               <template slot-scope="scope">
@@ -34,7 +34,7 @@
       </el-col>
       <!-- 字典项列表 -->
       <el-col :span="12">
-        <el-card shadow="always" style="min-height: 300px;">
+        <el-card shadow="always" style="height: 500px;">
           <div slot="header">
             <span>字典项</span>
           </div>
@@ -86,7 +86,7 @@
           </el-col>
           <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
             <el-form-item label="状态" prop="status">
-              <el-input v-model="groupForm.status" />
+              <aq-select :business-type="'status'" :bind-value.sync="groupForm.status" style="width: 100%" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -127,7 +127,7 @@
           </el-col>
           <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
             <el-form-item label="状态" prop="status">
-              <el-input v-model="itemForm.status" />
+              <aq-select :business-type="'status'" :bind-value.sync="itemForm.status" style="width: 100%" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -149,6 +149,7 @@
 
 <script>
 import { queryByPage, save } from '@/api/common'
+import aqSelect from '@/components/Element/Select'
 import Pagination from '@/components/Pagination'
 import CheckBoxRole from '@/components/Business/Role/CheckBoxRole'
 import { resultValidate, resultSuccessShowMsg } from '@/utils/validate'
@@ -156,7 +157,8 @@ import { resultValidate, resultSuccessShowMsg } from '@/utils/validate'
 export default {
   components: {
     Pagination,
-    CheckBoxRole
+    CheckBoxRole,
+    aqSelect
   },
   data() {
     return {
@@ -328,6 +330,7 @@ export default {
             this.submitLoading = false
             resultSuccessShowMsg(response)
             this.dialogGroupVisible = false
+            this.fetchData()
           }).catch(error => {
             this.submitLoading = false
             console.log(error)
@@ -343,6 +346,7 @@ export default {
             this.submitLoading = false
             resultSuccessShowMsg(response)
             this.dialogItemVisible = false
+            this.fetchItemData()
           }).catch(error => {
             this.submitLoading = false
             console.log(error)

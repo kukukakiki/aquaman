@@ -68,6 +68,7 @@ const user = {
           removeToken()
           resolve()
         }).catch(error => {
+          debugger
           reject(error)
         })
       })

@@ -70,7 +70,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
         if(StringUtils.isNotEmpty(menuType)) {
             MenuQuery menuQuery = new MenuQuery();
             menuQuery.setType(menuType);
-            return menuMapper.selectList(menuQuery.instanceQueryWrapper());
+            return menuMapper.selectList(menuQuery.instanceQueryWrapper().orderByAsc("sort"));
         }
         return null;
     }
@@ -133,7 +133,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
             query.setParentId(-1L);
         }
         // 获取查询菜单集合
-        List<Menu> parentMenuList = menuMapper.selectList(query.instanceQueryWrapper());
+        List<Menu> parentMenuList = menuMapper.selectList(query.instanceQueryWrapper().orderByAsc("sort"));
         if(CollectionUtils.isNotEmpty(parentMenuList)){
             // 菜单VO集合
             List<MenuTreeVO> menuTreeVOList = new ArrayList<>();

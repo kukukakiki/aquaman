@@ -162,17 +162,17 @@ export default {
       }
     },
     addHandler() {
-      this.$router.push({ path: '/systemMessage/roleAdd' })
+      this.$router.push({ path: '/authorizeManager/roleAdd' })
     },
     updateHandler() {
       this.$router.push({
-        path: '/systemMessage/roleUpdate',
+        path: '/authorizeManager/roleUpdate',
         query: { id: this.selectId }
       })
     },
     viewHandler() {
       this.$router.push({
-        path: '/systemMessage/roleView',
+        path: '/authorizeManager/roleView',
         query: { id: this.selectId }
       })
     },

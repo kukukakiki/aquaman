@@ -8,7 +8,7 @@ export function settingSidebar(items) {
         path: '/' + item.code,
         component: Layout,
         name: item.name,
-        meta: { title: item.name },
+        meta: { title: item.meta.title, icon: item.meta.incon, type: item.meta.type },
         children: childrenComponent(item.code, item.children),
         hidden: item.display === '0'
       })
@@ -25,7 +25,7 @@ function childrenComponent(rootPath, children) {
         path: '/' + rootPath + '/' + citem.code,
         name: citem.name,
         component: () => import('@/views' + citem.router),
-        meta: { title: citem.name },
+        meta: { title: citem.meta.title, icon: citem.meta.incon, type: citem.meta.type },
         // children: cildrenButton(rootPath + '/' + citem.code, citem.children),
         hidden: citem.display === '0'
       })
@@ -44,7 +44,7 @@ function cildrenButton(rootPath, children) {
       path: '/' + rootPath + '/' + citem.code,
       name: citem.name,
       component: () => import('@/views' + citem.router),
-      meta: { title: citem.name },
+      meta: { title: citem.meta.title, icon: citem.meta.incon, type: citem.meta.type },
       hidden: citem.display === '0'
     })
     // 将登陆用户所有按钮权限缓存
