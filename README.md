@@ -1,8 +1,10 @@
 # Aquaman Admin（海王管理系统）
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![SpringBoot](https://img.shields.io/badge/spring%20boot-2.1.3.RELEASE-brightgreen)](SPRINGBOOT)
-[![SpringCloud](https://img.shields.io/badge/spring%20cloud-Greenwich.RELEASE-brightgreen)](SPRINGGLOUD)
+[![Spring-Boot](https://img.shields.io/badge/spring--boot-2.1.3.RELEASE-brightgreen)](https://spring.io/projects/spring-boot)
+[![Spring-Cloud](https://img.shields.io/badge/spring%20cloud-Greenwich.RELEASE-brightgreen)](https://spring.io/projects/spring-cloud)
+[![Vue-Element-Admin](https://img.shields.io/badge/vue--element--admin-3.9.0-brightgreen)](https://panjiachen.github.io/vue-element-admin-site/zh/)
+[![MyBatis-Plus](https://img.shields.io/badge/mybatis--plus-3.1.0-brightgreen)](https://mp.baomidou.com/)
 
 ## 声明
 
@@ -15,6 +17,8 @@
 [Aquaman管理系统.xmind](https://github.com/kukukakiki/aquaman/tree/master/aquaman-doc/1.%20requirements)
 
 ## 表设计
+
+目前表结构尚在设计阶段不稳定，待发布正式版本后，将完成表结构提交至GITHUB上！！！
 
 [表设计及SQL语句](https://github.com/kukukakiki/aquaman/tree/master/aquaman-doc/2.design/1.db%20design)
 
