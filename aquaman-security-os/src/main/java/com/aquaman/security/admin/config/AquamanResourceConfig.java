@@ -92,7 +92,7 @@ public class AquamanResourceConfig extends ResourceServerConfigurerAdapter {
             // 过滤OPTIONS请求
             .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
             // 过滤该URL
-            .antMatchers(aquamanSecurityProperties.getAuthorization().getLoginPage()).permitAll()
+            .antMatchers(aquamanSecurityProperties.getAuthorization().getLoginPage(), "/file/upload").permitAll()
             // 任何请求
             .anyRequest().authenticated()
             // 取消跨站请求防护

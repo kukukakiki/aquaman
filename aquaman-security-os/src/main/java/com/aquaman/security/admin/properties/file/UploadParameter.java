@@ -9,7 +9,7 @@ import lombok.Data;
  * @since 2019/7/30
  */
 @Data
-public class UploadFileParame {
+public class UploadParameter {
 
     private String path;
 

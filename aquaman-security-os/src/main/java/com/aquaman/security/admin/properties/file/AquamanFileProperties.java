@@ -9,9 +9,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @version 2019/7/30
  * @since 2019/7/30
  */
-@ConfigurationProperties(prefix = "aquaman.uploadFile")
+@ConfigurationProperties(prefix = "aquaman.file")
 @Data
-public class AquamanUploadFileProperties {
+public class AquamanFileProperties {
 
-    UploadFileParame uploadFile = new UploadFileParame();
+    UploadParameter upload = new UploadParameter();
 }

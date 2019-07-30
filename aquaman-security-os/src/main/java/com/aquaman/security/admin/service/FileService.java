@@ -3,6 +3,8 @@ package com.aquaman.security.admin.service;
 import com.aquaman.security.admin.entity.vo.ResultVO;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 /**
  * 请填写类注释
  *
@@ -16,7 +18,7 @@ public interface FileService {
      * @param file
      * @return
      */
-    ResultVO uploadFile(MultipartFile file);
+    boolean uploadFile(MultipartFile file) throws IOException;
 
     /**
      * 附件下载

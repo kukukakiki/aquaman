@@ -4,7 +4,7 @@
       :show-file-list="false"
       :on-success="handleAvatarSuccess"
       list-type="picture-card"
-      action="https://jsonplaceholder.typicode.com/posts/">
+      action="http://aquaman.leerzoom.com:8001/file/upload">
       <img v-if="imageUrl" :src="imageUrl" class="avatar">
       <i v-else class="el-icon-plus avatar-uploader-icon" />
     </el-upload>

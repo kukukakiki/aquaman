@@ -23,7 +23,7 @@ SOFTWARE.
  */
 package com.aquaman.security.admin.properties.config;
 
-import com.aquaman.security.admin.properties.file.AquamanUploadFileProperties;
+import com.aquaman.security.admin.properties.file.AquamanFileProperties;
 import com.aquaman.security.admin.properties.security.AquamanSecurityProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -35,6 +35,6 @@ import org.springframework.context.annotation.Configuration;
  * @since 2019/2/28
  */
 @Configuration
-@EnableConfigurationProperties({AquamanSecurityProperties.class, AquamanUploadFileProperties.class})
+@EnableConfigurationProperties({AquamanSecurityProperties.class, AquamanFileProperties.class})
 public class PropertiesConfig {
 }

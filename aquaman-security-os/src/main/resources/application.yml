@@ -55,9 +55,9 @@ logging:
 
 # Aquaman自定义配置项目
 aquaman:
-  upload-file:
-    path: /upload/file/
-    max-size: 20
+  file:
+    upload:
+      path: C://
   security:
     authorization:
       # 登陆访问uri路径

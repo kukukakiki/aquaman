@@ -1,12 +1,16 @@
 package com.aquaman.security.admin.service.impl;
 
 import com.aquaman.security.admin.entity.vo.ResultVO;
-import com.aquaman.security.admin.properties.file.AquamanUploadFileProperties;
+import com.aquaman.security.admin.properties.file.AquamanFileProperties;
 import com.aquaman.security.admin.service.FileService;
-import org.apache.commons.lang3.time.DateUtils;
+import com.aquaman.security.admin.utils.DateUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * @author 创建者 wei.wang
@@ -18,18 +22,31 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileServiceImpl implements FileService {
 
     @Autowired
-    private AquamanUploadFileProperties uploadFileProperties;
+    private AquamanFileProperties uploadFileProperties;
 
     @Override
-    public ResultVO uploadFile(MultipartFile file) {
-        String path = uploadFileProperties.getUploadFile().getPath();
+    public boolean uploadFile(MultipartFile file) throws IOException {
+        // 组装文件全路径（配置路径+年月日）
+        String fullPath = StringUtils.join(uploadFileProperties.getUpload().getPath()
+                , "/", DateUtils.customDateFormat("yyyyMMdd"), "/");
+        // 文件名称
         String fileName = file.getOriginalFilename();
-        // TODO 未完成,需要需要增加校验,存放的完整路径等等
-        return null;
+        // 截取文件后缀
+        String fileSuffix = StringUtils.substringAfterLast(fileName, ".");
+        // 系统存档的文件名
+        String newFileName = StringUtils.join(DateUtils.currentUnsigned(), ".", fileSuffix);
+        File uploadFile = new File(fullPath);
+        if(!uploadFile.exists()) {
+            uploadFile.mkdirs();
+        }
+        uploadFile = new File(fullPath + newFileName);
+        file.transferTo(uploadFile);
+        return true;
     }
 
     @Override
     public ResultVO downloadFile(String path) {
         return null;
     }
+
 }
