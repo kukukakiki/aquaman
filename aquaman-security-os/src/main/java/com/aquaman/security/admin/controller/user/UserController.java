@@ -117,6 +117,17 @@ public class UserController extends BaseController {
     }
 
     /**
+     * 获取登录用户详情
+     * @return
+     */
+    @GetMapping("/info")
+    public ResultVO info(){
+        User user = CurrentUserUtil.getLoginUserInfo();
+        ResultVO<User> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, user);
+        return resultVO;
+    }
+
+    /**
      * 根据当前登陆用户获取菜单
      * @return
      */

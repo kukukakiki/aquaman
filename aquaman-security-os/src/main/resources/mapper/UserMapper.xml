@@ -70,20 +70,12 @@
     </update>
 
     <select id="findUserFullInfoByAccount" parameterType="java.lang.String"  resultMap="ResultUserFullInfo">
-        select <include refid="Base_Column_List" />, ur.id as user_role_id, ur.role_ids,
-            GROUP_CONCAT(rm.menu_ids) as menu_ids,d.name, d.id dept_id
-        from
-            ad_user t,
-            ad_user_role ur,
-            ad_role_menu rm,
-            ad_dept d
+        SELECT <include refid="Base_Column_List" />, ui.image_file_id, ui.card, ui.tel, ui.nationality, ui.province, ui.city, ui.area, ui.address, ui.postcode, ui.hobby
+        FROM
+        ad_user t
+        LEFT JOIN ad_user_info ui ON t.id = ui.id
         WHERE
-            ur.user_id = id
-        AND du.dept_id = d.id
-        AND t.account = #{account,jdbcType=VARCHAR}
-        AND FIND_IN_SET(rm.role_id, ur.role_ids)
-        AND FIND_IN_SET(id, du.user_ids)
-        AND t.dept_id = d.id
+        t.account = #{account,jdbcType=VARCHAR}
     </select>
 
 </mapper>

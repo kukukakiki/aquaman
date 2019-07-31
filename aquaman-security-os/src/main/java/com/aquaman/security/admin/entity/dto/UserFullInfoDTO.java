@@ -23,12 +23,97 @@ SOFTWARE.
  */
 package com.aquaman.security.admin.entity.dto;
 
+import com.aquaman.security.admin.enums.StatusEnum;
+import com.aquaman.security.admin.enums.UserRegisterTypeEnum;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+
 /**
- * 用户详情DTO，包含部门，角色，等信息
+ * 用户详情DTO
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
  * @version 2019-07-19
  * @since 2019-07-19
  */
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
 public class UserFullInfoDTO {
+
+    /**
+     * 主键ID
+     */
+    private Long id;
+
+
+    /**
+     * 用户名
+     */
+    private String account;
+
+    /**
+     * 用户姓名
+     */
+    private String name;
+
+
+    /**
+     * 昵称
+     */
+    private String nickName;
+
+
+    /**
+     * 手机
+     */
+    private String mobile;
+
+
+    /**
+     * 邮箱
+     */
+    private String email;
+
+
+    /**
+     * 所属部门ID
+     */
+    private Long deptId;
+
+
+    /**
+     * 状态
+     */
+    private StatusEnum status;
+
+
+    /**
+     * 类型
+     */
+    private UserRegisterTypeEnum type;
+
+
+    /**
+     * 最后登录时间
+     */
+    private Long loginTime;
+
+
+    /**
+     * 权限Code
+     */
+    private String permissionCode;
+
+
+    /**
+     * 创建时间
+     */
+    private Long gmtCreate;
+
+
+    /**
+     * 修改时间
+     */
+    private Long gmtModify;
 }
