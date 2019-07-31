@@ -53,16 +53,13 @@ public class CurrentUserUtil {
      */
     public static User getLoginUserInfo() {
         IUserService userService = SpringUtil.getBean(IUserService.class);
-        String userName =  (String) SecurityContextHolder.getContext().getAuthentication() .getPrincipal();
-        User loginUser = loginUserMap.get(userName);
+        String account =  (String) SecurityContextHolder.getContext().getAuthentication() .getPrincipal();
+        User loginUser = loginUserMap.get(account);
         if(loginUser != null) {
             return loginUser;
         }
-        UserQuery query = new UserQuery();
-        query.setAccount(userName);
-        IPage<User> user =  userService.page(query);
-        if(CollectionUtils.isNotEmpty(user.getRecords())){
-            loginUser = user.getRecords().get(0);
+        loginUser =  userService.loadUserByUsername(account);
+        if(loginUser != null){
             loginUserMap.put(loginUser.getAccount(), loginUser);
         }
         return loginUser;

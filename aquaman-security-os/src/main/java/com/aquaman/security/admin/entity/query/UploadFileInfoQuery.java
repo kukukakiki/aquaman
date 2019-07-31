@@ -22,6 +22,7 @@ import java.math.BigDecimal;
  * @since 2019-07-31
  */
 @Data
+@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 public class UploadFileInfoQuery extends PageQuery<UploadFileInfo> implements Serializable {
 

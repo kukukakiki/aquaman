@@ -14,6 +14,7 @@ import java.io.Serializable;
  * @since 2019-05-05
  */
 @Data
+@Deprecated
 public class DeptUserQuery extends PageQuery<DeptUser> implements Serializable {
 
     private static final long serialVersionUID = 1L;

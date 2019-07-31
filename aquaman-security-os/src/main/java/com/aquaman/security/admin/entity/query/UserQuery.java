@@ -27,6 +27,8 @@ import com.aquaman.security.admin.entity.domain.User;
 import com.aquaman.security.admin.enums.StatusEnum;
 import com.aquaman.security.admin.enums.UserRegisterTypeEnum;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -37,6 +39,8 @@ import java.io.Serializable;
  * @since 2019/2/27
  */
 @Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
 public class UserQuery extends PageQuery<User> implements Serializable {
 
     private static final long serialVersionUID = 8874511002284155516L;

@@ -26,6 +26,8 @@ package com.aquaman.security.admin.entity.query;
 import com.aquaman.security.admin.entity.domain.Menu;
 import com.aquaman.security.admin.enums.DisplayMenuEnum;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -36,6 +38,8 @@ import java.io.Serializable;
  * @since 2019/3/4
  */
 @Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
 public class MenuQuery extends PageQuery<Menu> implements Serializable {
 
     private static final long serialVersionUID = 2529460702876533867L;

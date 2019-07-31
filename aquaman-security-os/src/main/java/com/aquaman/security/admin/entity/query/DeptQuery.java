@@ -20,6 +20,7 @@ import java.io.Serializable;
  * @since 2019-05-05
  */
 @Data
+@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 public class DeptQuery extends PageQuery<Dept> implements Serializable {
 

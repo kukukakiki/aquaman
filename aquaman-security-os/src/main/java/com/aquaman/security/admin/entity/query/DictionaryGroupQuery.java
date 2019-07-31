@@ -2,6 +2,7 @@ package com.aquaman.security.admin.entity.query;
 
 import com.aquaman.security.admin.entity.domain.DictionaryGroup;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
@@ -15,6 +16,7 @@ import java.io.Serializable;
  * @since 2019-07-27
  */
 @Data
+@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 public class DictionaryGroupQuery extends PageQuery<DictionaryGroup> implements Serializable  {
 

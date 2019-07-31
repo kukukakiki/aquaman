@@ -17,6 +17,7 @@ import java.io.Serializable;
  * @since 2019-07-28
  */
 @Data
+@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 public class LogQuery implements Serializable {
 
