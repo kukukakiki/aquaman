@@ -8,7 +8,7 @@
 
 ## 声明
 
-本项目会长期更新并维护，不定期提交更新，可能会因为工作，生活等原因导致更新不及时问题请谅解）
+目前并未发布正式版，不能将其部署至生产环境使用，如若使用后果自负！！！
 
 ## 开发进度
 
@@ -80,12 +80,11 @@ public interface IAquamanService<T> extends IService<T> {
 }
 ```
 
-## 前端fe工程
+## 开源项目
 
-前端工程基于[vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)开发
+前端框架[vue-element-admin](https://panjiachen.github.io/vue-element-admin-site/zh/)
 
-在此鸣谢vue-element-admin贡献者们
+ORM框架[MyBatis-Plus](https://mp.baomidou.com/)
 
-## 问题记录跟踪
+在此鸣谢开源项目贡献者们
 
-[有道笔记传送门](http://note.youdao.com/noteshare?id=d212a2fa2f7850518572b904e28d05ad)
