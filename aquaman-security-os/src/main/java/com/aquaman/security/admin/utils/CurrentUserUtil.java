@@ -28,8 +28,11 @@ import com.aquaman.security.admin.entity.query.UserQuery;
 import com.aquaman.security.admin.service.IUserService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.experimental.UtilityClass;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 当前登陆用户
@@ -41,6 +44,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @UtilityClass
 public class CurrentUserUtil {
 
+    private ConcurrentHashMap<String, User> loginUserMap = new ConcurrentHashMap<>();
+
     /**
      * 获取当前登陆用户
      * TODO 改造编号201903311114
@@ -49,10 +54,17 @@ public class CurrentUserUtil {
     public static User getLoginUserInfo() {
         IUserService userService = SpringUtil.getBean(IUserService.class);
         String userName =  (String) SecurityContextHolder.getContext().getAuthentication() .getPrincipal();
+        User loginUser = loginUserMap.get(userName);
+        if(loginUser != null) {
+            return loginUser;
+        }
         UserQuery query = new UserQuery();
         query.setAccount(userName);
         IPage<User> user =  userService.page(query);
-        User currentUser = user.getRecords().get(0);
-        return currentUser;
+        if(CollectionUtils.isNotEmpty(user.getRecords())){
+            loginUser = user.getRecords().get(0);
+            loginUserMap.put(loginUser.getAccount(), loginUser);
+        }
+        return loginUser;
     }
 }

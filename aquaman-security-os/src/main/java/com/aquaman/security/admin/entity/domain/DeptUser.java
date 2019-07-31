@@ -10,7 +10,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ * 表结构改造后废弃,部门ID字段数据已经冗余{@link User}中
  * </p>
  *
  * @author wei wang
@@ -20,6 +20,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("ad_dept_user")
+@Deprecated
 public class DeptUser implements Serializable {
 
     private static final long serialVersionUID = 1L;

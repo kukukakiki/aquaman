@@ -4,6 +4,7 @@ import com.aquaman.security.admin.entity.domain.RoleMenu;
 import com.aquaman.security.admin.entity.query.RoleMenuQuery;
 import com.aquaman.security.admin.mapper.RoleMenuMapper;
 import com.aquaman.security.admin.service.IRoleMenuService;
+import com.aquaman.security.common.constant.AquamanConstant;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -41,10 +42,10 @@ public class RoleMenuServiceImpl extends ServiceImpl<RoleMenuMapper, RoleMenu> i
             StringBuffer sb = new StringBuffer();
             for(RoleMenu roleMenu : list){
                 // 拼接菜单id
-                sb.append(roleMenu.getMenuIds()).append(",");
+                sb.append(roleMenu.getMenuIds()).append(AquamanConstant.COMMA_SYMBOL);
             }
             // 返回集合
-            return Arrays.asList(sb.toString().split(","));
+            return Arrays.asList(sb.toString().split(AquamanConstant.COMMA_SYMBOL));
         }
         log.warn("角色集{}，查询菜单为空", roleIds);
         return null;

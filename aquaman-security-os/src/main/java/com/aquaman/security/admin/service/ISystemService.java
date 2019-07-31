@@ -15,13 +15,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author wei wang
  * @since 2019-07-20
  */
-public interface ISystemService extends IService<System> {
-
-    /**
-     * 角色分页查询
-     * @param query
-     * @return
-     */
-    IPage<System> page(SystemQuery query);
+public interface ISystemService extends IAquamanService<System> {
 
 }

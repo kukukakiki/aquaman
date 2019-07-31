@@ -27,12 +27,6 @@ public class DictionaryItemServiceImpl extends ServiceImpl<DictionaryItemMapper,
     @Autowired
     private DictionaryItemMapper dictionaryItemMapper;
 
-
-    @Override
-    public IPage<DictionaryItem> page(DictionaryItemQuery query) {
-        return dictionaryItemMapper.selectPage(query, query.instanceQueryWrapper());
-    }
-
     @Override
     public Optional<IPage<DictionaryItem>> findItemByGroupId(DictionaryItemQuery query) {
         Assert.notNull(query.getGroupId(), "字典目录ID不能为空");

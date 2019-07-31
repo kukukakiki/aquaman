@@ -27,6 +27,8 @@ import com.aquaman.security.admin.handler.login.LoginFailureHandler;
 import com.aquaman.security.admin.handler.login.LoginSuccessHandler;
 import com.aquaman.security.admin.handler.logout.LogoutSuccessHandler;
 import com.aquaman.security.admin.properties.security.AquamanSecurityProperties;
+import com.aquaman.security.common.constant.AquamanConstant;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -92,7 +94,8 @@ public class AquamanResourceConfig extends ResourceServerConfigurerAdapter {
             // 过滤OPTIONS请求
             .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
             // 过滤该URL
-            .antMatchers(aquamanSecurityProperties.getAuthorization().getLoginPage(), "/file/upload").permitAll()
+            // StringUtils.trim(aquamanSecurityProperties.getAuthorization().getIgnoreUri()).split(",")
+            .antMatchers(aquamanSecurityProperties.getAuthorization().getIgnoreUri().split(AquamanConstant.COMMA_SYMBOL)).permitAll()
             // 任何请求
             .anyRequest().authenticated()
             // 取消跨站请求防护

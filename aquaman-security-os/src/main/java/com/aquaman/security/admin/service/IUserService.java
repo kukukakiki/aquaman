@@ -20,7 +20,7 @@ import java.util.Collection;
  * @author kukukakiki
  * @since 2019-03-01
  */
-public interface IUserService extends IService<User>, UserDetailsService {
+public interface IUserService extends IAquamanService<User>, UserDetailsService {
 
     /**
      * 根据account查询用户信息
@@ -30,13 +30,6 @@ public interface IUserService extends IService<User>, UserDetailsService {
      */
     @Override
     User loadUserByUsername(String account) throws UsernameNotFoundException;
-
-    /**
-     * 用户分页查询
-     * @param query
-     * @return
-     */
-    IPage<User> page(UserQuery query);
 
     /**
      * 更新最后登录时间

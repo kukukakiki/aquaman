@@ -20,11 +20,4 @@ import org.springframework.stereotype.Service;
 @Service
 public class DictionaryGroupServiceImpl extends ServiceImpl<DictionaryGroupMapper, DictionaryGroup> implements IDictionaryGroupService {
 
-    @Autowired
-    private DictionaryGroupMapper dictionaryGroupMapper;
-
-    @Override
-    public IPage<DictionaryGroup> page(DictionaryGroupQuery query) {
-        return dictionaryGroupMapper.selectPage(query, query.instanceQueryWrapper());
-    }
 }

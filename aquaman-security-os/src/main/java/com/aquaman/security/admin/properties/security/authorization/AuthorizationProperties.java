@@ -35,5 +35,13 @@ import lombok.Data;
 @Data
 public class AuthorizationProperties {
 
+    /**
+     * 登录页面URI
+     */
     private String loginPage;
+
+    /**
+     * 过滤URI集合
+     */
+    private String ignoreUri;
 }

@@ -39,7 +39,7 @@ public class DictionaryItemController extends BaseController {
      */
     @GetMapping
     public ResultVO<List<DictionaryItem>> getByPage(DictionaryItemQuery DictionaryItemQuery){
-        IPage<DictionaryItem> page1 = dictionaryItemService.page(DictionaryItemQuery);
+        IPage<DictionaryItem> page1 = dictionaryItemService.pageByQuery(DictionaryItemQuery);
         ResultVO<List<DictionaryItem>> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, page1);
         return resultVO;
     }

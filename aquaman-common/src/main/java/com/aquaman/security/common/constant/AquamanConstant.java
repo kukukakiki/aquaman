@@ -18,4 +18,14 @@ public class AquamanConstant {
      * 日志标识符
      */
     public static final transient String LOG_TAG = "---------------------------------";
+
+    /**
+     * 逗号标识符
+     */
+    public static final transient String COMMA_SYMBOL  = ",";
+
+    /**
+     * 点标识符
+     */
+    public static final transient String POINT_SYMBOL  = ".";
 }

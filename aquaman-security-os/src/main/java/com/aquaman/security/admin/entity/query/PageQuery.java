@@ -41,6 +41,8 @@ import java.util.List;
  */
 public class PageQuery<T> implements IPage<T> {
 
+    private static final long serialVersionUID = -4445390117757525729L;
+
     /**
      * 查询数据列表
      */

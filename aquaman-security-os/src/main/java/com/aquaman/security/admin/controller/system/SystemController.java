@@ -41,7 +41,7 @@ public class SystemController extends BaseController {
      */
     @GetMapping
     public ResultVO<IPage<System>> getByPage(SystemQuery query) {
-        IPage<System> page1 = systemService.page(query);
+        IPage<System> page1 = systemService.pageByQuery(query);
         ResultVO<IPage<System>> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, page1);
         return resultVO;
     }

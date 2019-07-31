@@ -39,6 +39,7 @@ import com.aquaman.security.admin.service.IUserRoleService;
 import com.aquaman.security.admin.service.IUserService;
 import com.aquaman.security.admin.utils.CollectionUtil;
 import com.aquaman.security.admin.utils.CurrentUserUtil;
+import com.aquaman.security.common.constant.AquamanConstant;
 import com.aquaman.security.common.enums.ResultCodeEnum;
 import com.aquaman.security.common.view.DetailView;
 import com.aquaman.security.common.view.ListView;
@@ -97,7 +98,7 @@ public class UserController extends BaseController {
     @GetMapping
     @AquamanLog
     public ResultVO<List<User>> getByPage(UserQuery userQuery){
-        IPage<User> page1 = userService.page(userQuery);
+        IPage<User> page1 = userService.pageByQuery(userQuery);
         ResultVO<List<User>> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, page1);
         return resultVO;
     }
@@ -127,7 +128,7 @@ public class UserController extends BaseController {
             UserRoleQuery userRoleQuery = new UserRoleQuery();
             userRoleQuery.setUserId(user.getId());
             UserRole userRole = userRoleService.getOne(userRoleQuery.instanceQueryWrapper());
-            List<String> list = Arrays.asList(userRole.getRoleIds().split(","));
+            List<String> list = Arrays.asList(userRole.getRoleIds().split(AquamanConstant.COMMA_SYMBOL));
             List<String> menuIds = roleMenuService.findMenuIdsByRoleIds(CollectionUtil.stringToLong(list));
             List<MenuTreeVO> menuTreeVOList = menuService.findMenuTreeVOByIds(CollectionUtil.stringToLong(menuIds));
             log.info("{}", menuTreeVOList);

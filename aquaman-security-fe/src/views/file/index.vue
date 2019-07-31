@@ -3,11 +3,11 @@
     <el-form ref="queryForm" :inline="true" :model="query" class="demo-form-inline">
       <el-row>
         <el-col :span="8">
-          <el-button-group>
+          <!-- <el-button-group>
             <el-button v-show_button="'adminAdd'" type="primary" @click.stop="addHandler">新增</el-button>
             <el-button v-show_button="'adminView'" :disabled="!showButton" type="primary" @click="viewHandler">查阅</el-button>
             <el-button v-show_button="'adminUpdate'" :disabled="!showButton" type="primary" @click.stop="updateHandler">修改</el-button>
-          </el-button-group>
+          </el-button-group> -->
         </el-col>
         <el-col :span="16">
           <el-button-group style="float:right">
@@ -15,8 +15,8 @@
             <el-button type="primary" icon="el-icon-more" title="更多条件" @click="showMoreQuery" />
             <el-button type="primary" icon="el-icon-refresh" title="清空条件" @click="resetQuery" />
           </el-button-group>
-          <el-form-item label="用户名称" style="float:right" prop="account">
-            <el-input v-model="query.account" placeholder="用户名称" />
+          <el-form-item label="附件名称" style="float:right" prop="name">
+            <el-input v-model="query.name" placeholder="附件名称" />
           </el-form-item>
         </el-col>
       </el-row>
@@ -24,10 +24,10 @@
         <div v-if="hiddenQuery">
           <el-row class="my_row">
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
-              <el-form-item label="用户状态" prop="status">
-                <el-select v-model="query.status" placeholder="选择状态">
-                  <el-option label="启用" value="START" />
-                  <el-option label="停用" value="STOP" />
+              <el-form-item label="附件状态" prop="isDeleted">
+                <el-select v-model="query.isDeleted" placeholder="选择状态">
+                  <el-option label="生效" value="1" />
+                  <el-option label="删除" value="0" />
                 </el-select>
               </el-form-item>
             </el-col>
@@ -36,10 +36,10 @@
       </transition>
     </el-form>
     <el-table v-loading="loading" :data="items" border style="width: 100%" highlight-current-row @current-change="handleCurrentChange">
-      <el-table-column prop="account" label="用户名" />
-      <el-table-column prop="name" label="姓名" />
-      <el-table-column prop="nickName" label="昵称" />
-      <el-table-column prop="email" label="邮箱" />
+      <el-table-column prop="name" label="附件名称" />
+      <el-table-column prop="fileSize" label="附件大小" />
+      <el-table-column prop="suffix" label="附件后缀" />
+      <el-table-column prop="createUserAccount" label="上传用户" />
       <el-table-column prop="gmtCreate" label="创建时间">
         <template slot-scope="scope">
           <i class="el-icon-time" />
@@ -52,8 +52,10 @@
 </template>
 
 <script>
+import { queryByPage } from '@/api/common'
 import Pagination from '@/components/Pagination'
 import CheckBoxRole from '@/components/Business/Role/CheckBoxRole'
+import { resultValidate } from '@/utils/validate'
 
 export default {
   components: {
@@ -66,6 +68,8 @@ export default {
       showButton: false, // 显示执行按钮
       loading: false, // 页面loading标示
       query: { // 列表查询对象
+        name: '',
+        isDeleted: '',
         total: 0, // 总条数
         size: 5, // 每页条数
         current: 1 // 当前页码数
@@ -92,7 +96,22 @@ export default {
      */
     fetchData() {
       this.loading = true
-      this.loading = false
+      queryByPage('upload_file_info', this.query).then(response => {
+        const data = response.result
+        if (resultValidate(response.code)) {
+          this.items = data.records
+          this.query.total = data.total
+          this.query.size = data.size
+        }
+        this.loading = false
+      }).catch(error => {
+        this.$message({
+          message: error.msg,
+          type: 'error',
+          duration: 5 * 1000
+        })
+        this.loading = false
+      })
     },
     /**
      * 获取当前列表选中行

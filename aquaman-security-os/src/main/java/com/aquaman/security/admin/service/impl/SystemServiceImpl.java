@@ -21,11 +21,4 @@ import org.springframework.stereotype.Service;
 @Service
 public class SystemServiceImpl extends ServiceImpl<SystemMapper, System> implements ISystemService {
 
-    @Autowired
-    private SystemMapper systemMapper;
-
-    @Override
-    public IPage<System> page(SystemQuery query) {
-        return systemMapper.selectPage(query, query.instanceQueryWrapper());
-    }
 }

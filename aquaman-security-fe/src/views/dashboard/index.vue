@@ -3,29 +3,42 @@
     <el-upload
       :show-file-list="false"
       :on-success="handleAvatarSuccess"
-      list-type="picture-card"
-      action="http://aquaman.leerzoom.com:8001/file/upload">
-      <img v-if="imageUrl" :src="imageUrl" class="avatar">
+      :action="getUploadFormUrl()"
+      :headers="authorizationHeaders"
+      list-type="picture-card">
+      <el-image v-if="imageUrl" :src="imageUrl">
+        <div slot="error" class="image-slot">
+          <i class="el-icon-picture-outline" />
+        </div>
+      </el-image>
       <i v-else class="el-icon-plus avatar-uploader-icon" />
     </el-upload>
   </div>
 </template>
 
 <script>
+import { getToken } from '@/utils/auth'
 
 export default {
   name: 'Dashboard',
   data() {
     return {
-      imageUrl: ''
+      imageUrl: '',
+      authorizationHeaders: { Authorization: 'Bearer ' + getToken() }
     }
   },
   created() {
     this.fetchData()
   },
   methods: {
+    getUploadFormUrl() {
+      return process.env.BASE_API + '/upload_file_info/upload'
+    },
     fetchData() {},
-    handleAvatarSuccess() {}
+    handleAvatarSuccess(res, file) {
+      this.imageUrl = process.env.BASE_API + '/upload_file_info/download/' + res.result
+      console.log('附件下载地址:', this.imageUrl)
+    }
   }
 }
 </script>

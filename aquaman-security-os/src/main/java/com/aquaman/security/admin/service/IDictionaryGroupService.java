@@ -13,8 +13,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author wei wang
  * @since 2019-07-27
  */
-public interface IDictionaryGroupService extends IService<DictionaryGroup> {
-
-    IPage<DictionaryGroup> page(DictionaryGroupQuery query);
+public interface IDictionaryGroupService extends IAquamanService<DictionaryGroup> {
 
 }

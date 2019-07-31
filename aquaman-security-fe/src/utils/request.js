@@ -100,6 +100,7 @@ service.interceptors.response.use(
   },
   error => {
     console.log('err' + error) // for debug
+    // 如果http返回status为401,应该提示"用户登录态已失效，请重新登录"
     closeLoading()
     Message({
       message: error.message,

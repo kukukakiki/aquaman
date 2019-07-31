@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aquaman.security.admin.mapper.UploadFileInfoMapper">
+
+    <insert id="insertAndGetId" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="com.aquaman.security.admin.entity.domain.UploadFileInfo">
+        insert into ad_upload_file_info(name, path, suffix, file_size, origin_system_id, is_deleted,
+        create_user_id, create_user_account, gmt_create, gmt_modify)
+        values(#{name,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, #{suffix,jdbcType=VARCHAR},
+        #{fileSize,jdbcType=BIGINT}, #{originSystemId,jdbcType=BIGINT}, #{isDeleted,jdbcType=BIGINT}, #{createUserId,jdbcType=BIGINT}, #{createUserAccount},
+        DATE_FORMAT(NOW(), '%Y%m%d%H%i%s'), DATE_FORMAT(NOW(), '%Y%m%d%H%i%s'))
+    </insert>
+
+</mapper>

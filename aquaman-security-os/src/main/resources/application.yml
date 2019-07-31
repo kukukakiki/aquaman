@@ -57,11 +57,12 @@ logging:
 aquaman:
   file:
     upload:
-      path: C://
+      path: D:\upload\file
   security:
     authorization:
       # 登陆访问uri路径
       login-page: /login
+      ignore-uri: /login,/file/upload,/upload_file_info/download/*
     oauth2:
       # jwt盐值
       jwt-salt: aquamanSystem

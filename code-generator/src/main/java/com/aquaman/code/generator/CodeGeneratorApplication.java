@@ -41,7 +41,7 @@ public class CodeGeneratorApplication {
 
     private static final String PROJECT_PARENT_PAGE = "com.aquaman.security";
 
-    private static final String CURRENT_EXECUTE_TABLE = "ad_dept_user";
+    private static final String CURRENT_EXECUTE_TABLE = "ad_upload_file_info";
 
     private static final String PROJECT_NAME = "aquaman-security-os";
 

@@ -42,16 +42,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
-    public IPage<User> page(UserQuery query) {
-        return userMapper.selectPage(query, query .instanceQueryWrapper());
-        // 需要判断入参属性非空，否则会查询空字符串
-//        IPage<User> userIPage = userMapper.selectPage(query, new QueryWrapper<User>()
-//                .eq(StringUtils.isNotEmpty(query.getAccount()),"account", query.getAccount())
-//                .eq(query.getStatus() != null, "status", query.getStatus()));
-//        return userIPage;
-    }
-
-    @Override
     public void updateLoginTime(Long id) {
         userMapper.updateLoginTime(id);
     }

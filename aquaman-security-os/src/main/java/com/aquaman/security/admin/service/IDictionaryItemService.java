@@ -15,14 +15,7 @@ import java.util.Optional;
  * @author wei wang
  * @since 2019-07-27
  */
-public interface IDictionaryItemService extends IService<DictionaryItem> {
-
-    /**
-     * 字典项分页查询
-     * @param query
-     * @return
-     */
-    IPage<DictionaryItem> page(DictionaryItemQuery query);
+public interface IDictionaryItemService extends IAquamanService<DictionaryItem> {
 
     /**
      * 根据字典目录ID查询所属子项集合
