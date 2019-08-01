@@ -90,5 +90,8 @@ export function getLabel(val, key) {
   if (isCollectionNotEmpty(label)) {
     return label[0].label
   }
+  if (label.length === 0) {
+    return ''
+  }
   return label
 }

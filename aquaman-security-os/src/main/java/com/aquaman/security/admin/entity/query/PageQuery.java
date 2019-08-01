@@ -260,6 +260,9 @@ public class PageQuery<T> implements IPage<T> {
                 }
             }
         }
-        return new QueryWrapper(this);
+        QueryWrapper queryWrapper = new QueryWrapper(this);
+        // 默认采用gmt_create倒序
+        // queryWrapper.orderByDesc("gmt_create");
+        return queryWrapper;
     }
 }

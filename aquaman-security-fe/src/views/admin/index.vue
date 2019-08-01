@@ -140,7 +140,7 @@ export default {
       if (val) {
         this.showButton = true
         this.selectId = val.id
-        this.setRoleUserTitle = '【' + val.name + '】分配角色'
+        this.setRoleUserTitle = '【' + (val.name === null ? val.account : val.name) + '】分配角色'
       } else {
         this.showButton = false
       }
@@ -179,7 +179,9 @@ export default {
       getRoleByUserId(this.selectId).then(response => {
         console.log(response.result)
         if (response && response.result) {
-          this.updateUserRole.id = response.result[0].userRoleId
+          if (response && response.result && response.result.length > 0) {
+            this.updateUserRole.id = response.result[0].userRoleId
+          }
         }
         this.checkRole = response.result
         this.dialogVisible = true
