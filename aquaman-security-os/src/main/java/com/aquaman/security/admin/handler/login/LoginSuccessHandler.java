@@ -113,6 +113,8 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
             currentLoginUserDTO.setExpires(oAuth2AccessToken.getExpiresIn());
             currentLoginUserDTO.setAccount(user.getAccount());
             currentLoginUserDTO.setId(user.getId());
+            currentLoginUserDTO.setName(user.getName());
+            currentLoginUserDTO.setImageFileId(user.getImageFileId());
             // 组装返回VO
             ResultVO resultVO = new ResultVO(ResultCodeEnum.SUCCESS, user);
             resultVO.setResult(currentLoginUserDTO);

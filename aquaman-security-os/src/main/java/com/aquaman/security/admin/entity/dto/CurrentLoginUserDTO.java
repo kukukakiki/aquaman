@@ -48,6 +48,16 @@ public class CurrentLoginUserDTO {
     private String account;
 
     /**
+     * 登陆用户姓名
+     */
+    private String name;
+
+    /**
+     * 登陆用户图像
+     */
+    private Long imageFileId;
+
+    /**
      * token值
      */
     private String token;

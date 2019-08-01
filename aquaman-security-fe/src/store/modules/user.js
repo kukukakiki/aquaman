@@ -33,6 +33,11 @@ const user = {
           const data = response.result
           setToken(data.token)
           commit('SET_TOKEN', data.token)
+          commit('SET_NAME', data.name)
+          // 用户图像,关联ad_upload_file表的主键ID
+          debugger
+          const avatar = process.env.BASE_API + '/upload_file_info/download/' + data.imageFileId
+          commit('SET_AVATAR', avatar)
           resolve()
         }).catch(error => {
           reject(error)
@@ -43,13 +48,13 @@ const user = {
     // 获取用户信息
     GetInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
-        getInfo(state.token).then(response => {
-          const data = response.data
-          if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
-            commit('SET_ROLES', data.roles)
-          } else {
-            reject('getInfo: roles must be a non-null array !')
-          }
+        getInfo().then(response => {
+          const data = response.result
+          // if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
+          //   commit('SET_ROLES', data.roles)
+          // } else {
+          //   reject('getInfo: roles must be a non-null array !')
+          // }
           commit('SET_NAME', data.name)
           commit('SET_AVATAR', data.avatar)
           resolve(response)

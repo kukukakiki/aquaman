@@ -3,7 +3,7 @@
 <mapper namespace="com.aquaman.security.admin.mapper.UserMapper">
 
     <sql id="Base_Column_List">
-    t.id, t.account, t.name, t.password, t.nick_name, t.mobile, t.email, t.dept_id, t.status, t.type, t.login_time,
+    t.id, t.account, t.name, t.password, t.nick_name, t.mobile, t.email, t.dept_id, t.status, t.type, t.login_time, t.image_file_id,
     t.permission_code, t.gmt_create, t.gmt_modify
     </sql>
 
@@ -70,7 +70,7 @@
     </update>
 
     <select id="findUserFullInfoByAccount" parameterType="java.lang.String"  resultMap="ResultUserFullInfo">
-        SELECT <include refid="Base_Column_List" />, ui.image_file_id, ui.card, ui.tel, ui.nationality, ui.province, ui.city, ui.area, ui.address, ui.postcode, ui.hobby
+        SELECT <include refid="Base_Column_List" />, ui.card, ui.tel, ui.nationality, ui.province, ui.city, ui.area, ui.address, ui.postcode, ui.hobby
         FROM
         ad_user t
         LEFT JOIN ad_user_info ui ON t.id = ui.id

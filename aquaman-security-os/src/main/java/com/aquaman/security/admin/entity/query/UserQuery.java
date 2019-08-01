@@ -105,6 +105,11 @@ public class UserQuery extends PageQuery<User> implements Serializable {
      */
     private Long loginTime;
 
+    /**
+     * 图像对应ad_upload_file表主键ID
+     */
+    private Long imageFileId;
+
 
     /**
      * 权限Code
