@@ -17,7 +17,9 @@
 ### 1.4.前置准备(aquaman服务器)
 
 > JDK: 1.8+
+>
 > Zookeeper: 3.4.11
+>
 > Kafka: 2.1.0
 
 ## 2.安装
@@ -80,7 +82,7 @@ nohup bin/kafka-server-start.sh config/server.properties &
 
 ### 4.1无法连接zookeeper
 
-提示信息:
+错误信息:
 
 ```
 Timed out waiting for connection while in state: CONNECTING
@@ -101,7 +103,7 @@ zookeeper.connect=localhost:2181
 
 ### 4.2内存过小
 
-提示信息:
+错误信息:
 
 ```
 cannot allocate memory
@@ -109,15 +111,15 @@ cannot allocate memory
 
 解决办法:
 
-由于kafka默认最大和最小都是1G,如果服务器内存剩余空间过小,当无法启动,修改如下:
+问题1:由于kafka默认最大和最小都是1G,如果服务器内存剩余空间过小,当无法启动,修改如下:
 
-1.进入kafka-server-start.sh
+进入kafka-server-start.sh
 
 ```
 vim bin/kafka-server-start.sh
 ```
 
-2.修改配置
+找到对应的行并修改配置
 
 修改前
 
