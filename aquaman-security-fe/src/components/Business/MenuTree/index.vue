@@ -57,7 +57,9 @@ export default {
         const data = response.result
         if (resultValidate(response.code)) {
           this.items = data
-          this.setCheckedKeys()
+          this.$nextTick(function() {
+            this.setCheckedKeys()
+          })
         }
       })
     },
@@ -94,7 +96,7 @@ export default {
       } else {
         setTimeout(() => {
           this.setCheckedKeys()
-        }, 3000)
+        }, 1000)
       }
     },
     whileMenuIdsCheckedElTree(node) {

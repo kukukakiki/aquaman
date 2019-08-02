@@ -37,6 +37,7 @@ public class User implements UserDetails, Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
+    @JsonView(BaseView.class)
     private Long id;
 
     /**

@@ -116,7 +116,6 @@ export default {
       this.submitLoading = true
       queryById('user', id).then(response => {
         this.submitLoading = false
-        console.log(response)
         this.form = response.result
       }).catch(error => {
         this.submitLoading = false
@@ -131,7 +130,7 @@ export default {
         resultSuccessShowMsg(response)
       }).catch(error => {
         this.submitLoading = false
-        console.log(error)
+        console.log(error.response)
       })
     },
     resetForm() {

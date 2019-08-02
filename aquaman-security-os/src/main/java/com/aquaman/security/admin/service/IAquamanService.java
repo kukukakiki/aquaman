@@ -1,6 +1,7 @@
 package com.aquaman.security.admin.service;
 
 import com.aquaman.security.admin.entity.query.PageQuery;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -18,6 +19,9 @@ public interface IAquamanService<T> extends IService<T> {
      * @return
      */
     default IPage<T> pageByQuery(PageQuery query) {
-        return page(query, query.instanceQueryWrapper());
+        QueryWrapper queryWrapper = query.instanceQueryWrapper();
+        // 默认采用gmt_create倒序
+        queryWrapper.orderByDesc("gmt_create");
+        return page(query, queryWrapper);
     }
 }

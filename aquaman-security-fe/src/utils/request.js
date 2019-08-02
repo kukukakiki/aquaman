@@ -99,14 +99,22 @@ service.interceptors.response.use(
     }
   },
   error => {
-    console.log('err', error) // for debug
+    console.log(error.response) // for debug
     // 如果http返回status为401,应该提示"用户登录态已失效，请重新登录"
     closeLoading()
-    Message({
-      message: error.message,
-      type: 'error',
-      duration: 5 * 1000
-    })
+    if (error.response.status === 401) {
+      Message({
+        message: '用户登陆状态已失效，请重新登陆！',
+        type: 'error',
+        duration: 5 * 1000
+      })
+    } else {
+      Message({
+        message: error.message,
+        type: 'error',
+        duration: 5 * 1000
+      })
+    }
     return Promise.reject(error)
   }
 )
