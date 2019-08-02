@@ -8,11 +8,11 @@
 
 ### 1.2.下载zookeeper
 
-[访问zookeeper官方网站](),找到对应的版下载即可,如果想用系统一样的版[本请前往]()
+[访问zookeeper官方网站](https://zookeeper.apache.org/releases.html),找到对应的版下载即可,如果想用系统一样的版[本请前往](https://github.com/kukukakiki/aquaman/tree/master/aquaman-doc/3.software/zookeeper)
 
 ### 1.3.下载kafka
 
-[访问kafka官方网站](http://kafka.apache.org/downloads),找到对应的版下载即可,如果想用系统一样的版[本请前往]()
+[访问kafka官方网站](http://kafka.apache.org/downloads),找到对应的版下载即可,如果想用系统一样的版[本请前往](https://github.com/kukukakiki/aquaman/tree/master/aquaman-doc/3.software/kafka)
 
 ### 1.4.前置准备(aquaman服务器)
 
