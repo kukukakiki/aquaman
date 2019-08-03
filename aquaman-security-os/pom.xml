@@ -19,6 +19,28 @@
 			<artifactId>aquaman-common</artifactId>
 			<version>${base-version}</version>
 		</dependency>
+		<!-- <dependency>
+			<groupId>com.aquaman.security</groupId>
+			<artifactId>aquaman-kafka</artifactId>
+			<version>${base-version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>com.aquaman.security</artifactId>
+					<groupId>aquaman-common</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency> -->
+		<dependency>
+			<groupId>com.aquaman.security</groupId>
+			<artifactId>aquaman-oss</artifactId>
+			<version>${base-version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>com.aquaman.security</artifactId>
+					<groupId>aquaman-common</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>

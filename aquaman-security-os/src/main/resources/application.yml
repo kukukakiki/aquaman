@@ -15,6 +15,8 @@ spring:
       # 解密所需配置
       filters: config
       connection-properties: config.decrypt=true;config.decrypt.key=${publickey}
+  kafka:
+    bootstrap-servers: 101.200.38.213:9092
   # 缓存配置
   redis:
     host: 101.200.38.213
@@ -53,8 +55,16 @@ logging:
   level:
     com.aquaman.security.admin: debug
 
-# Aquaman自定义配置项目
+# Aquaman自定义配置项目aquaman.oss.aliyun
 aquaman:
+  oss:
+    aliyun:
+      management:
+        endpoint: https://oss-cn-beijing.aliyuncs.com
+        access-key-id: LTAIDGS5wLX2ifvh
+        access-key-secret: 04jVewOEhLFRrK7Zon5GoiFuc1KiMS
+        bucket-name: leerzoom
+        oss-path: image/
   file:
     upload:
       path: D:\upload\file
