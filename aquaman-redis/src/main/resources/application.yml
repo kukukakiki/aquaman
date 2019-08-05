@@ -1,0 +1,6 @@
+spring:
+  # 缓存配置
+  redis:
+    host: 101.200.38.213
+    port: 6379
+    password: leerzoom213
