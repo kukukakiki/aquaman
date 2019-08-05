@@ -4,6 +4,7 @@
     <breadcrumb />
     <el-dropdown class="avatar-container" trigger="click">
       <div class="avatar-wrapper">
+        <!-- 直接从store中获取用户邮箱URL -->
         <img :src="avatar" class="user-avatar">
         <i class="el-icon-caret-bottom"/>
       </div>

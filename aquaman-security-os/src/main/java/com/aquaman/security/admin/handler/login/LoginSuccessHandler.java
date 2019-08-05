@@ -107,7 +107,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
             User user = (User) authentication.getPrincipal();
             // 创建当前登陆会员DTO
             CurrentLoginUserDTO currentLoginUserDTO = new CurrentLoginUserDTO();
-            // 设置token、刷新token、token过期时长、用户名、用户ID
+            // 设置token、刷新token、token过期时长、用户名、用户ID、用户头像、用户姓名
             currentLoginUserDTO.setToken(oAuth2AccessToken.getValue());
             currentLoginUserDTO.setRefreshToken(oAuth2AccessToken.getRefreshToken() == null ? null : oAuth2AccessToken.getRefreshToken().getValue());
             currentLoginUserDTO.setExpires(oAuth2AccessToken.getExpiresIn());

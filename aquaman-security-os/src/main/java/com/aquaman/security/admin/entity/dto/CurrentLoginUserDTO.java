@@ -53,7 +53,7 @@ public class CurrentLoginUserDTO {
     private String name;
 
     /**
-     * 登陆用户图像
+     * 用户头像关联ad_upload_file表主键ID
      */
     private Long imageFileId;
 

@@ -59,16 +59,19 @@
         where <include refid="Base_Where_List" />
     </select>
 
+    <!-- 根据部门ID获取用户信息 -->
     <select id="findUserByDeptId" resultType="com.aquaman.security.admin.entity.domain.User">
         select
         <include refid="Base_Column_List" />
         from ad_user t, ad_dept d where t.dept_id = d.id and d.id = #{deptId,jdbcType=BIGINT}
     </select>
 
+    <!-- 更新登录时间 -->
     <update id="updateLoginTime" parameterType="java.lang.Long">
         update ad_user t set login_time = DATE_FORMAT(NOW(), '%Y%m%d%H%i%s') where t.id = #{id,jdbcType=BIGINT}
     </update>
 
+    <!-- 根据用户名称获取全量信息 -->
     <select id="findUserFullInfoByAccount" parameterType="java.lang.String"  resultMap="ResultUserFullInfo">
         SELECT <include refid="Base_Column_List" />, ui.card, ui.tel, ui.nationality, ui.province, ui.city, ui.area, ui.address, ui.postcode, ui.hobby
         FROM
