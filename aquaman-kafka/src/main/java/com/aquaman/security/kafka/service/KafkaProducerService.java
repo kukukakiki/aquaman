@@ -21,33 +21,22 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.aquaman.security.admin;
-
-import com.aquaman.security.admin.utils.SpringUtil;
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.ComponentScans;
+package com.aquaman.security.kafka.service;
 
 /**
- * 引导类
+ * Kafka生产者
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
- * @version 2019/2/26
- * @since 2019/2/26
+ * @version 2019-08-03
+ * @since 2019-08-03
  */
-@MapperScan("com.aquaman.security.admin.mapper")
-@SpringBootApplication
-@ComponentScan(basePackages = {"com.aquaman.security"})
-public class AquamanSecurityOsApplication {
+public interface KafkaProducerService {
 
-    public static void main(String[] args) {
-        ApplicationContext applicationContext = SpringApplication.run(AquamanSecurityOsApplication.class, args);
-        SpringUtil.setApplicationContext(applicationContext);
-    }
-
+    /**
+     * 发送{@link String}类型的消息到队列中
+     * @param topicName 主题名称
+     * @param message 消息内容体
+     * @return
+     */
+   boolean sendMessageByString(String topicName, String message);
 }

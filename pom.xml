@@ -47,7 +47,11 @@
 		<module>aquaman-common</module>
 		<module>/aquaman-security-os</module>
 		<module>code-generator</module>
-    </modules>
+        <module>aquaman-oss</module>
+        <module>aquaman-kafka</module>
+        <module>aquaman-redis</module>
+		<module>aquaman-zookeeper</module>
+	</modules>
 
 	<build>
 		<plugins>

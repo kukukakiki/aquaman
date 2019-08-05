@@ -1,12 +1,10 @@
 package com.aquaman.security.admin.service.impl;
 
 import com.aquaman.security.admin.entity.domain.UploadFileInfo;
-import com.aquaman.security.admin.entity.query.UploadFileInfoQuery;
 import com.aquaman.security.admin.mapper.UploadFileInfoMapper;
 import com.aquaman.security.admin.service.IFileService;
 import com.aquaman.security.admin.service.IUploadFileInfoService;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.aquaman.security.oss.aliyun.service.AliYunOSSUploadService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

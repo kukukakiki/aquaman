@@ -22,6 +22,24 @@
 
 [表设计及SQL语句](https://github.com/kukukakiki/aquaman/tree/master/aquaman-doc/2.design/1.db%20design)
 
+## 模块说明
+```lua
+aquaman
+├── aquaman-fe -- 前端工程[9528]
+├── aquaman-os -- 海王管理系统[8081]
+└── aquaman-common -- 海王管理系统系统公共模块
+├── aquaman-redis -- redis缓存服务
+├── aquaman-kafka -- kafka消息队列服务
+├── aquaman-zookeeper -- zookeeper服务
+└── aquaman-oss -- OSS三通通用服务[阿里云]
+└── aquaman-doc  -- 海王管理系统文档 
+     ├── 1.requirements -- 需求整理
+     └── 2.design -- 海王管理系统设计文档
+            └── 1.db design -- 数据库设置文档
+     └── 99.tool -- 图形化代码生成[5003]
+	 
+```
+
 ## mybatis-plus 改造点记录
 
 ##### 1.空字符串参数不查询
