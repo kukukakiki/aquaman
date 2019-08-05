@@ -8,6 +8,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
@@ -26,6 +27,10 @@ public class RedisTemplateConfig {
     @Resource
     private LettuceConnectionFactory lettuceConnectionFactory;
 
+    /**
+     *
+     * @return
+     */
     @Bean
     public RedisTemplate redisTemplate() {
         RedisTemplate redisTemplate = new RedisTemplate();
@@ -37,5 +42,22 @@ public class RedisTemplateConfig {
         redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
         redisTemplate.afterPropertiesSet();
         return redisTemplate;
+    }
+
+    /**
+     * redis字符串模板
+     * @return
+     */
+    @Bean
+    public StringRedisTemplate stringRedisTemplate() {
+        StringRedisTemplate stringRedisTemplate = new StringRedisTemplate();
+        // lettuce连接redis
+        stringRedisTemplate.setConnectionFactory(lettuceConnectionFactory);
+        //key序列化
+        stringRedisTemplate.setKeySerializer(new StringRedisSerializer());
+        //value序列化
+        stringRedisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        stringRedisTemplate.afterPropertiesSet();
+        return stringRedisTemplate;
     }
 }

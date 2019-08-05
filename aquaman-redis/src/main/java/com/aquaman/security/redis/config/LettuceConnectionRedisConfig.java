@@ -1,13 +1,14 @@
 package com.aquaman.security.redis.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import io.lettuce.core.ReadFrom;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.data.redis.connection.RedisSentinelConfiguration;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
 
 /**
  * 通过Lettuce方式连接redis
@@ -26,9 +27,18 @@ public class LettuceConnectionRedisConfig {
      */
     @Bean
     public LettuceConnectionFactory redisConnectionFactory() {
-        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration("101.200.38.213", 6379);
-        // redisStandaloneConfiguration.setPassword("leerzoom213");
-        return new LettuceConnectionFactory(redisStandaloneConfiguration);
+        // 写主,读从设置
+        /*LettuceClientConfiguration clientConfig = LettuceClientConfiguration.builder()
+        .readFrom(ReadFrom.SLAVE_PREFERRED)
+        .build();*/
+        // 哨兵方式
+        /*RedisSentinelConfiguration sentinelConfig = new RedisSentinelConfiguration();
+        sentinelConfig.setPassword("leerzoom213");
+        sentinelConfig.sentinel("101.200.38.213", 6379);*/
+        // 普通方式
+         RedisStandaloneConfiguration serverConfig = new RedisStandaloneConfiguration("101.200.38.213", 6379);
+         serverConfig.setPassword("leerzoom213");
+        return new LettuceConnectionFactory(serverConfig);
     }
 
 }

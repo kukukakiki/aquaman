@@ -3,6 +3,7 @@ package com.aquaman.security.redis.service.impl;
 import com.aquaman.security.redis.service.RedisOperationsService;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -17,11 +18,19 @@ import javax.annotation.Resource;
 public class RedisOperationsServiceImpl implements RedisOperationsService {
 
 
+    @Resource(name="stringRedisTemplate")
+    private StringRedisTemplate stringRedisTemplate;
+
     @Resource(name="redisTemplate")
-    private RedisTemplate<String, String> listOps;
+    private RedisTemplate redisTemplate;
 
     @Override
     public void addLink(String userId, String value) {
-        listOps.opsForValue().set(userId, value);
+        stringRedisTemplate.opsForValue().set(userId, value);
+    }
+
+    @Override
+    public void addLink(String userId, Object value) {
+        redisTemplate.opsForValue().set(userId, value);
     }
 }

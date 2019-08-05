@@ -1,6 +1,10 @@
 # Spring Boot2.X 使用Redis
 
-[官方文档](https://docs.spring.io/spring-data/redis/docs/2.1.3.RELEASE/reference/html/#why-spring-redis)
+[spring-data-redis:2.1.3.RELEASE官方文档](https://docs.spring.io/spring-data/redis/docs/2.1.3.RELEASE/reference/html/#why-spring-redis)
+
+## Rrdis笔记
+
+[redis笔记目录]()
 
 ## 连接Redis
 

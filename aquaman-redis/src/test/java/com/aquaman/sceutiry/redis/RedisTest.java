@@ -4,10 +4,8 @@ import com.aquaman.security.redis.service.RedisOperationsService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.SpringBootConfiguration;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
@@ -30,5 +28,11 @@ public class RedisTest {
     @Test
     public void test(){
         redisOperationsService.addLink("test111", "测试一下可否");
+    }
+
+    @Test
+    public void test2(){
+        Object o = new Object();
+        redisOperationsService.addLink("test111", o);
     }
 }

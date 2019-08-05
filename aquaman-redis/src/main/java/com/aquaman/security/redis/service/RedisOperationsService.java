@@ -9,4 +9,6 @@ package com.aquaman.security.redis.service;
 public interface RedisOperationsService {
 
     void addLink(String userId, String value);
+
+    void addLink(String userId, Object value);
 }
