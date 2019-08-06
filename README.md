@@ -98,11 +98,13 @@ public interface IAquamanService<T> extends IService<T> {
 }
 ```
 
-## 开源项目
+## 系统已使用开源项目
 
 前端框架[vue-element-admin](https://panjiachen.github.io/vue-element-admin-site/zh/)
 
 ORM框架[MyBatis-Plus](https://mp.baomidou.com/)
+
+还有很多，后期一一列表...
 
 在此鸣谢开源项目贡献者们
 
