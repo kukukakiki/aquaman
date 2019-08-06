@@ -36,7 +36,7 @@ aquaman
      ├── 1.requirements -- 需求整理
      └── 2.design -- 海王管理系统设计文档
             └── 1.db design -- 数据库设置文档
-     └── 99.tool -- 图形化代码生成[5003]
+     └── 99.tool -- 工具&jar包等
 	 
 ```
 
