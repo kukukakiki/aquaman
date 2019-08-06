@@ -14,6 +14,8 @@ import router from './router'
 
 import '@/icons' // icon
 import '@/permission' // permission control
+import dateTime from '@/utils/dateTime' // 时间格式化工具类
+import logger from '@/utils/logger' // 控制台数据控制类
 
 /**
  * This project originally used easy-mock to simulate data,
@@ -26,6 +28,8 @@ import '@/permission' // permission control
 // import '../mock' // simulation data
 
 Vue.use(ElementUI, { size: 'small', locale })
+Vue.use(dateTime)
+Vue.use(logger)
 
 Vue.config.productionTip = false
 

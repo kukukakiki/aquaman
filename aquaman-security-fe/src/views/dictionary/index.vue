@@ -20,7 +20,7 @@
             <!-- <el-table-column prop="gmtCreate" label="创建时间">
               <template slot-scope="scope">
                 <i class="el-icon-time" />
-                <span>{{ formateDate(scope.row.gmtCreate) }}</span>
+                <span>{{ defaultFormateDate(scope.row.gmtCreate) }}</span>
               </template>
             </el-table-column> -->
             <el-table-column fixed="right" label="操作" width="100">
@@ -67,7 +67,7 @@
       :visible.sync="dialogGroupVisible"
       title="字典组"
       width="70%">
-      <el-form ref="form" :rules="groupRules" :model="groupForm" label-width="120px">
+      <el-form ref="groupForm" :rules="groupRules" :model="groupForm" label-width="120px">
         <el-row class="my_row">
           <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
             <el-form-item label="编码" prop="code">
@@ -108,7 +108,7 @@
       :visible.sync="dialogItemVisible"
       title="字典项"
       width="70%">
-      <el-form ref="form" :rules="itemRules" :model="itemForm" label-width="120px">
+      <el-form ref="itemForm" :rules="itemRules" :model="itemForm" label-width="120px">
         <el-row class="my_row">
           <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
             <el-form-item label="编码" prop="code">
@@ -148,7 +148,7 @@
 </template>
 
 <script>
-import { queryByPage, save } from '@/api/common'
+import { queryByPage, save, queryById } from '@/api/common'
 import aqSelect from '@/components/Element/Select'
 import Pagination from '@/components/Pagination'
 import CheckBoxRole from '@/components/Business/Role/CheckBoxRole'
@@ -280,6 +280,9 @@ export default {
       if (val) {
         this.showButton = true
         this.selectId = val.id
+        queryById('dictionary_group', val.id).then(response => {
+          this.groupForm = response.result
+        })
         // 查询该字典组所有字典项的集合
         this.itemQuery.groupId = val.id
         this.fetchItemData()
@@ -289,32 +292,20 @@ export default {
     },
     handleItemCurrentChange(val) {
     },
-    /**
-     * 列表时间转换
-     */
-    formateDate(cellValue) {
-      if (cellValue !== undefined && cellValue !== null && cellValue !== '') {
-        const dateTime = cellValue + ''
-        if (dateTime.length === 14) {
-          const fullYear = dateTime.substring(0, 4)
-          const month = dateTime.substring(4, 6)
-          const day = dateTime.substring(6, 8)
-          const hours = dateTime.substring(8, 10)
-          const minutes = dateTime.substring(10, 12)
-          const seconds = dateTime.substring(12, 14)
-          return fullYear + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds
-        } else {
-          return '暂无时间'
-        }
-      } else {
-        return '暂无时间'
-      }
-    },
     addGroupHandler() {
+      this.resetGroupFormFiedlds()
+      this.loggerInfo('控制台输出：', 'dsadasd电视剧啊看得开', this.selectId)
       this.dialogGroupVisible = true
     },
+    resetGroupFormFiedlds() {
+      this.groupForm.id = ''
+      this.groupForm.code = ''
+      this.groupForm.name = ''
+      this.groupForm.type = ''
+      this.groupForm.status = ''
+      this.groupForm.remark = ''
+    },
     addItemHandler(row) {
-      console.log(row)
       this.itemForm.groupId = row.id
       this.dialogItemVisible = true
     },
@@ -323,7 +314,7 @@ export default {
     viewHandler() {
     },
     submitGroupHandler() {
-      this.$refs['form'].validate(validate => {
+      this.$refs['groupForm'].validate(validate => {
         if (validate) {
           this.submitLoading = true
           save('dictionary_group', this.groupForm).then(response => {
@@ -339,7 +330,7 @@ export default {
       })
     },
     submitItemHandler() {
-      this.$refs['form'].validate(validate => {
+      this.$refs['itemForm'].validate(validate => {
         if (validate) {
           this.submitLoading = true
           save('dictionary_item', this.itemForm).then(response => {

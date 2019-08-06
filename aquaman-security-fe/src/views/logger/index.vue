@@ -43,7 +43,7 @@
       <el-table-column prop="gmtCreate" label="创建时间">
         <template slot-scope="scope">
           <i class="el-icon-time" />
-          <span>{{ formateDate(scope.row.gmtCreate) }}</span>
+          <span>{{ defaultFormateDate(scope.row.gmtCreate) }}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -103,27 +103,6 @@ export default {
         this.selectId = val.id
       } else {
         this.showButton = false
-      }
-    },
-    /**
-     * 列表时间转换
-     */
-    formateDate(cellValue) {
-      if (cellValue !== undefined && cellValue !== null && cellValue !== '') {
-        const dateTime = cellValue + ''
-        if (dateTime.length === 14) {
-          const fullYear = dateTime.substring(0, 4)
-          const month = dateTime.substring(4, 6)
-          const day = dateTime.substring(6, 8)
-          const hours = dateTime.substring(8, 10)
-          const minutes = dateTime.substring(10, 12)
-          const seconds = dateTime.substring(12, 14)
-          return fullYear + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds
-        } else {
-          return '暂无时间'
-        }
-      } else {
-        return '暂无时间'
       }
     },
     addHandler() {
