@@ -31,7 +31,7 @@ aquaman
 ├── aquaman-redis -- redis缓存服务
 ├── aquaman-kafka -- kafka消息队列服务
 ├── aquaman-zookeeper -- zookeeper服务
-└── aquaman-oss -- OSS三通通用服务[阿里云]
+└── aquaman-oss -- OSS第三方服务[阿里云]
 └── aquaman-doc  -- 海王管理系统文档 
      ├── 1.requirements -- 需求整理
      └── 2.design -- 海王管理系统设计文档
