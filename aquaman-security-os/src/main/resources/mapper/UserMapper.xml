@@ -4,7 +4,7 @@
 
     <sql id="Base_Column_List">
     t.id, t.account, t.name, t.password, t.nick_name, t.mobile, t.email, t.dept_id, t.status, t.type, t.login_time, t.image_file_id,
-    t.permission_code, t.gmt_create, t.gmt_modify
+    t.permission_code, t.is_deleted, t.gmt_create, t.gmt_modify
     </sql>
 
 
@@ -33,6 +33,9 @@
         </if>
         <if test="type != null and type != ''">
             and type = #{type,jdbcType=VARCHAR}
+        </if>
+        <if test="isDeleted != null and isDeleted != ''">
+            and is_deleted = #{isDeleted,jdbcType=BIGINT}
         </if>
         <if test="loginTime != null and loginTime != ''">
             and login_time = #{loginTime,jdbcType=BIGINT}

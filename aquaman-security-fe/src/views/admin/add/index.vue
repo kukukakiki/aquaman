@@ -20,11 +20,6 @@
                   </el-form-item>
                 </el-col>
                 <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
-                  <el-form-item label="用户姓名" prop="name">
-                    <el-input v-model="form.name" />
-                  </el-form-item>
-                </el-col>
-                <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
                   <el-form-item label="登陆密码" prop="password">
                     <el-input v-model="form.password" type="password" />
                   </el-form-item>
@@ -32,6 +27,16 @@
                 <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
                   <el-form-item label="用户状态" prop="status">
                     <aq-select :business-type="'status'" :bind-value.sync="form.status" style="width: 100%" />
+                  </el-form-item>
+                </el-col>
+                <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
+                  <el-form-item label="所属部门" prop="deptId">
+                    <radio-dept-tree ref="radioDeptTree" :_id.sync="form.deptId" />
+                  </el-form-item>
+                </el-col>
+                <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
+                  <el-form-item label="用户姓名" prop="name">
+                    <el-input v-model="form.name" />
                   </el-form-item>
                 </el-col>
                 <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
@@ -69,12 +74,14 @@
 
 <script>
 import aqSelect from '@/components/Element/Select'
+import radioDeptTree from '@/components/Business/Dept/RadioTree'
 import { save } from '@/api/common'
 import { resultSuccessShowMsg } from '@/utils/validate'
 
 export default {
   components: {
-    aqSelect
+    aqSelect,
+    radioDeptTree
   },
   data() {
     return {

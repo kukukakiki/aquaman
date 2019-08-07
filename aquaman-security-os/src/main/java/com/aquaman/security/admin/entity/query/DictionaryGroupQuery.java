@@ -50,7 +50,7 @@ public class DictionaryGroupQuery extends PageQuery<DictionaryGroup> implements 
     /**
      * 备注
      */
-    private String remark;
+    private String remarks;
 
     /**
      * 权限表示（暂未启用）
@@ -66,6 +66,11 @@ public class DictionaryGroupQuery extends PageQuery<DictionaryGroup> implements 
      * 修改时间
      */
     private Long gmtModify;
+
+    /**
+     * 是否删除(0:否;1:是)
+     */
+    private Integer isDeleted;
 
 
 }

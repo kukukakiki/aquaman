@@ -55,5 +55,10 @@ public class Dept implements Serializable {
     @DateTimeFormat(pattern = "yyyyMMddHHmmss")
     private Long gmtModify;
 
+    /**
+     * 是否删除(0:否;1:是)
+     */
+    private Integer isDeleted;
+
 
 }

@@ -167,7 +167,7 @@ export default {
       })
     },
     resetForm() {
-      this.$refs['form'].resetFields()
+      this.fetchData(this.form.id)
     },
     goBack() {
       this.$router.push({ path: '/systemMessage/system' })

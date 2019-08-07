@@ -52,7 +52,7 @@ public class DictionaryGroup implements Serializable {
     /**
      * 备注
      */
-    private String remark;
+    private String remarks;
 
     /**
      * 权限表示（暂未启用）
@@ -71,6 +71,11 @@ public class DictionaryGroup implements Serializable {
     @TableField(update = "now()", fill = FieldFill.INSERT_UPDATE)
     @DateTimeFormat(pattern = "yyyyMMddHHmmss")
     private Long gmtModify;
+
+    /**
+     * 是否删除(0:否;1:是)
+     */
+    private Integer isDeleted;
 
 
 }

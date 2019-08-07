@@ -24,7 +24,7 @@
     </resultMap>-->
 
     <sql id="Base_Column_List">
-      t.id, t.system_id, t.code, t.name, t.url, t.router, t.icon_type, t.type, t.display, t.status, t.remark, t.parent_id, t.permission_code, t.gmt_create, t.gmt_modify, t.sort
+      t.id, t.system_id, t.code, t.name, t.url, t.router, t.icon_type, t.type, t.display, t.status, t.remark, t.parent_id, t.permission_code, t.gmt_create, t.gmt_modify, t.sort, t.is_deleted
     </sql>
 
     <!-- DTO改造废弃sql

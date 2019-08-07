@@ -57,5 +57,10 @@ public class UserRole implements Serializable {
     @TableField(update = "now()", fill = FieldFill.INSERT_UPDATE)
     private Long gmtModify;
 
+    /**
+     * 是否删除(0:否;1:是)
+     */
+    private Integer isDeleted;
+
 
 }

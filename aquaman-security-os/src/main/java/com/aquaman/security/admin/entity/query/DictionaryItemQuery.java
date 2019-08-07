@@ -50,7 +50,7 @@ public class DictionaryItemQuery extends PageQuery<DictionaryItem> implements Se
     /**
      * 备注
      */
-    private String remark;
+    private String remarks;
 
     /**
      * 状态
@@ -71,6 +71,11 @@ public class DictionaryItemQuery extends PageQuery<DictionaryItem> implements Se
      * 修改时间
      */
     private Long gmtModify;
+
+    /**
+     * 是否删除(0:否;1:是)
+     */
+    private Integer isDeleted;
 
 
 }

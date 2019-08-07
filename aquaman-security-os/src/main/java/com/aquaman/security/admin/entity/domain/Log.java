@@ -19,7 +19,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("ad_log")
+@TableName("ad_logger")
 public class Log implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -99,6 +99,11 @@ public class Log implements Serializable {
     @TableField(update = "now()", fill = FieldFill.INSERT_UPDATE)
     @DateTimeFormat(pattern = "yyyyMMddHHmmss")
     private Long gmtModify;
+
+    /**
+     * 是否删除(0:否;1:是)
+     */
+    private Integer isDeleted;
 
 
 }

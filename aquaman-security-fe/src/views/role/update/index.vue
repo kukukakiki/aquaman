@@ -101,7 +101,7 @@ export default {
       })
     },
     resetForm() {
-      this.$refs['form'].resetFields()
+      this.fetchData()
     },
     goBack() {
       this.$router.push({ path: '/authorizeManager/role' })

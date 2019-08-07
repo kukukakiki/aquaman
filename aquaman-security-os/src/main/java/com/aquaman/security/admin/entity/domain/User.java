@@ -126,6 +126,11 @@ public class User implements UserDetails, Serializable {
     @DateTimeFormat(pattern = "yyyyMMddHHmmss")
     private Long gmtModify;
 
+    /**
+     * 是否删除(0:否;1:是)
+     */
+    private Integer isDeleted;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -54,5 +54,10 @@ public class DeptQuery extends PageQuery<Dept> implements Serializable {
 
     private Long gmtModify;
 
+    /**
+     * 是否删除(0:否;1:是)
+     */
+    private Integer isDeleted;
+
 
 }

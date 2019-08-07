@@ -2,8 +2,8 @@
   <div class="app-container">
     <el-button-group style="padding-bottom: 10px;">
       <el-button v-show_button="'adminAdd'" type="primary" @click.stop="addGroupHandler">新增</el-button>
-      <el-button v-show_button="'adminView'" :disabled="!showButton" type="primary" @click="viewHandler">查阅</el-button>
-      <el-button v-show_button="'adminUpdate'" :disabled="!showButton" type="primary" @click.stop="updateHandler">修改</el-button>
+      <el-button v-show_button="'adminUpdate'" :disabled="!showButton" type="primary" @click.stop="updateGroupHandler">修改</el-button>
+      <!-- <el-button v-show_button="'adminView'" :disabled="!showButton" type="primary" @click="viewHandler">查阅</el-button> -->
     </el-button-group>
     <el-row>
       <!-- 字典组列表 -->
@@ -39,7 +39,7 @@
             <span>字典项</span>
           </div>
           <!-- @current-change="handleGroupCurrentChange" -->
-          <el-table v-loading="loading" :data="items" border style="width: 100%" highlight-current-row>
+          <el-table v-loading="loading" :data="items" border style="width: 100%" highlight-current-row @current-change="handleItemCurrentChange">
             <el-table-column prop="name" label="名称" />
             <el-table-column prop="code" label="编码" />
             <el-table-column prop="value" label="数值" />
@@ -52,9 +52,9 @@
             </el-table-column> -->
             <el-table-column fixed="right" label="操作" width="130">
               <template slot-scope="scope">
-                <el-button type="text" size="small" @click="addItemHandle(scope.row)">查阅</el-button>
-                <el-button type="text" size="small" @click="addItemHandle(scope.row)">修改</el-button>
-                <el-button type="text" size="small" @click="addItemHandle(scope.row)">删除</el-button>
+                <el-button type="text" size="small" @click="viewItemHandler(scope.row)">查阅</el-button>
+                <!-- <el-button type="text" size="small" @click="updateItemHandler(scope.row)">修改</el-button> -->
+                <el-button type="text" size="small" @click="deleteItemHandler(scope.row)">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -148,7 +148,7 @@
 </template>
 
 <script>
-import { queryByPage, save, queryById } from '@/api/common'
+import { queryByPage, save, queryById, update } from '@/api/common'
 import aqSelect from '@/components/Element/Select'
 import Pagination from '@/components/Pagination'
 import CheckBoxRole from '@/components/Business/Role/CheckBoxRole'
@@ -162,6 +162,8 @@ export default {
   },
   data() {
     return {
+      selectId: null,
+      selectItemId: null,
       hiddenQuery: false,
       showButton: false, // 显示执行按钮
       loading: false, // 页面loading标示
@@ -180,7 +182,7 @@ export default {
         name: '',
         type: '',
         status: '',
-        remark: ''
+        remarks: ''
       },
       groupRules: {
         code: [
@@ -204,7 +206,7 @@ export default {
         name: '',
         value: '',
         status: '',
-        remark: ''
+        remarks: ''
       },
       itemRules: {
         code: [
@@ -244,6 +246,7 @@ export default {
           this.groupItems = data.records
           this.query.total = data.total
           this.query.size = data.size
+          this.items = []
         }
         this.loading = false
       }).catch(error => {
@@ -273,6 +276,30 @@ export default {
         this.loading = false
       })
     },
+    fetchGroupDataById() {
+      queryById('dictionary_group', this.selectId).then(response => {
+        this.groupForm = response.result
+      }).catch(error => {
+        this.$message({
+          message: error.msg,
+          type: 'error',
+          duration: 5 * 1000
+        })
+        this.loading = false
+      })
+    },
+    fetchItemDataById() {
+      queryById('dictionary_item', this.selectItemId).then(response => {
+        this.itemForm = response.result
+      }).catch(error => {
+        this.$message({
+          message: error.msg,
+          type: 'error',
+          duration: 5 * 1000
+        })
+        this.loading = false
+      })
+    },
     /**
      * 获取当前列表选中行
      */
@@ -280,9 +307,7 @@ export default {
       if (val) {
         this.showButton = true
         this.selectId = val.id
-        queryById('dictionary_group', val.id).then(response => {
-          this.groupForm = response.result
-        })
+        this.fetchGroupDataById()
         // 查询该字典组所有字典项的集合
         this.itemQuery.groupId = val.id
         this.fetchItemData()
@@ -291,6 +316,8 @@ export default {
       }
     },
     handleItemCurrentChange(val) {
+      this.selectItemId = val.id
+      this.fetchItemDataById()
     },
     addGroupHandler() {
       this.resetGroupFormFiedlds()
@@ -303,13 +330,11 @@ export default {
       this.groupForm.name = ''
       this.groupForm.type = ''
       this.groupForm.status = ''
-      this.groupForm.remark = ''
+      this.groupForm.remarks = ''
     },
-    addItemHandler(row) {
-      this.itemForm.groupId = row.id
-      this.dialogItemVisible = true
-    },
-    updateHandler() {
+    updateGroupHandler() {
+      this.fetchGroupDataById()
+      this.dialogGroupVisible = true
     },
     viewHandler() {
     },
@@ -317,33 +342,78 @@ export default {
       this.$refs['groupForm'].validate(validate => {
         if (validate) {
           this.submitLoading = true
-          save('dictionary_group', this.groupForm).then(response => {
-            this.submitLoading = false
-            resultSuccessShowMsg(response)
-            this.dialogGroupVisible = false
-            this.fetchData()
-          }).catch(error => {
-            this.submitLoading = false
-            console.log(error)
-          })
+          if (this.groupForm.id) {
+            update('dictionary_group', this.groupForm).then(response => {
+              this.submitLoading = false
+              resultSuccessShowMsg(response)
+              this.dialogGroupVisible = false
+              this.fetchData()
+            }).catch(error => {
+              this.submitLoading = false
+              console.log(error)
+            })
+          } else {
+            save('dictionary_group', this.groupForm).then(response => {
+              this.submitLoading = false
+              resultSuccessShowMsg(response)
+              this.dialogGroupVisible = false
+              this.fetchData()
+            }).catch(error => {
+              this.submitLoading = false
+              console.log(error)
+            })
+          }
         }
       })
+    },
+    addItemHandler(row) {
+      this.resetItemFormFiedlds()
+      this.itemForm.groupId = row.id
+      this.dialogItemVisible = true
+    },
+    resetItemFormFiedlds() {
+      this.itemForm.id = ''
+      this.itemForm.code = ''
+      this.itemForm.groupId = ''
+      this.itemForm.name = ''
+      this.itemForm.value = ''
+      this.itemForm.status = ''
+      this.itemForm.remarks = ''
     },
     submitItemHandler() {
       this.$refs['itemForm'].validate(validate => {
         if (validate) {
           this.submitLoading = true
-          save('dictionary_item', this.itemForm).then(response => {
-            this.submitLoading = false
-            resultSuccessShowMsg(response)
-            this.dialogItemVisible = false
-            this.fetchItemData()
-          }).catch(error => {
-            this.submitLoading = false
-            console.log(error)
-          })
+          if (this.itemForm.id) {
+            update('dictionary_item', this.itemForm).then(response => {
+              this.submitLoading = false
+              resultSuccessShowMsg(response)
+              this.dialogItemVisible = false
+              this.fetchItemData()
+            }).catch(error => {
+              this.submitLoading = false
+              console.log(error)
+            })
+          } else {
+            save('dictionary_item', this.itemForm).then(response => {
+              this.submitLoading = false
+              resultSuccessShowMsg(response)
+              this.dialogItemVisible = false
+              this.fetchItemData()
+            }).catch(error => {
+              this.submitLoading = false
+              console.log(error)
+            })
+          }
         }
       })
+    },
+    viewItemHandler() {
+    },
+    updateItemHandler() {
+      this.dialogItemVisible = true
+    },
+    deleteItemHandler() {
     }
   }
 }

@@ -92,6 +92,7 @@ export default {
   },
   data() {
     return {
+      isUpdateOperator: false, // 是否更新操作
       showOperatorButton: false, // 显示操作按钮
       operatorButtonName: '创建', // 操作按钮名称
       showButton: false,
@@ -171,6 +172,7 @@ export default {
     addHandler() {
       this.showOperatorButtonHandler()
       this.operatorButtonName = '创建'
+      this.isUpdateOperator = false
       // 屏蔽修改，删除按钮
       this.showButton = false
       if (isNotEmpty(this.form.id)) {
@@ -184,6 +186,7 @@ export default {
     updateHandler() {
       this.showOperatorButtonHandler()
       this.operatorButtonName = '更新'
+      this.isUpdateOperator = true
     },
     showOperatorButtonHandler() {
       this.showOperatorButton = true
@@ -224,9 +227,13 @@ export default {
       })
     },
     resetForm() {
-      this.$refs['form'].resetFields()
-      this.form.id = ''
-      this.resetParentList()
+      if (!this.isUpdateOperator) {
+        this.$refs['form'].resetFields()
+        this.form.id = ''
+        this.resetParentList()
+      } else {
+        this.handleNodeClick(this.form)
+      }
     },
     resetParentList() {
       this.form.parentId = -1

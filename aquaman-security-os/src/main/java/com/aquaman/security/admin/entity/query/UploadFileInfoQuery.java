@@ -56,9 +56,9 @@ public class UploadFileInfoQuery extends PageQuery<UploadFileInfo> implements Se
     private Long originSystemId;
 
     /**
-     * (0:删除, 1:未删除)
+     * 是否删除(0:否;1:是)
      */
-    private Long isDeleted;
+    private Integer isDeleted;
 
     private Long createUserId;
 
