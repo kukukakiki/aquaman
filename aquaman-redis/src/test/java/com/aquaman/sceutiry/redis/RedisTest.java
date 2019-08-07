@@ -27,12 +27,12 @@ public class RedisTest {
 
     @Test
     public void test(){
-        redisOperationsService.addLink("test111", "测试一下可否");
+        redisOperationsService.setKeyValue("test111", "测试一下可否");
     }
 
     @Test
     public void test2(){
         Object o = new Object();
-        redisOperationsService.addLink("test111", o);
+        redisOperationsService.setKeyValue("test111", o);
     }
 }

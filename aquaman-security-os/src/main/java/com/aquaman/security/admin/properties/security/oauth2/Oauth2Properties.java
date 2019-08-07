@@ -36,4 +36,6 @@ import lombok.Data;
 public class Oauth2Properties {
 
     private String jwtSalt;
+
+    private String storeType;
 }

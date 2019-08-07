@@ -8,7 +8,20 @@ package com.aquaman.security.redis.service;
  */
 public interface RedisOperationsService {
 
-    void addLink(String userId, String value);
+    /**
+     * 向redis放入key，value
+     * 该方法入参都是{@link String}类型
+     * @param key
+     * @param value
+     */
+    void setKeyValue(String key, String value);
 
-    void addLink(String userId, Object value);
+    /**
+     * 向redis放入key，value
+     * 入参key:{@link String}类型
+     * 入参value:{@link Object}类
+     * @param key
+     * @param value
+     */
+    void setKeyValue(String key, Object value);
 }

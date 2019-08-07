@@ -42,7 +42,6 @@ public class AquamanTokenEnhancer implements TokenEnhancer {
 
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
-
         Map<String, Object> informationMap = new HashMap<>();
         if(authentication.getPrincipal() != null && authentication.getPrincipal() instanceof User){
             User currentUser = (User)authentication.getPrincipal();

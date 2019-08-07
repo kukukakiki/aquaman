@@ -31,6 +31,7 @@ import com.aquaman.security.admin.service.IUserService;
 import com.aquaman.security.common.constant.AquamanConstant;
 import com.aquaman.security.common.util.JSONUtil;
 import com.aquaman.security.common.enums.ResultCodeEnum;
+import com.aquaman.security.redis.service.RedisOperationsService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -68,6 +69,9 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
 
     @Autowired
     private ClientDetailsService clientDetailsService;
+
+    @Autowired
+    private RedisOperationsService redisOperationsService;
 
     @Autowired
     @Qualifier("defaultAuthorizationServerTokenServices")
@@ -115,6 +119,8 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
             currentLoginUserDTO.setId(user.getId());
             currentLoginUserDTO.setName(user.getName());
             currentLoginUserDTO.setImageFileId(user.getImageFileId());
+            // 将当前登陆用户信息存入redis中
+            redisOperationsService.setKeyValue(user.getAccount(), JSONUtil.objectToJSONString(currentLoginUserDTO));
             // 组装返回VO
             ResultVO resultVO = new ResultVO(ResultCodeEnum.SUCCESS, user);
             resultVO.setResult(currentLoginUserDTO);

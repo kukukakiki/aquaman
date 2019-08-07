@@ -23,52 +23,29 @@ SOFTWARE.
  */
 package com.aquaman.security.admin.config;
 
-import com.aquaman.security.admin.properties.security.AquamanSecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.oauth2.provider.token.TokenEnhancer;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 /**
- * ConditionalOnProperty：
- * prefix：前缀是"leerzoom.security.oauth2"
- * name：最后结尾名字是"storeType"
- * havingValue：值为"jwt"
- * matchIfMissing：如果没有字就执行该配置项
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
- * @version 2019/3/6
- * @since 2019/3/6
+ * @version 2019-08-07
+ * @since 2019-08-07
  */
 @Configuration
-@ConditionalOnProperty(prefix = "aquaman.security.oauth2", name = "storeType", havingValue = "jwt", matchIfMissing = true)
-public class AquamanJwtTokenStoreConfig {
-
+@ConditionalOnProperty(prefix = "aquaman.security.oauth2", name = "storeType", havingValue = "redis")
+public class AquamanRedisTokenStoreConfig {
 
     @Autowired
-    private AquamanSecurityProperties aquamanSecurityProperties;
+    private RedisConnectionFactory redisConnectionFactory;
 
     @Bean
-    public TokenStore jwtTokenStore(){
-        return new JwtTokenStore(jwtAccessTokenConverter());
-    }
-
-    @Bean
-    public JwtAccessTokenConverter jwtAccessTokenConverter(){
-        JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
-        // 盐值签名串->JWT解密需要此盐值
-        jwtAccessTokenConverter.setSigningKey(aquamanSecurityProperties.getOauth2().getJwtSalt());
-        return jwtAccessTokenConverter;
-    }
-
-    @Bean
-    @ConditionalOnMissingBean(name = "jwtTokenEnhancer")
-    public TokenEnhancer jwtTokenEnhancer(){
-        return new AquamanTokenEnhancer();
+    public TokenStore redisTokenStore(){
+        return new RedisTokenStore(redisConnectionFactory);
     }
 }

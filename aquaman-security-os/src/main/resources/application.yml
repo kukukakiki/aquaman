@@ -56,6 +56,7 @@ logging:
     com.aquaman.security.admin: debug
 
 # Aquaman自定义配置项目aquaman.oss.aliyun
+
 aquaman:
   oss:
     aliyun:

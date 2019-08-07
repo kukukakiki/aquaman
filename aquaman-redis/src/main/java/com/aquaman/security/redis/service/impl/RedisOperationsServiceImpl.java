@@ -7,6 +7,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author 创建者 wei.wang
@@ -25,12 +26,23 @@ public class RedisOperationsServiceImpl implements RedisOperationsService {
     private RedisTemplate redisTemplate;
 
     @Override
-    public void addLink(String userId, String value) {
-        stringRedisTemplate.opsForValue().set(userId, value);
+    public void setKeyValue(String key, String value) {
+        stringRedisTemplate.opsForValue().set(key, value);
     }
 
     @Override
-    public void addLink(String userId, Object value) {
-        redisTemplate.opsForValue().set(userId, value);
+    public void setKeyValue(String key, Object value) {
+        redisTemplate.opsForValue().set(key, value);
+    }
+
+    /**
+     *
+     * @param key
+     * @param value
+     * @param timeout
+     * @param unit
+     */
+    private void defaultSetKeyValue(String key, Object value, long timeout, TimeUnit unit) {
+        redisTemplate.opsForValue().set(key, value, timeout, unit);
     }
 }
