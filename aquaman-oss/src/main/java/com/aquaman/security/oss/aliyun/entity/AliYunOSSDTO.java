@@ -41,7 +41,7 @@ import java.io.InputStream;
 public class AliYunOSSDTO {
 
     /**
-     * 附件名称
+     * 附件名称,需要后缀名;例如:abc.jpg
      */
     private String fileName;
 
@@ -56,7 +56,12 @@ public class AliYunOSSDTO {
     private String networkPath;
 
     /**
-     * 本地路径
+     * 本地路径;例如:images/2018/09/11/
      */
     private String filePath;
+
+    /**
+     * 相对路径;例如/images/abc.jpg
+     */
+    private String relativePathFileName;
 }

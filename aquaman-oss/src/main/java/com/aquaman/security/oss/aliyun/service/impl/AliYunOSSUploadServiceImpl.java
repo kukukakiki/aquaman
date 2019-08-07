@@ -32,6 +32,7 @@ import com.aquaman.security.oss.aliyun.service.AliYunOSSUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,65 +48,59 @@ import java.net.URL;
 public class AliYunOSSUploadServiceImpl implements AliYunOSSUploadService {
 
     @Autowired
+    private OSS aliyunOSSClient;
+
+    @Autowired
     private AliYunOSSProperties properties;
 
     @Override
     public void networkFileUpload(String fileName, String networkPath) throws IOException {
-        // 创建OSSClient实例
-        OSS ossClient = new OSSClientBuilder().build(properties.getManagement().getEndpoint(),
-                properties.getManagement().getAccessKeyId(), properties.getManagement().getAccessKeySecret());
         // 上传文件流
         InputStream inputStream = new URL(networkPath).openStream();
         try {
-            ossClient.putObject(properties.getManagement().getBucketName(), properties.getManagement().getOssPath() + fileName, inputStream);
+            aliyunOSSClient.putObject(properties.getManagement().getBucketName(), properties.getManagement().getOssPath() + fileName, inputStream);
         } catch (OSSException oe) {
 
         } catch (ClientException ce) {
 
         } finally {
             // 关闭OSSClient
-            if (ossClient != null) {
-                ossClient.shutdown();
+            if (aliyunOSSClient != null) {
+                aliyunOSSClient.shutdown();
             }
         }
     }
 
     @Override
     public void streamFileUpload(String fileName, InputStream inputStream) throws IOException {
-        // 创建OSSClient实例
-        OSS ossClient = new OSSClientBuilder().build(properties.getManagement().getEndpoint(),
-                properties.getManagement().getAccessKeyId(), properties.getManagement().getAccessKeySecret());
         try {
             // 上传文件流
-            ossClient.putObject(properties.getManagement().getBucketName(), properties.getManagement().getOssPath() + fileName, inputStream);
+            aliyunOSSClient.putObject(properties.getManagement().getBucketName(), properties.getManagement().getOssPath() + fileName, inputStream);
         } catch (OSSException oe) {
 
         } catch (ClientException ce) {
 
         } finally {
             // 关闭OSSClient
-            if (ossClient != null) {
-                ossClient.shutdown();
+            if (aliyunOSSClient != null) {
+                aliyunOSSClient.shutdown();
             }
         }
     }
 
     @Override
     public void localFileUpload(String fileName, String filePath) throws IOException {
-        // 创建OSSClient实例
-        OSS ossClient = new OSSClientBuilder().build(properties.getManagement().getEndpoint(),
-                properties.getManagement().getAccessKeyId(), properties.getManagement().getAccessKeySecret());
         try {
             // 上传本地文件，需要有文件后缀
-            ossClient.putObject(properties.getManagement().getBucketName(), properties.getManagement().getOssPath() + fileName, new File(filePath));
+            aliyunOSSClient.putObject(properties.getManagement().getBucketName(), properties.getManagement().getOssPath() + fileName, new File(filePath));
         } catch (OSSException oe) {
 
         } catch (ClientException ce) {
 
         } finally {
             // 关闭OSSClient
-            if (ossClient != null) {
-                ossClient.shutdown();
+            if (aliyunOSSClient != null) {
+                aliyunOSSClient.shutdown();
             }
         }
     }

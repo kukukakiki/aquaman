@@ -23,8 +23,11 @@ SOFTWARE.
  */
 package com.aquaman.security.oss.aliyun.service;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * @author 创建者 wei.wang
@@ -34,5 +37,10 @@ import java.io.InputStream;
  */
 public interface AliYunOSSDownloadService {
 
-    void streamFileDownload(String fileName, InputStream inputStream) throws IOException;
+    /**
+     * 附件下载
+     * @param fileName
+     * @throws IOException
+     */
+    void streamFileDownload(String fileName, OutputStream out) throws IOException;
 }

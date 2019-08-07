@@ -23,10 +23,18 @@ SOFTWARE.
  */
 package com.aquaman.security.oss.aliyun.service.impl;
 
+import com.aliyun.oss.OSS;
+import com.aliyun.oss.model.OSSObject;
+import com.aquaman.security.oss.aliyun.properties.AliYunOSSProperties;
 import com.aquaman.security.oss.aliyun.service.AliYunOSSDownloadService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 
 /**
  * @author 创建者 wei.wang
@@ -34,9 +42,33 @@ import java.io.InputStream;
  * @version 2019-08-03
  * @since 2019-08-03
  */
+@Service
 public class AliYunOSSDownloadServiceImpl implements AliYunOSSDownloadService {
-    @Override
-    public void streamFileDownload(String fileName, InputStream inputStream) throws IOException {
 
+    @Autowired
+    private OSS aliyunOSSClient;
+
+    @Autowired
+    private AliYunOSSProperties properties;
+
+
+    @Override
+    public void streamFileDownload(String fileName, OutputStream out) throws IOException {
+        BufferedReader reader = null;
+        try{
+            // ossObject包含文件所在的存储空间名称、文件名称、文件元信息以及一个输入流。
+            OSSObject ossObject = aliyunOSSClient.getObject(properties.getManagement().getBucketName(), "images/image.jpg");
+            reader = new BufferedReader(new InputStreamReader(ossObject.getObjectContent()));
+            int len = 0;
+            while((len = reader.read()) != -1) {
+                out.write(len);
+                out.flush();
+            }
+        } finally {
+            // 数据读取完成后，获取的流必须关闭，否则会造成连接泄漏，导致请求无连接可用，程序无法正常工作。
+            if (reader != null) {
+                reader.close();
+            }
+        }
     }
 }
