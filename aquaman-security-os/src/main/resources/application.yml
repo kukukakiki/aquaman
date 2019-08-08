@@ -15,9 +15,7 @@ spring:
       # 解密所需配置
       filters: config
       connection-properties: config.decrypt=true;config.decrypt.key=${publickey}
-  kafka:
-    bootstrap-servers: 101.200.38.213:9092
-  # 缓存配置
+  # Redis缓存配置
   redis:
     # Redis服务地址
     host: 101.200.38.213
@@ -34,6 +32,10 @@ spring:
             max-idle: 8
             # 最小空闲连接数 默认0
             min-idle: 0
+  # kafka 配置
+  kafka:
+    bootstrap-servers: 101.200.38.213:9092
+  # 资源配置
   resources:
     # 不要为我们工程中的资源文件建立映射
     add-mappings: false

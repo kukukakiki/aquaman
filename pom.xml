@@ -44,13 +44,15 @@
 	</properties>
 
 	<modules>
-		<module>aquaman-common</module>
 		<module>/aquaman-security-os</module>
-		<module>code-generator</module>
-        <module>aquaman-oss</module>
-        <module>aquaman-kafka</module>
-        <module>aquaman-redis</module>
-		<module>aquaman-zookeeper</module>
+		<!-- aquaman系统基础包目录 -->
+		<module>aquaman-base/aquaman-common</module>
+		<module>aquaman-base/code-generator</module>
+		<!-- 以下都是扩展包目录，例如：OSS，Kafka，Redis等等 -->
+        <module>aquaman-extension/aquaman-oss</module>
+        <module>aquaman-extension/aquaman-kafka</module>
+        <module>aquaman-extension/aquaman-redis</module>
+		<module>aquaman-extension/aquaman-zookeeper</module>
 	</modules>
 
 	<build>

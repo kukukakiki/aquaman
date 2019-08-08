@@ -25,14 +25,17 @@
 ## 模块说明
 ```lua
 aquaman
+└── aquaman-base -- 海王系统基础包目录
+    └── aquaman-common -- 海王管理系统系统公共模块
+    └── code-generator -- mybatis-plus代码生成工具模块
+└── aquaman-extension -- 扩展包目录
+    ├── aquaman-redis -- redis缓存服务模块
+    ├── aquaman-kafka -- kafka消息队列服务模块
+    ├── aquaman-zookeeper -- zookeeper服务模块
+    └── aquaman-oss -- OSS第三方服务模块[阿里云]
 ├── aquaman-fe -- 前端工程[9528]
 ├── aquaman-os -- 海王管理系统[8081]
-└── aquaman-common -- 海王管理系统系统公共模块
-├── aquaman-redis -- redis缓存服务
-├── aquaman-kafka -- kafka消息队列服务
-├── aquaman-zookeeper -- zookeeper服务
-└── aquaman-oss -- OSS第三方服务[阿里云]
-└── aquaman-doc  -- 海王管理系统文档 
+└── documents  -- 海王管理系统文档 
      ├── 1.requirements -- 需求整理
      └── 2.design -- 海王管理系统设计文档
             └── 1.db design -- 数据库设置文档

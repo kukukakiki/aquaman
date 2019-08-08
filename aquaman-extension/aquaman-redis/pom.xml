@@ -6,10 +6,11 @@
         <artifactId>aquaman-security-parent</artifactId>
         <groupId>com.aquaman.security</groupId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>aquaman-kafka</artifactId>
+    <artifactId>aquaman-redis</artifactId>
 
     <dependencies>
         <dependency>
@@ -18,10 +19,18 @@
             <version>${base-version}</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.kafka</groupId>
-            <artifactId>spring-kafka</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+            <version>2.6.2</version>
         </dependency>
     </dependencies>
-
-
 </project>

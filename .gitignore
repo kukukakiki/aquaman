@@ -28,7 +28,10 @@ mvnw.cmd
 /build/
 
 ### Aquaman ###
-/aquaman-doc/generator-mybatis-admin/src
-/aquaman-common/target
+/aquaman-base/aquaman-common/target
 /aquaman-security-os/target
-/code-generator/target
+/aquaman-base/code-generator/target
+/aquaman-extension/aquaman-kafka/target
+/aquaman-extension/aquaman-zookeeper/target
+/aquaman-extension/aquaman-redis/target
+/aquaman-extension/aquaman-oss/target
