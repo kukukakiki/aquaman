@@ -1,6 +1,6 @@
 package com.aquaman.sceutiry.redis;
 
-import com.aquaman.security.redis.service.RedisOperationsService;
+import com.aquaman.security.redis.service.RedisSetService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.SpringBootConfiguration;
@@ -23,16 +23,16 @@ import javax.annotation.Resource;
 public class RedisTest {
 
     @Resource
-    private RedisOperationsService redisOperationsService;
+    private RedisSetService redisOperationsService;
 
     @Test
     public void test(){
-        redisOperationsService.setKeyValue("test111", "测试一下可否");
+        redisOperationsService.setKeyValueForEver("test111", "测试一下可否");
     }
 
     @Test
     public void test2(){
         Object o = new Object();
-        redisOperationsService.setKeyValue("test111", o);
+        redisOperationsService.setKeyValueForEver("test111", o);
     }
 }

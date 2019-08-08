@@ -2,6 +2,7 @@ package com.aquaman.security.admin.service.impl;
 
 import com.aquaman.security.admin.entity.domain.UploadFileInfo;
 import com.aquaman.security.admin.entity.domain.User;
+import com.aquaman.security.admin.entity.dto.CurrentLoginUserDTO;
 import com.aquaman.security.admin.entity.vo.ResultVO;
 import com.aquaman.security.admin.properties.file.AquamanFileProperties;
 import com.aquaman.security.admin.service.IFileService;
@@ -65,7 +66,7 @@ public class FileServiceImpl implements IFileService {
         // 上传文件服务器全路径
         String uploadFileFullPath = uploadFile(file);
         if(StringUtils.isNotEmpty(uploadFileFullPath)){
-            User loginUser = CurrentUserUtil.getLoginUserInfo();
+            CurrentLoginUserDTO loginUser = CurrentUserUtil.getLoginUserInfo();
             UploadFileInfo uploadFileInfo = new UploadFileInfo();
             // 文件名称,有后最
             String fileName = file.getOriginalFilename();

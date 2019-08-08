@@ -27,6 +27,7 @@ import com.aquaman.security.admin.annotation.AquamanLog;
 import com.aquaman.security.admin.controller.base.BaseController;
 import com.aquaman.security.admin.entity.domain.User;
 import com.aquaman.security.admin.entity.domain.UserRole;
+import com.aquaman.security.admin.entity.dto.CurrentLoginUserDTO;
 import com.aquaman.security.admin.entity.query.RoleQuery;
 import com.aquaman.security.admin.entity.query.UserQuery;
 import com.aquaman.security.admin.entity.query.UserRoleQuery;
@@ -121,8 +122,9 @@ public class UserController extends BaseController {
      * @return
      */
     @GetMapping("/info")
+    @Deprecated
     public ResultVO info(){
-        User user = CurrentUserUtil.getLoginUserInfo();
+        CurrentLoginUserDTO user = CurrentUserUtil.getLoginUserInfo();
         ResultVO<User> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, user);
         return resultVO;
     }
@@ -134,7 +136,7 @@ public class UserController extends BaseController {
     @GetMapping("/menu")
     public ResultVO<List<MenuTreeVO>> getMenuByCurrentLoginUser() {
         ResultVO<List<MenuTreeVO>> resultVO = new ResultVO<>(ResultCodeEnum.SUCCESS);
-        User user = CurrentUserUtil.getLoginUserInfo();
+        CurrentLoginUserDTO user = CurrentUserUtil.getLoginUserInfo();
         if(user != null) {
             UserRoleQuery userRoleQuery = new UserRoleQuery();
             userRoleQuery.setUserId(user.getId());

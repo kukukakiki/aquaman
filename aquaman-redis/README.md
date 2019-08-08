@@ -20,3 +20,20 @@
 
 ### RedisTemplate
 
+### Redis启动
+
+如果上下文中缺省配置启动工厂,spring boot会默认采用Lettuce连接配置
+
+```
+LettuceConnectionConfiguration
+    @Bean
+	@ConditionalOnMissingBean(RedisConnectionFactory.class)
+	public LettuceConnectionFactory redisConnectionFactory(
+			ClientResources clientResources) throws UnknownHostException {
+		LettuceClientConfiguration clientConfig = getLettuceClientConfiguration(
+				clientResources, this.properties.getLettuce().getPool());
+		return createLettuceConnectionFactory(clientConfig);
+	}
+}
+```
+

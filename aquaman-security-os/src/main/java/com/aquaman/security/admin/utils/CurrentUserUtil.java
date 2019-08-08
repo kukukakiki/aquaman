@@ -23,16 +23,18 @@ SOFTWARE.
  */
 package com.aquaman.security.admin.utils;
 
-import com.aquaman.security.admin.entity.domain.User;
-import com.aquaman.security.admin.entity.query.UserQuery;
-import com.aquaman.security.admin.service.IUserService;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.aquaman.security.admin.entity.dto.CurrentLoginUserDTO;
+import com.aquaman.security.common.util.JSONUtil;
+import com.aquaman.security.redis.service.RedisQueryService;
 import lombok.experimental.UtilityClass;
-import org.apache.commons.collections.CollectionUtils;
-import org.springframework.context.ApplicationContext;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+import com.aquaman.security.admin.handler.login.LoginSuccessHandler;
 
 /**
  * 当前登陆用户
@@ -42,26 +44,36 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 2019/3/31
  */
 @UtilityClass
+@Slf4j
 public class CurrentUserUtil {
 
-    private ConcurrentHashMap<String, User> loginUserMap = new ConcurrentHashMap<>();
-
     /**
-     * 获取当前登陆用户
-     * TODO 改造编号201903311114
+     * 获取当前登陆用户,用户登录存放Redis(具体实现查阅{@link LoginSuccessHandler}),用户名作为Redis的key,值为{@link CurrentLoginUserDTO}对象
      * @return
      */
-    public static User getLoginUserInfo() {
-        IUserService userService = SpringUtil.getBean(IUserService.class);
-        String account =  (String) SecurityContextHolder.getContext().getAuthentication() .getPrincipal();
-        User loginUser = loginUserMap.get(account);
-        if(loginUser != null) {
-            return loginUser;
+    public static CurrentLoginUserDTO getLoginUserInfo() {
+        RedisQueryService<String> redisQueryService = SpringUtil.getBean(RedisQueryService.class);
+        String account =  (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CurrentLoginUserDTO dto = null;
+        String jsonToken =  redisQueryService.queryByKey(account);
+        Long expire = redisQueryService.queryExpire(account, TimeUnit.SECONDS);
+        // token过期时间
+        log.info("Redis中key的过期时间{}", expire);
+        if(StringUtils.isNotEmpty(jsonToken)) {
+            try {
+                dto = JSONUtil.resolverObjectIncludeArrayByJSON(jsonToken, CurrentLoginUserDTO.class);
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // TODO 未能在redis中查找到到当前登录用户
         }
-        loginUser =  userService.loadUserByUsername(account);
-        if(loginUser != null){
-            loginUserMap.put(loginUser.getAccount(), loginUser);
-        }
-        return loginUser;
+        return dto;
     }
 }

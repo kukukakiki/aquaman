@@ -21,7 +21,6 @@ import javax.annotation.Resource;
  * @since 2019/8/5
  */
 @Configuration
-@Order(2)
 public class RedisTemplateConfig {
 
     @Resource

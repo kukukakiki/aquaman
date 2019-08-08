@@ -31,13 +31,12 @@ import com.aquaman.security.admin.service.IUserService;
 import com.aquaman.security.common.constant.AquamanConstant;
 import com.aquaman.security.common.util.JSONUtil;
 import com.aquaman.security.common.enums.ResultCodeEnum;
-import com.aquaman.security.redis.service.RedisOperationsService;
+import com.aquaman.security.redis.service.RedisSetService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -52,6 +51,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Base64;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 登录成功后spring security将会调用该处理器
@@ -71,7 +71,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
     private ClientDetailsService clientDetailsService;
 
     @Autowired
-    private RedisOperationsService redisOperationsService;
+    private RedisSetService redisOperationsService;
 
     @Autowired
     @Qualifier("defaultAuthorizationServerTokenServices")
@@ -120,7 +120,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
             currentLoginUserDTO.setName(user.getName());
             currentLoginUserDTO.setImageFileId(user.getImageFileId());
             // 将当前登陆用户信息存入redis中
-            redisOperationsService.setKeyValue(user.getAccount(), JSONUtil.objectToJSONString(currentLoginUserDTO));
+            redisOperationsService.setKeyValue(user.getAccount(), JSONUtil.objectToJSONString(currentLoginUserDTO), currentLoginUserDTO.getExpires(), TimeUnit.SECONDS);
             // 组装返回VO
             ResultVO resultVO = new ResultVO(ResultCodeEnum.SUCCESS, user);
             resultVO.setResult(currentLoginUserDTO);

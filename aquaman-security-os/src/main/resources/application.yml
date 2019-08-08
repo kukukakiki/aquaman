@@ -19,9 +19,21 @@ spring:
     bootstrap-servers: 101.200.38.213:9092
   # 缓存配置
   redis:
+    # Redis服务地址
     host: 101.200.38.213
+    # Redis服务端口
     port: 6379
+    # Redis服务密码
     password: leerzoom213
+    # 连接工厂使用lettuce
+    lettuce:
+          pool:
+            # 最大活跃链接数 默认8
+            max-active: 8
+            # 最大空闲连接数 默认8
+            max-idle: 8
+            # 最小空闲连接数 默认0
+            min-idle: 0
   resources:
     # 不要为我们工程中的资源文件建立映射
     add-mappings: false
