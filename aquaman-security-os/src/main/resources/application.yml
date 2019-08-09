@@ -34,7 +34,13 @@ spring:
             min-idle: 0
   # kafka 配置
   kafka:
+    # 连接地址:端口
     bootstrap-servers: 101.200.38.213:9092
+  cloud:
+    # zookeeper 配置
+    zookeeper:
+      # 连接地址:端口
+      connect-string: 101.200.38.213:2181
   # 资源配置
   resources:
     # 不要为我们工程中的资源文件建立映射
