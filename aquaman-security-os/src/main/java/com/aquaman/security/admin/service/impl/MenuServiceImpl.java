@@ -5,6 +5,7 @@ import com.aquaman.security.admin.entity.domain.Menu;
 import com.aquaman.security.admin.entity.dto.MenuDTO;
 import com.aquaman.security.admin.entity.query.MenuQuery;
 import com.aquaman.security.admin.entity.vo.MenuTreeVO;
+import com.aquaman.security.admin.entity.vo.MetaVO;
 import com.aquaman.security.admin.enums.MenuTypeEnum;
 import com.aquaman.security.admin.mapper.MenuMapper;
 import com.aquaman.security.admin.service.IMenuService;
@@ -137,9 +138,14 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
         if(CollectionUtils.isNotEmpty(parentMenuList)){
             // 菜单VO集合
             List<MenuTreeVO> menuTreeVOList = new ArrayList<>();
+            MenuTreeVO menuTreeVO = new MenuTreeVO();
+            MetaVO metaVO = new MetaVO();
+            menuTreeVO.setMeta(metaVO);
             for(Menu menu : parentMenuList) {
+                // clone菜单树VO
+                MenuTreeVO cloneMenuTreeVO =  menuTreeVO.clone();
                 // 将Menu构建成MenuTreeVO对象
-                MenuTreeVO menuTreeVO = MenuTreeBuild.buildMenuTreeVO(menu);
+                menuTreeVO = MenuTreeBuild.buildMenuTreeVO(menu, cloneMenuTreeVO);
                 // MenuTreeVO增加到集合中
                 menuTreeVOList.add(menuTreeVO);
                 // 设置父菜单ID

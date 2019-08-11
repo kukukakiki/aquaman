@@ -47,15 +47,40 @@ public class MenuTreeBuild {
      * @return
      */
     public static MenuTreeVO buildMenuTreeVO(Menu menu) {
-        Assert.notNull(menu, "菜单关系DTO对象不能为空");
         MenuTreeVO menuTreeVO = new MenuTreeVO();
-        BeanUtils.copyProperties(menu, menuTreeVO);
         // 构建扩展信息
         MetaVO meta = new MetaVO();
+        return buildMenuTreeVO(menu, menuTreeVO, meta);
+    }
+
+    /**
+     * Menu构建成MenuTreeVO
+     * @param menu
+     * @return
+     */
+    public static MenuTreeVO buildMenuTreeVO(Menu menu, MenuTreeVO menuTreeVO, MetaVO meta) {
+        Assert.notNull(menu, "菜单关系DTO对象不能为空");
+        BeanUtils.copyProperties(menu, menuTreeVO);
+        // 构建扩展信息
         meta.setTitle(menu.getName());
         meta.setIncon(menu.getIconType());
         meta.setType(menu.getType());
         menuTreeVO.setMeta(meta);
+        return menuTreeVO;
+    }
+
+
+
+    /**
+     * Menu构建成MenuTreeVO
+     * @param menu
+     * @return
+     */
+    public static MenuTreeVO buildMenuTreeVO(Menu menu, MenuTreeVO menuTreeVO) {
+        Assert.notNull(menu, "菜单关系DTO对象不能为空");
+        BeanUtils.copyProperties(menu, menuTreeVO);
+        // 构建扩展信息
+        menuTreeVO.getMeta().setIncon(menu.getIconType()).setTitle(menu.getName()).setType(menu.getType());
         return menuTreeVO;
     }
 }

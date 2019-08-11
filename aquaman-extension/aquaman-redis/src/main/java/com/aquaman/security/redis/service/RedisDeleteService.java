@@ -7,4 +7,6 @@ package com.aquaman.security.redis.service;
  * @since 2019/8/8
  */
 public interface RedisDeleteService {
+
+    Boolean deleteByKey(String key);
 }

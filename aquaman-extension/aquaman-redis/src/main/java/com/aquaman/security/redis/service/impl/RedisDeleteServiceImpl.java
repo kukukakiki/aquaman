@@ -21,47 +21,28 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.aquaman.security.admin.entity.vo;
+package com.aquaman.security.redis.service.impl;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+import com.aquaman.security.redis.service.RedisDeleteService;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
- * 前端菜单扩展VO
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
- * @version 2019/4/13
- * @since 2019/4/13
+ * @version 2019-08-11
+ * @since 2019-08-11
  */
-@Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
-public class MetaVO implements Cloneable {
+@Service
+public class RedisDeleteServiceImpl implements RedisDeleteService {
 
-    /**
-     * 菜单标题
-     */
-    private String title;
-
-    /**
-     * 菜单图标
-     */
-    private String incon;
-
-    /**
-     * 菜单类型
-     */
-    private String type;
+    @Resource(name="redisTemplate")
+    private RedisTemplate redisTemplate;
 
     @Override
-    public MetaVO clone() {
-        MetaVO vo = null;
-        try {
-            vo = (MetaVO) super.clone();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        return vo;
+    public Boolean deleteByKey(String key) {
+        return redisTemplate.delete(key);
     }
 }

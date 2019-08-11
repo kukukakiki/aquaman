@@ -41,7 +41,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<dependency>
+		<!--<dependency>
 			<groupId>com.aquaman.security</groupId>
 			<artifactId>aquaman-zookeeper</artifactId>
 			<version>${base-version}</version>
@@ -51,7 +51,7 @@
 					<groupId>aquaman-common</groupId>
 				</exclusion>
 			</exclusions>
-		</dependency>
+		</dependency>-->
 		<dependency>
 			<groupId>com.aquaman.security</groupId>
 			<artifactId>aquaman-redis</artifactId>

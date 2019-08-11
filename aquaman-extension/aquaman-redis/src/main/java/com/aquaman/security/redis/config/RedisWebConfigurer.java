@@ -21,47 +21,28 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.aquaman.security.admin.entity.vo;
+package com.aquaman.security.redis.config;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+import com.aquaman.security.redis.interceptor.SubmitIdempotentInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * 前端菜单扩展VO
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
- * @version 2019/4/13
- * @since 2019/4/13
+ * @version 2019-08-11
+ * @since 2019-08-11
  */
-@Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
-public class MetaVO implements Cloneable {
+@Configuration
+public class RedisWebConfigurer implements WebMvcConfigurer {
 
-    /**
-     * 菜单标题
-     */
-    private String title;
-
-    /**
-     * 菜单图标
-     */
-    private String incon;
-
-    /**
-     * 菜单类型
-     */
-    private String type;
+    @Autowired
+    private SubmitIdempotentInterceptor submitIdempotentInterceptor;
 
     @Override
-    public MetaVO clone() {
-        MetaVO vo = null;
-        try {
-            vo = (MetaVO) super.clone();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        return vo;
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(submitIdempotentInterceptor);
     }
 }

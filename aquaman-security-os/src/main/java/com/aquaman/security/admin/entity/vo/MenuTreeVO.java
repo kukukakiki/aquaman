@@ -27,7 +27,10 @@ import com.aquaman.security.admin.enums.DisplayMenuEnum;
 import com.aquaman.security.admin.enums.MenuTypeEnum;
 import com.aquaman.security.admin.enums.StatusEnum;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,7 +41,9 @@ import java.util.List;
  * @since 2019/3/4
  */
 @Data
-public class MenuTreeVO {
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+public class MenuTreeVO implements Cloneable {
 
     private Long id;
 
@@ -124,4 +129,22 @@ public class MenuTreeVO {
      */
     private MetaVO meta;
 
+    /**
+     * 该克隆方法采用深克隆
+     * @return
+     */
+    @Override
+    public MenuTreeVO clone() {
+        MenuTreeVO vo = null;
+        try {
+            vo = (MenuTreeVO) super.clone();
+            MetaVO metaVO = this.meta.clone();
+            List<MenuTreeVO> list = new ArrayList<>();
+            vo.setMeta(metaVO);
+            vo.setChildren(list);
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return vo;
+    }
 }
