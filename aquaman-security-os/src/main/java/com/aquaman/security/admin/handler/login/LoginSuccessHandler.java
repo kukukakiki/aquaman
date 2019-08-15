@@ -28,6 +28,7 @@ import com.aquaman.security.admin.entity.dto.CurrentLoginUserDTO;
 import com.aquaman.security.admin.entity.vo.ResultVO;
 import com.aquaman.security.admin.exception.PrincipalToUserConversionException;
 import com.aquaman.security.admin.service.IUserService;
+import com.aquaman.security.admin.utils.CurrentUserUtil;
 import com.aquaman.security.common.constant.AquamanConstant;
 import com.aquaman.security.common.util.JSONUtil;
 import com.aquaman.security.common.enums.ResultCodeEnum;
@@ -119,6 +120,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
             currentLoginUserDTO.setId(user.getId());
             currentLoginUserDTO.setName(user.getName());
             currentLoginUserDTO.setImageFileId(user.getImageFileId());
+            CurrentUserUtil.set(currentLoginUserDTO);
             // 将当前登陆用户信息存入redis中
             redisOperationsService.setKeyValue(user.getAccount(), JSONUtil.objectToJSONString(currentLoginUserDTO), currentLoginUserDTO.getExpires(), TimeUnit.SECONDS);
             // 组装返回VO

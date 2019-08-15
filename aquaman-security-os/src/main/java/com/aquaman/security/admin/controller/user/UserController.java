@@ -136,6 +136,7 @@ public class UserController extends BaseController {
     @GetMapping("/menu")
     public ResultVO<List<MenuTreeVO>> getMenuByCurrentLoginUser() {
         ResultVO<List<MenuTreeVO>> resultVO = new ResultVO<>(ResultCodeEnum.SUCCESS);
+        CurrentLoginUserDTO currentLoginUserDTO = CurrentUserUtil.get();
         CurrentLoginUserDTO user = CurrentUserUtil.getLoginUserInfo();
         if(user != null) {
             UserRoleQuery userRoleQuery = new UserRoleQuery();

@@ -47,6 +47,20 @@ import com.aquaman.security.admin.handler.login.LoginSuccessHandler;
 @Slf4j
 public class CurrentUserUtil {
 
+    private static final ThreadLocal<CurrentLoginUserDTO> threadLocal = new ThreadLocal<>();
+
+    public static final void set(CurrentLoginUserDTO currentLoginUserDTO) {
+        threadLocal.set(currentLoginUserDTO);
+    }
+
+    public static final CurrentLoginUserDTO get() {
+        return threadLocal.get();
+    }
+
+    public static final void remover() {
+        threadLocal.remove();
+    }
+
     /**
      * 获取当前登陆用户,用户登录存放Redis(具体实现查阅{@link LoginSuccessHandler}),用户名作为Redis的key,值为{@link CurrentLoginUserDTO}对象
      * @return
