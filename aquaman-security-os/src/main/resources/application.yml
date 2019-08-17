@@ -37,7 +37,10 @@ spring:
     # 连接地址:端口
     bootstrap-servers: 101.200.38.213:9092
     consumer:
-      group-id: test-consumer-group
+      # 使用组管理将主题分区分配给消费者，因此需要一个组
+      group-id: test-consumer-group222
+      # 该属性确保新的使用者组获取发送的消息，因为容器可能在发送完成后启动
+      # auto-offset-reset: earliest
   cloud:
     # zookeeper 配置
     zookeeper:
