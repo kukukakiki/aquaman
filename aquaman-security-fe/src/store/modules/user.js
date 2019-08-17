@@ -35,7 +35,6 @@ const user = {
           commit('SET_TOKEN', data.token)
           commit('SET_NAME', data.name)
           // 用户头像关联ad_upload_file表主键ID
-          debugger
           const avatar = process.env.BASE_API + '/upload_file_info/download/' + data.imageFileId
           commit('SET_AVATAR', avatar)
           resolve()
@@ -73,7 +72,6 @@ const user = {
           removeToken()
           resolve()
         }).catch(error => {
-          debugger
           reject(error)
         })
       })

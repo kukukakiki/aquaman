@@ -21,14 +21,34 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.aquaman.security.kafka.service;
+package com.aquaman.security.kafka.producer;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.stereotype.Component;
 
 /**
- * Kafka消费者
+ * aquaman基本kafka生产类
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
- * @version 2019-08-03
- * @since 2019-08-03
+ * @version 2019-08-17
+ * @since 2019-08-17
  */
-public interface KafkaConsumerService {
+@Component
+public class KafkaBaseProducer {
+
+    @Autowired
+    private KafkaTemplate<String, String> kafkaTemplate;
+
+
+    /**
+     * 发送{@link String}类型的消息到队列中
+     * @param topicName 主题名称
+     * @param message 消息内容体
+     * @return
+     */
+    public boolean sendMessageByString(String topicName, String message) {
+        kafkaTemplate.send(topicName, message);
+        return false;
+    }
 }

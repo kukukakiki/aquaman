@@ -63,8 +63,39 @@ public T get() {
 
 > remove
 
-## aquaman 使用场景
+## spring security中ThreadLocal使用场景
 
-### 用户登录
+### 上下文获取用户登陆信息
 
-通过登录->将用户信息存储值ThreadLoad->需要获取用户信息调用get方法
+- 通过调用如下方法，获取登陆用户信息，其中"SecurityContextHolder.getContext()"就是一个ThreadLocal
+
+```
+SecurityContextHolder.getContext().getAuthentication()
+```
+
+- 跟进SecurityContextHolder类的getContext()方法，我们发现调用如下，strategy是ThreadLocalSecurityContextHolderStrategy对象
+
+```
+public static void setContext(SecurityContext context) {
+    strategy.setContext(context);
+}
+```
+
+- 继续跟进ThreadLocalSecurityContextHolderStrategy类的getContext()方法
+
+不难发现spring security默认情况下，使用的是ThreadLocal存储登陆信息到上下文中
+
+```
+private static final ThreadLocal<SecurityContext> contextHolder = new ThreadLocal<>();
+
+public SecurityContext getContext() {
+    SecurityContext ctx = contextHolder.get();
+
+    if (ctx == null) {
+        ctx = createEmptyContext();
+        contextHolder.set(ctx);
+    }
+
+    return ctx;
+}
+```

@@ -120,7 +120,6 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
             currentLoginUserDTO.setId(user.getId());
             currentLoginUserDTO.setName(user.getName());
             currentLoginUserDTO.setImageFileId(user.getImageFileId());
-            CurrentUserUtil.set(currentLoginUserDTO);
             // 将当前登陆用户信息存入redis中
             redisOperationsService.setKeyValue(user.getAccount(), JSONUtil.objectToJSONString(currentLoginUserDTO), currentLoginUserDTO.getExpires(), TimeUnit.SECONDS);
             // 组装返回VO

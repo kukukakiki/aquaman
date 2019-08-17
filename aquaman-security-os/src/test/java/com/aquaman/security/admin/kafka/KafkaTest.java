@@ -21,22 +21,30 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.aquaman.security.kafka.service;
+package com.aquaman.security.admin.kafka;
+
+import com.aquaman.security.kafka.producer.KafkaBaseProducer;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 /**
- * Kafka生产者
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
- * @version 2019-08-03
- * @since 2019-08-03
+ * @version 2019-08-17
+ * @since 2019-08-17
  */
-public interface KafkaProducerService {
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class KafkaTest {
 
-    /**
-     * 发送{@link String}类型的消息到队列中
-     * @param topicName 主题名称
-     * @param message 消息内容体
-     * @return
-     */
-   boolean sendMessageByString(String topicName, String message);
+    @Autowired
+    private KafkaBaseProducer kafkaBaseProducer;
+
+    @Test
+    public void sendTopicAquamanLoggerTest() {
+        kafkaBaseProducer.sendMessageByString("aquamanLogger", "test测试一下消息");
+    }
 }

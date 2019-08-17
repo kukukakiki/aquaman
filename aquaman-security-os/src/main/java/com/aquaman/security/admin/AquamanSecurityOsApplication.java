@@ -32,6 +32,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScans;
+import org.springframework.kafka.annotation.EnableKafka;
 
 /**
  * 引导类
@@ -43,6 +44,7 @@ import org.springframework.context.annotation.ComponentScans;
 @MapperScan("com.aquaman.security.admin.mapper")
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.aquaman.security"})
+@EnableKafka
 public class AquamanSecurityOsApplication {
 
     public static void main(String[] args) {

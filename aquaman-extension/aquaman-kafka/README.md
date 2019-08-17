@@ -1,17 +1,35 @@
+# spring boot kafka 接入须知
+
 [Spring kafka API](https://docs.spring.io/spring-kafka/docs/2.2.4.RELEASE/reference/html/)
 
-创建Topic
+### kafka问题记录
 
-进入kafka安装目录
-该命令结尾的"aquamanLogger"及是本次创建Topic名称
+## 无法发送消息
 
-```
-kafka>./bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic aquamanLogger
-Created topic "aquamanLogger".
-```
-
-查看Topic
+spring boot发送消息至kafka，错误信息如下
 
 ```
-kafka>./bin/kafka-topics.sh --list --zookeeper localhost:2181
+org.apache.kafka.clients.networkclient broker may not be available
+```
+
+原因1
+
+kafka默认没有开放外网访问权限
+
+解决1
+
+进入kafka的config配置目录，修改server.properties
+
+```
+advertised.listeners=PLAINTEXT://#you ip#:#you kafka port#
+```
+
+原因2
+
+kafka没有启动
+
+解决2
+
+```
+nohup bin/kafka-server-start.sh config/server.properties &
 ```

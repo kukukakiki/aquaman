@@ -78,9 +78,26 @@ cd /usr/local/kafka_2.11-2.1.0
 nohup bin/kafka-server-start.sh config/server.properties &
 ```
 
-## 4.错误
+## 4.创建Topic
 
-### 4.1无法连接zookeeper
+进入kafka安装目录
+该命令结尾的"aquamanLogger"及是本次创建Topic名称
+
+```
+kafka>./bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic aquamanLogger
+Created topic "aquamanLogger".
+```
+
+## 5.查看Topic
+
+```
+kafka>./bin/kafka-topics.sh --list --zookeeper localhost:2181
+```
+
+
+## 6.错误
+
+### 6.1无法连接zookeeper
 
 错误信息:
 
@@ -101,7 +118,7 @@ Timed out waiting for connection while in state: CONNECTING
 zookeeper.connect=localhost:2181
 ```
 
-### 4.2内存过小
+### 6.2内存过小
 
 错误信息:
 

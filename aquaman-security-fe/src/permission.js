@@ -34,9 +34,15 @@ router.beforeEach((to, from, next) => {
           // 避免动态设置路由未生生效
           next({ ...to, replace: true })
         }).catch((err) => {
-          store.dispatch('FedLogOut').then(() => {
-            Message.error(err || 'Verification failed, please login again')
-            next({ path: '/' })
+          // store.dispatch('FedLogOut').then(() => {
+          //   Message.error(err || 'Verification failed, please login again')
+          //   next({ path: '/' })
+          // })
+          console.error(err)
+          Message({
+            message: '服务器异常，请联系管理员',
+            type: 'error',
+            duration: 5 * 1000
           })
         })
       } else {

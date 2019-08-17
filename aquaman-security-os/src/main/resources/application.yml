@@ -36,6 +36,8 @@ spring:
   kafka:
     # 连接地址:端口
     bootstrap-servers: 101.200.38.213:9092
+    consumer:
+      group-id: test-consumer-group
   cloud:
     # zookeeper 配置
     zookeeper:

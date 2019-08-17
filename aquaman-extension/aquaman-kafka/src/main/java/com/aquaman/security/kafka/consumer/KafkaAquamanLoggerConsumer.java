@@ -21,28 +21,25 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.aquaman.security.kafka.service.impl;
+package com.aquaman.security.kafka.consumer;
 
-import com.aquaman.security.kafka.service.KafkaProducerService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.stereotype.Service;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.stereotype.Component;
 
 /**
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
- * @version 2019-08-03
- * @since 2019-08-03
+ * @version 2019-08-17
+ * @since 2019-08-17
  */
-@Service
-public class KafkaProducerServiceImpl implements KafkaProducerService {
+@Component
+@Slf4j
+public class KafkaAquamanLoggerConsumer {
 
-    @Autowired
-    KafkaTemplate<String, String> kafka;
-
-    @Override
-    public boolean sendMessageByString(String topicName, String message) {
-        kafka.send(topicName, message);
-        return false;
+    @KafkaListener(topics = {"aquamanLogger"})
+    public String getMessage(String message) {
+        log.info("topic aquamanLogger message: {}", message);
+        return message;
     }
 }
