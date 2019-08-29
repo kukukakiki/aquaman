@@ -33,8 +33,9 @@ aquaman
     ├── aquaman-kafka -- kafka消息队列服务模块
     ├── aquaman-zookeeper -- zookeeper服务模块
     └── aquaman-oss -- OSS第三方服务模块[阿里云]
-├── aquaman-fe -- 前端工程[9528]
-├── aquaman-os -- 海王管理系统[8081]
+├── aquaman-admin-fe -- 前端工程[9528]
+├── aquaman-admin-os -- 海王用户管理系统[8081]
+├── aquaman-gateway-os -- 海王网管系统[8888]
 └── documents  -- 海王管理系统文档 
      ├── 1.requirements -- 需求整理
      └── 2.design -- 海王管理系统设计文档
