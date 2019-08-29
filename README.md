@@ -18,7 +18,7 @@
 
 ## 表设计
 
-目前表结构尚在设计阶段不稳定，待发布正式版本后，将完成表结构提交至GITHUB上！！！
+目前表结构尚在设计阶段不稳定，待发布正式版本后，将完整表结构提交至GITHUB上！！！
 
 [表设计及SQL语句](https://github.com/kukukakiki/aquaman/tree/master/aquaman-doc/2.design/1.db%20design)
 
@@ -39,6 +39,14 @@ aquaman
      ├── 1.requirements -- 需求整理
      └── 2.design -- 海王管理系统设计文档
             └── 1.db design -- 数据库设置文档
+     └── 3.software -- 软件
+     └── 4.notes -- 学习笔记
+            └── elasticsearch
+            └── golang
+            └── java
+            └── kafka
+            └── redis
+            └── zookeeper
      └── 99.tool -- 工具&jar包等
 	 
 ```
@@ -107,7 +115,7 @@ public interface IAquamanService<T> extends IService<T> {
 
 ORM框架[MyBatis-Plus](https://mp.baomidou.com/)
 
-还有很多，后期一一列表...
+还有很多，后期一一罗列...
 
 在此鸣谢开源项目贡献者们
 
