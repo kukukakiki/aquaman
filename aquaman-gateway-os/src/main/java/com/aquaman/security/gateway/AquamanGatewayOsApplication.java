@@ -21,35 +21,23 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.aquaman.security.admin;
+package com.aquaman.security.gateway;
 
-import com.aquaman.security.admin.utils.SpringUtil;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.ComponentScans;
-import org.springframework.kafka.annotation.EnableKafka;
 
 /**
- * 引导类
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
- * @version 2019/2/26
- * @since 2019/2/26
+ * @version 2019-08-29
+ * @since 2019-08-29
  */
-@MapperScan("com.aquaman.security.admin.mapper")
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.aquaman.security"})
-@EnableKafka
-public class AquamanSecurityOsApplication {
+public class AquamanGatewayOsApplication {
 
     public static void main(String[] args) {
-        ApplicationContext applicationContext = SpringApplication.run(AquamanSecurityOsApplication.class, args);
-        SpringUtil.setApplicationContext(applicationContext);
+        ApplicationContext applicationContext = SpringApplication.run(AquamanGatewayOsApplication.class, args);
+        // SpringUtil.setApplicationContext(applicationContext);
     }
-
 }

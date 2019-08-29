@@ -21,20 +21,26 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.aquaman.security.admin.exception;
+package com.aquaman.security.gateway.config;
 
-import com.aquaman.security.admin.entity.vo.ResultVO;
+import org.springframework.cloud.gateway.route.RouteLocator;
+import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
- * Principal转换User对象异常
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
- * @version 2019/2/28
- * @since 2019/2/28
+ * @version 2019-08-29
+ * @since 2019-08-29
  */
-public class PrincipalToUserConversionException extends AquamanBasicException {
-    
-    public PrincipalToUserConversionException(ResultVO resultVO) {
-        super(resultVO);
+@Configuration
+public class AquamanGatewayConfig {
+
+    @Bean
+    public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
+        return builder.routes()
+                .route(r -> r.path("/admin").uri("http://aquaman.leerzoom.com:8001"))
+                .build();
     }
 }

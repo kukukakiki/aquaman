@@ -36,6 +36,8 @@ import lombok.Data;
 @Data
 public class AquamanBasicException extends RuntimeException {
 
+    private static final long serialVersionUID = 4129025025987083341L;
+
     private ResultVO resultVO;
 
     public AquamanBasicException(ResultVO resultVO) {

@@ -44,7 +44,7 @@
 	</properties>
 
 	<modules>
-		<module>/aquaman-security-os</module>
+		<module>/aquaman-admin-os</module>
 		<!-- aquaman系统基础包目录 -->
 		<module>aquaman-base/aquaman-common</module>
 		<module>aquaman-base/code-generator</module>
@@ -53,6 +53,7 @@
         <module>aquaman-extension/aquaman-kafka</module>
         <module>aquaman-extension/aquaman-redis</module>
 		<module>aquaman-extension/aquaman-zookeeper</module>
+		<module>aquaman-gateway-os</module>
 	</modules>
 
 	<build>

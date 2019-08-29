@@ -9,7 +9,7 @@
         <relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>aquaman-security-os</artifactId>
+	<artifactId>aquaman-admin-os</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<description>aquaman manager</description>
 
@@ -161,7 +161,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>com.aquaman.security.admin.AquamanSecurityOsApplication</mainClass>
+					<mainClass>com.aquaman.security.admin.AquamanAdminOsApplication</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>

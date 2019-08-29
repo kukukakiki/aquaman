@@ -34,6 +34,8 @@ import com.aquaman.security.admin.entity.vo.ResultVO;
  */
 public class ValidatorException extends AquamanBasicException {
 
+    private static final long serialVersionUID = -3505998837272881780L;
+
     public ValidatorException(ResultVO resultVO) {
         super(resultVO);
     }

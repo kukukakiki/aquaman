@@ -29,7 +29,8 @@ mvnw.cmd
 
 ### Aquaman ###
 /aquaman-base/aquaman-common/target
-/aquaman-security-os/target
+/aquaman-admin-os/target
+/aquaman-gateway-os/target
 /aquaman-base/code-generator/target
 /aquaman-extension/aquaman-kafka/target
 /aquaman-extension/aquaman-zookeeper/target

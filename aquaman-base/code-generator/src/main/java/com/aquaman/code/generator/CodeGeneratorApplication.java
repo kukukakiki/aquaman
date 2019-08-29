@@ -43,7 +43,7 @@ public class CodeGeneratorApplication {
 
     private static final String CURRENT_EXECUTE_TABLE = "ad_upload_file_info";
 
-    private static final String PROJECT_NAME = "aquaman-security-os";
+    private static final String PROJECT_NAME = "aquaman-admin-os";
 
     /**
      * 快速入门参考https://mp.baomidou.com/guide/generator.html#%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96
