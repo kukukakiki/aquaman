@@ -1,11 +1,9 @@
 package com.aquaman.security.admin.controller.file;
 
 
-import com.aquaman.security.admin.annotation.AquamanLog;
 import com.aquaman.security.admin.controller.base.BaseController;
 import com.aquaman.security.admin.entity.domain.UploadFileInfo;
 import com.aquaman.security.admin.entity.query.UploadFileInfoQuery;
-import com.aquaman.security.admin.entity.query.UserQuery;
 import com.aquaman.security.admin.entity.vo.ResultVO;
 import com.aquaman.security.admin.service.IUploadFileInfoService;
 import com.aquaman.security.common.enums.ResultCodeEnum;
@@ -21,11 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.websocket.server.PathParam;
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.List;
 
 /**

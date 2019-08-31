@@ -23,12 +23,10 @@ SOFTWARE.
  */
 package com.aquaman.security.admin.controller.user;
 
-import com.aquaman.security.admin.annotation.AquamanLog;
 import com.aquaman.security.admin.controller.base.BaseController;
 import com.aquaman.security.admin.entity.domain.User;
 import com.aquaman.security.admin.entity.domain.UserRole;
 import com.aquaman.security.admin.entity.dto.CurrentLoginUserDTO;
-import com.aquaman.security.admin.entity.query.RoleQuery;
 import com.aquaman.security.admin.entity.query.UserQuery;
 import com.aquaman.security.admin.entity.query.UserRoleQuery;
 import com.aquaman.security.admin.entity.vo.MenuTreeVO;
@@ -43,13 +41,11 @@ import com.aquaman.security.admin.utils.CurrentUserUtil;
 import com.aquaman.security.common.constant.AquamanConstant;
 import com.aquaman.security.common.enums.ResultCodeEnum;
 import com.aquaman.security.common.view.DetailView;
-import com.aquaman.security.common.view.ListView;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,7 +56,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -97,7 +92,6 @@ public class UserController extends BaseController {
      * @return
      */
     @GetMapping
-    @AquamanLog
     public ResultVO<List<User>> getByPage(UserQuery userQuery){
         IPage<User> page1 = userService.pageByQuery(userQuery);
         ResultVO<List<User>> resultVO = new ResultVO(ResultCodeEnum.SUCCESS, page1);
