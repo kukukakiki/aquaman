@@ -54,7 +54,8 @@
         <module>aquaman-extension/aquaman-redis</module>
 		<module>aquaman-extension/aquaman-zookeeper</module>
 		<module>aquaman-gateway-os</module>
-	</modules>
+        <module>aquaman-base/aquaman-logger</module>
+    </modules>
 
 	<build>
 		<plugins>

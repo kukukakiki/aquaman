@@ -19,6 +19,11 @@
 			<artifactId>aquaman-common</artifactId>
 			<version>${base-version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.aquaman.security</groupId>
+			<artifactId>aquaman-logger</artifactId>
+			<version>${base-version}</version>
+		</dependency>
 		 <dependency>
 			<groupId>com.aquaman.security</groupId>
 			<artifactId>aquaman-kafka</artifactId>
