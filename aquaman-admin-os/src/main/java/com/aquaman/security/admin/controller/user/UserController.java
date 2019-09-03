@@ -31,6 +31,7 @@ import com.aquaman.security.admin.entity.query.UserQuery;
 import com.aquaman.security.admin.entity.query.UserRoleQuery;
 import com.aquaman.security.admin.entity.vo.MenuTreeVO;
 import com.aquaman.security.admin.entity.vo.ResultVO;
+import com.aquaman.security.admin.enums.DeleteEnum;
 import com.aquaman.security.admin.enums.StatusEnum;
 import com.aquaman.security.admin.service.IMenuService;
 import com.aquaman.security.admin.service.IRoleMenuService;
@@ -186,7 +187,7 @@ public class UserController extends BaseController {
     public ResultVO delete(@PathVariable Long id){
         User user = new User();
         user.setId(id);
-        user.setStatus(StatusEnum.STOP.getValue());
+        user.setIsDeleted(DeleteEnum.YES.getValue());
         boolean isSuccess = userService.updateById(user);
         if(!isSuccess){
             log.warn("修改用户失败，执行返回结果：", isSuccess);

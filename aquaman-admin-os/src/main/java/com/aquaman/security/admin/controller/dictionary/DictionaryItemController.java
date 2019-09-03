@@ -2,9 +2,11 @@ package com.aquaman.security.admin.controller.dictionary;
 
 
 import com.aquaman.security.admin.controller.base.BaseController;
+import com.aquaman.security.admin.entity.domain.DictionaryGroup;
 import com.aquaman.security.admin.entity.domain.DictionaryItem;
 import com.aquaman.security.admin.entity.query.DictionaryItemQuery;
 import com.aquaman.security.admin.entity.vo.ResultVO;
+import com.aquaman.security.admin.enums.DeleteEnum;
 import com.aquaman.security.admin.enums.StatusEnum;
 import com.aquaman.security.admin.service.IDictionaryItemService;
 import com.aquaman.security.common.enums.ResultCodeEnum;
@@ -105,10 +107,10 @@ public class DictionaryItemController extends BaseController {
      */
     @DeleteMapping("/{id:\\d+}")
     public ResultVO delete(@PathVariable Long id){
-        DictionaryItem DictionaryItem = new DictionaryItem();
-        DictionaryItem.setId(id);
-        DictionaryItem.setStatus(StatusEnum.STOP.getValue());
-        boolean isSuccess = dictionaryItemService.updateById(DictionaryItem);
+        DictionaryItem dictionaryItem = new DictionaryItem();
+        dictionaryItem.setId(id);
+        dictionaryItem.setIsDeleted(DeleteEnum.YES.getValue());
+        boolean isSuccess = dictionaryItemService.updateById(dictionaryItem);
         if(!isSuccess){
             log.warn("修改字典项失败，执行返回结果：", isSuccess);
             return unknownError();

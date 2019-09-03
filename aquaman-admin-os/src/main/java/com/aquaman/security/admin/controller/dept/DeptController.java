@@ -8,6 +8,7 @@ import com.aquaman.security.admin.entity.dto.DeptDTO;
 import com.aquaman.security.admin.entity.vo.DeptVO;
 import com.aquaman.security.admin.entity.vo.MenuTreeVO;
 import com.aquaman.security.admin.entity.vo.ResultVO;
+import com.aquaman.security.admin.enums.DeleteEnum;
 import com.aquaman.security.admin.service.IDeptService;
 import com.aquaman.security.admin.service.IUserService;
 import com.aquaman.security.common.enums.ResultCodeEnum;
@@ -68,6 +69,25 @@ public class DeptController extends BaseController {
     @PutMapping("/{id:\\d+}")
     public ResultVO update(Dept dept) {
         deptService.updateById(dept);
+        return success();
+    }
+
+    /**
+     * 根据id删除部门
+     * TODO 该方法存在严重缺陷,需要增加部门所属人员校验,即部门下有所属人员的情况下是不可以进行删除操作
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/{id:\\d+}")
+    @Deprecated
+    public ResultVO delete(@PathVariable Long id) {
+        Dept dept = new Dept();
+        dept.setId(id);
+        dept.setIsDeleted(DeleteEnum.YES.getValue());
+        boolean isSuccess = deptService.updateById(dept);
+        if(!isSuccess){
+            return error(ResultCodeEnum.MENU_DELETE_ERROR);
+        }
         return success();
     }
 }

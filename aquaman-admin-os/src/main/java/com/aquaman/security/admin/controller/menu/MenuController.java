@@ -7,6 +7,7 @@ import com.aquaman.security.admin.entity.dto.MenuDTO;
 import com.aquaman.security.admin.entity.query.MenuQuery;
 import com.aquaman.security.admin.entity.vo.MenuTreeVO;
 import com.aquaman.security.admin.entity.vo.ResultVO;
+import com.aquaman.security.admin.enums.DeleteEnum;
 import com.aquaman.security.admin.enums.StatusEnum;
 import com.aquaman.security.admin.service.IMenuService;
 import com.aquaman.security.common.enums.ResultCodeEnum;
@@ -114,7 +115,7 @@ public class MenuController extends BaseController {
     public ResultVO delete(@PathVariable Long id) {
         Menu menu = new Menu();
         menu.setId(id);
-        menu.setStatus(StatusEnum.STOP.getValue());
+        menu.setIsDeleted(DeleteEnum.YES.getValue());
         boolean isSuccess = menuService.updateById(menu);
         if(!isSuccess){
             return error(ResultCodeEnum.MENU_DELETE_ERROR);

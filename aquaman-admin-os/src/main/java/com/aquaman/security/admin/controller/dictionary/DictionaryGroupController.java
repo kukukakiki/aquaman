@@ -5,6 +5,7 @@ import com.aquaman.security.admin.controller.base.BaseController;
 import com.aquaman.security.admin.entity.domain.DictionaryGroup;
 import com.aquaman.security.admin.entity.query.DictionaryGroupQuery;
 import com.aquaman.security.admin.entity.vo.ResultVO;
+import com.aquaman.security.admin.enums.DeleteEnum;
 import com.aquaman.security.admin.enums.StatusEnum;
 import com.aquaman.security.admin.service.IDictionaryGroupService;
 import com.aquaman.security.common.enums.ResultCodeEnum;
@@ -93,10 +94,10 @@ public class DictionaryGroupController extends BaseController {
      */
     @DeleteMapping("/{id:\\d+}")
     public ResultVO delete(@PathVariable Long id){
-        DictionaryGroup DictionaryGroup = new DictionaryGroup();
-        DictionaryGroup.setId(id);
-        DictionaryGroup.setStatus(StatusEnum.STOP.getValue());
-        boolean isSuccess = dictionaryGroupService.updateById(DictionaryGroup);
+        DictionaryGroup dictionaryGroup = new DictionaryGroup();
+        dictionaryGroup.setId(id);
+        dictionaryGroup.setIsDeleted(DeleteEnum.YES.getValue());
+        boolean isSuccess = dictionaryGroupService.updateById(dictionaryGroup);
         if(!isSuccess){
             log.warn("修改字典组失败，执行返回结果：", isSuccess);
             return unknownError();

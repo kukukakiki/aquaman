@@ -7,6 +7,7 @@ import com.aquaman.security.admin.entity.domain.System;
 import com.aquaman.security.admin.entity.dto.RoleDTO;
 import com.aquaman.security.admin.entity.query.SystemQuery;
 import com.aquaman.security.admin.entity.vo.ResultVO;
+import com.aquaman.security.admin.enums.DeleteEnum;
 import com.aquaman.security.admin.enums.StatusEnum;
 import com.aquaman.security.admin.service.ISystemService;
 import com.aquaman.security.common.enums.ResultCodeEnum;
@@ -103,8 +104,8 @@ public class SystemController extends BaseController {
     @DeleteMapping("/{id:\\d+}")
     public ResultVO delete(@PathVariable Long id){
         System system = new System();
-        system.setStatus(StatusEnum.STOP.getValue());
         system.setId(id);
+        system.setIsDeleted(DeleteEnum.YES.getValue());
         boolean isSuccess = systemService.updateById(system);
         if(!isSuccess){
             log.warn("删除系统失败，执行返回结果：", isSuccess);
