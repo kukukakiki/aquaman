@@ -45,7 +45,7 @@ import java.net.URL;
  * @since 2019-08-03
  */
 @Service
-public class AliYunOSSUploadServiceImpl implements AliYunOSSUploadService {
+public class AliYunOSSUploadServiceImpl implements AliYunOSSUploadService, AutoCloseable {
 
     @Autowired
     private OSS aliyunOSSClient;
@@ -59,15 +59,8 @@ public class AliYunOSSUploadServiceImpl implements AliYunOSSUploadService {
         InputStream inputStream = new URL(networkPath).openStream();
         try {
             aliyunOSSClient.putObject(properties.getManagement().getBucketName(), properties.getManagement().getOssPath() + fileName, inputStream);
-        } catch (OSSException oe) {
+        } catch (OSSException | ClientException e) {
 
-        } catch (ClientException ce) {
-
-        } finally {
-            // 关闭OSSClient
-            if (aliyunOSSClient != null) {
-                aliyunOSSClient.shutdown();
-            }
         }
     }
 
@@ -76,15 +69,8 @@ public class AliYunOSSUploadServiceImpl implements AliYunOSSUploadService {
         try {
             // 上传文件流
             aliyunOSSClient.putObject(properties.getManagement().getBucketName(), properties.getManagement().getOssPath() + fileName, inputStream);
-        } catch (OSSException oe) {
+        } catch (OSSException | ClientException e) {
 
-        } catch (ClientException ce) {
-
-        } finally {
-            // 关闭OSSClient
-            if (aliyunOSSClient != null) {
-                aliyunOSSClient.shutdown();
-            }
         }
     }
 
@@ -93,15 +79,16 @@ public class AliYunOSSUploadServiceImpl implements AliYunOSSUploadService {
         try {
             // 上传本地文件，需要有文件后缀
             aliyunOSSClient.putObject(properties.getManagement().getBucketName(), properties.getManagement().getOssPath() + fileName, new File(filePath));
-        } catch (OSSException oe) {
+        } catch (OSSException | ClientException e) {
 
-        } catch (ClientException ce) {
+        }
+    }
 
-        } finally {
-            // 关闭OSSClient
-            if (aliyunOSSClient != null) {
-                aliyunOSSClient.shutdown();
-            }
+    @Override
+    public void close() throws Exception {
+        // 关闭OSSClient
+        if (aliyunOSSClient != null) {
+            aliyunOSSClient.shutdown();
         }
     }
 }

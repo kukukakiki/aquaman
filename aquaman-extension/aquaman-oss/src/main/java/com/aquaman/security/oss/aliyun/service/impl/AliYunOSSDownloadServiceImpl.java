@@ -54,20 +54,13 @@ public class AliYunOSSDownloadServiceImpl implements AliYunOSSDownloadService {
 
     @Override
     public void streamFileDownload(String fileName, OutputStream out) throws IOException {
-        BufferedReader reader = null;
-        try{
-            // ossObject包含文件所在的存储空间名称、文件名称、文件元信息以及一个输入流。
-            OSSObject ossObject = aliyunOSSClient.getObject(properties.getManagement().getBucketName(), "images/image.jpg");
-            reader = new BufferedReader(new InputStreamReader(ossObject.getObjectContent()));
+        // ossObject包含文件所在的存储空间名称、文件名称、文件元信息以及一个输入流。
+        OSSObject ossObject = aliyunOSSClient.getObject(properties.getManagement().getBucketName(), fileName);
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(ossObject.getObjectContent()))){
             int len = 0;
             while((len = reader.read()) != -1) {
                 out.write(len);
                 out.flush();
-            }
-        } finally {
-            // 数据读取完成后，获取的流必须关闭，否则会造成连接泄漏，导致请求无连接可用，程序无法正常工作。
-            if (reader != null) {
-                reader.close();
             }
         }
     }
