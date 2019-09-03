@@ -18,11 +18,19 @@ import java.util.Optional;
 public interface IDictionaryItemService extends IAquamanService<DictionaryItem> {
 
     /**
-     * 根据字典目录ID查询所属子项集合
+     * 根据字典组ID查询所属子项集合
      * @param query
      * @return
      */
+    @Deprecated
     Optional<IPage<DictionaryItem>> findItemByGroupId(DictionaryItemQuery query);
+
+    /**
+     * 根据字典组ID查询所属子项集合
+     * @param groupId
+     * @return
+     */
+    Optional<IPage<DictionaryItem>> findItemByGroupId(Long groupId);
 
 
 

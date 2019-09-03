@@ -33,4 +33,13 @@ public class DictionaryItemServiceImpl extends ServiceImpl<DictionaryItemMapper,
         IPage<DictionaryItem> page = dictionaryItemMapper.selectPage(query, query.instanceQueryWrapper());
         return Optional.ofNullable(page);
     }
+
+    @Override
+    public Optional<IPage<DictionaryItem>> findItemByGroupId(Long groupId) {
+        Assert.notNull(groupId, "字典目录ID不能为空");
+        DictionaryItemQuery query = new DictionaryItemQuery();
+        query.setGroupId(groupId);
+        IPage<DictionaryItem> page = dictionaryItemMapper.selectPage(query, query.instanceQueryWrapper());
+        return Optional.ofNullable(page);
+    }
 }

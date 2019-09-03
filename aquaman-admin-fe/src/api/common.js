@@ -58,6 +58,18 @@ export function update(type, form) {
 }
 
 /**
+ * 删除
+ * @param {*} type
+ * @param {*} id
+ */
+export function deleted(type, id) {
+  return request({
+    url: '/' + type + '/' + id,
+    method: 'delete'
+  })
+}
+
+/**
  * 普通无条件查询
  * @param {*} type
  */

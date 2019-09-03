@@ -3,6 +3,8 @@
     <el-button-group style="padding-bottom: 10px;">
       <el-button v-show_button="'adminAdd'" type="primary" @click.stop="addGroupHandler">新增</el-button>
       <el-button v-show_button="'adminUpdate'" :disabled="!showButton" type="primary" @click.stop="updateGroupHandler">修改</el-button>
+      <!--  v-show_button="'adminDelete'" -->
+      <el-button :disabled="!showButton" type="primary" @click.stop="deletedGroupHandler">删除</el-button>
       <!-- <el-button v-show_button="'adminView'" :disabled="!showButton" type="primary" @click="viewHandler">查阅</el-button> -->
     </el-button-group>
     <el-row>
@@ -156,7 +158,7 @@
 </template>
 
 <script>
-import { queryByPage, save, queryById, update } from '@/api/common'
+import { queryByPage, save, queryById, update, deleted } from '@/api/common'
 import aqSelect from '@/components/Element/Select'
 import Pagination from '@/components/Pagination'
 import CheckBoxRole from '@/components/Business/Role/CheckBoxRole'
@@ -347,6 +349,26 @@ export default {
       this.dialogGroupVisible = true
     },
     viewHandler() {
+    },
+    deletedGroupHandler() {
+      this.loggerInfo('控制台输出：', 'dsadasd电视剧啊看得开', this.selectId)
+      if (this.selectId) {
+        deleted('dictionary_group', this.selectId).then(response => {
+          this.submitLoading = false
+          resultSuccessShowMsg(response)
+          this.dialogGroupVisible = false
+          this.fetchData()
+        }).catch(error => {
+          this.submitLoading = false
+          console.log(error)
+        })
+      } else {
+        this.$message({
+          message: '请选择一行字典项删除',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      }
     },
     submitGroupHandler() {
       this.$refs['groupForm'].validate(validate => {

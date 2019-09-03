@@ -15,4 +15,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IDictionaryGroupService extends IAquamanService<DictionaryGroup> {
 
+    /**
+     * 删除字典组
+     * 删除前需要校验该字典组所属的字典项是否有值,如果有则无法删除
+     * @param id
+     */
+    void deleteDictionaryGroup(Long id);
+
 }

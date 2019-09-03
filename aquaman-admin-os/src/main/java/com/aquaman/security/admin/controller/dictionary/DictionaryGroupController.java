@@ -94,14 +94,7 @@ public class DictionaryGroupController extends BaseController {
      */
     @DeleteMapping("/{id:\\d+}")
     public ResultVO delete(@PathVariable Long id){
-        DictionaryGroup dictionaryGroup = new DictionaryGroup();
-        dictionaryGroup.setId(id);
-        dictionaryGroup.setIsDeleted(DeleteEnum.YES.getValue());
-        boolean isSuccess = dictionaryGroupService.updateById(dictionaryGroup);
-        if(!isSuccess){
-            log.warn("修改字典组失败，执行返回结果：", isSuccess);
-            return unknownError();
-        }
+        dictionaryGroupService.deleteDictionaryGroup(id);
         return success();
     }
 
