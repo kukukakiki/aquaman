@@ -16,7 +16,11 @@
             <el-table-column prop="name" label="名称" />
             <el-table-column prop="code" label="编码" />
             <el-table-column prop="type" label="类型" width="70" />
-            <el-table-column prop="status" label="状态" width="50" />
+            <el-table-column prop="status" label="状态" width="50" >
+              <template slot-scope="scope">
+                {{ getLabel('status', scope.row.status) }}
+              </template>
+            </el-table-column>
             <!-- <el-table-column prop="gmtCreate" label="创建时间">
               <template slot-scope="scope">
                 <i class="el-icon-time" />
@@ -43,7 +47,11 @@
             <el-table-column prop="name" label="名称" />
             <el-table-column prop="code" label="编码" />
             <el-table-column prop="value" label="数值" />
-            <el-table-column prop="status" label="状态" width="50" />
+            <el-table-column prop="status" label="状态" width="50" >
+              <template slot-scope="scope">
+                {{ getLabel('status', scope.row.status) }}
+              </template>
+            </el-table-column>
             <!-- <el-table-column prop="gmtCreate" label="创建时间">
               <template slot-scope="scope">
                 <i class="el-icon-time" />
@@ -153,6 +161,7 @@ import aqSelect from '@/components/Element/Select'
 import Pagination from '@/components/Pagination'
 import CheckBoxRole from '@/components/Business/Role/CheckBoxRole'
 import { resultValidate, resultSuccessShowMsg } from '@/utils/validate'
+import { getLabel } from '@/utils/constant'
 
 export default {
   components: {
@@ -225,6 +234,7 @@ export default {
     this.fetchData()
   },
   methods: {
+    getLabel,
     showMoreQuery() {
       if (this.hiddenQuery === true) {
         this.hiddenQuery = false
