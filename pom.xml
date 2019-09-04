@@ -41,6 +41,9 @@
 		<mybatis-plus.version>3.2.0</mybatis-plus.version>
 		<druid-version>1.1.10</druid-version>
 		<base-version>0.0.1-SNAPSHOT</base-version>
+		<axon-spring-boot-autoconfigure-version>3.2</axon-spring-boot-autoconfigure-version>
+		<disruptor-version>3.4.2</disruptor-version>
+		<p6spy-version>3.8.5</p6spy-version>
 	</properties>
 
 	<modules>

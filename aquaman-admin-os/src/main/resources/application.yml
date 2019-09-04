@@ -7,7 +7,8 @@ publickey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAIvYfACyldtg8G9CDaFBr2r4rzupQbVbVjzRG
 spring:
   # DB 配置
   datasource:
-    url: jdbc:mysql://fanxiweb.mysql.rds.aliyuncs.com:3306/fanxiweb
+    # url: jdbc:mysql://fanxiweb.mysql.rds.aliyuncs.com:3306/fanxiweb
+    url: jdbc:p6spy:mysql://fanxiweb.mysql.rds.aliyuncs.com:3306/fanxiweb
     username: fanxiweb
     password: JLXFlYO0ksWlcue/1IH7xLa9h3zON/n8a56CwQQ5M9GoEnHLd4/sR4Xwz1C/ng58vA9EvJEihV2xg/1KkRF1Vg==
     # durid 配置
@@ -15,6 +16,8 @@ spring:
       # 解密所需配置
       filters: config
       connection-properties: config.decrypt=true;config.decrypt.key=${publickey}
+    # 生产环境删除该配置
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
   # Redis缓存配置
   redis:
     # Redis服务地址

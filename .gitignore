@@ -28,6 +28,7 @@ mvnw.cmd
 /build/
 
 ### Aquaman ###
+spy.log
 /aquaman-base/aquaman-common/target
 /aquaman-admin-os/target
 /aquaman-gateway-os/target

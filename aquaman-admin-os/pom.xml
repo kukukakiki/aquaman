@@ -151,12 +151,17 @@
 		<dependency>
 			<groupId>org.axonframework</groupId>
 			<artifactId>axon-spring-boot-autoconfigure</artifactId>
-			<version>3.2</version>
+			<version>${axon-spring-boot-autoconfigure-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.lmax</groupId>
 			<artifactId>disruptor</artifactId>
-			<version>3.4.2</version>
+			<version>${disruptor-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>p6spy</groupId>
+			<artifactId>p6spy</artifactId>
+			<version>${p6spy-version}</version>
 		</dependency>
 	</dependencies>
 
