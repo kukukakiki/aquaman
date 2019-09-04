@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
     <el-button-group style="padding-bottom: 10px;">
-      <el-button v-show_button="'adminAdd'" type="primary" @click.stop="addGroupHandler">新增</el-button>
-      <el-button v-show_button="'adminUpdate'" :disabled="!showButton" type="primary" @click.stop="updateGroupHandler">修改</el-button>
+      <el-button v-show_button="'groupAdd'" type="primary" @click.stop="addGroupHandler">新增</el-button>
+      <el-button v-show_button="'groupUpdate'" :disabled="!showButton" type="primary" @click.stop="updateGroupHandler">修改</el-button>
       <!--  v-show_button="'adminDelete'" -->
-      <el-button :disabled="!showButton" type="primary" @click.stop="deletedGroupHandler">删除</el-button>
+      <el-button v-show_button="'groupDelete'" :disabled="!showButton" type="primary" @click.stop="deletedGroupHandler">删除</el-button>
       <!-- <el-button v-show_button="'adminView'" :disabled="!showButton" type="primary" @click="viewHandler">查阅</el-button> -->
     </el-button-group>
     <el-row>
@@ -62,8 +62,8 @@
             </el-table-column> -->
             <el-table-column fixed="right" label="操作" width="130">
               <template slot-scope="scope">
-                <el-button type="text" size="small" @click="viewItemHandler(scope.row)">查阅</el-button>
-                <!-- <el-button type="text" size="small" @click="updateItemHandler(scope.row)">修改</el-button> -->
+                <!-- <el-button type="text" size="small" @click="viewItemHandler(scope.row)">查阅</el-button> -->
+                <el-button type="text" size="small" @click="updateItemHandler(scope.row)">修改</el-button>
                 <el-button type="text" size="small" @click="deleteItemHandler(scope.row)">删除</el-button>
               </template>
             </el-table-column>
@@ -328,7 +328,9 @@ export default {
       }
     },
     handleItemCurrentChange(val) {
-      this.selectItemId = val.id
+      if (val && val.id) {
+        this.selectItemId = val.id
+      }
       this.fetchItemDataById()
     },
     addGroupHandler() {
@@ -351,16 +353,26 @@ export default {
     viewHandler() {
     },
     deletedGroupHandler() {
-      this.loggerInfo('控制台输出：', 'dsadasd电视剧啊看得开', this.selectId)
       if (this.selectId) {
-        deleted('dictionary_group', this.selectId).then(response => {
-          this.submitLoading = false
-          resultSuccessShowMsg(response)
-          this.dialogGroupVisible = false
-          this.fetchData()
-        }).catch(error => {
-          this.submitLoading = false
-          console.log(error)
+        this.$confirm('此操作将删除字典组,列表将无法展示, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          deleted('dictionary_group', this.selectId).then(response => {
+            this.submitLoading = false
+            resultSuccessShowMsg(response)
+            this.dialogGroupVisible = false
+            this.fetchData()
+          }).catch(error => {
+            this.submitLoading = false
+            console.log(error)
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
         })
       } else {
         this.$message({
@@ -446,6 +458,34 @@ export default {
       this.dialogItemVisible = true
     },
     deleteItemHandler() {
+      if (this.itemForm && this.itemForm.id) {
+        this.$confirm('此操作将删除字典项,列表将无法展示, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          deleted('dictionary_item', this.itemForm.id).then(response => {
+            this.submitLoading = false
+            resultSuccessShowMsg(response)
+            this.dialogGroupVisible = false
+            this.fetchData()
+          }).catch(error => {
+            this.submitLoading = false
+            console.log(error)
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+      } else {
+        this.$message({
+          message: '请选择一行字典组删除',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      }
     }
   }
 }

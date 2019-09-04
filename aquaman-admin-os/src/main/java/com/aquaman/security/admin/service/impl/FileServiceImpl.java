@@ -109,7 +109,7 @@ public class FileServiceImpl implements IFileService {
 
     @Override
     public void downloadFile(HttpServletResponse response, UploadFileInfo uploadFileInfo) throws IOException {
-        Assert.notNull(uploadFileInfo, "上传附件信息对象不能为空");
+        Assert.notNull(uploadFileInfo, "下载附件信息对象不能为空");
         downloadFile(response, uploadFileInfo.getPath(), StringUtils.join(uploadFileInfo.getName(), AquamanConstant.POINT_SYMBOL, uploadFileInfo.getSuffix()));
     }
 

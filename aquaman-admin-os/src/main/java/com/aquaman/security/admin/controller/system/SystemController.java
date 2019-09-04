@@ -103,10 +103,7 @@ public class SystemController extends BaseController {
      */
     @DeleteMapping("/{id:\\d+}")
     public ResultVO delete(@PathVariable Long id){
-        System system = new System();
-        system.setId(id);
-        system.setIsDeleted(DeleteEnum.YES.getValue());
-        boolean isSuccess = systemService.updateById(system);
+        boolean isSuccess = systemService.removeById(id);
         if(!isSuccess){
             log.warn("删除系统失败，执行返回结果：", isSuccess);
             return unknownError();

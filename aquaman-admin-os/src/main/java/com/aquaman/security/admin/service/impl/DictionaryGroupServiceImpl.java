@@ -33,12 +33,13 @@ public class DictionaryGroupServiceImpl extends ServiceImpl<DictionaryGroupMappe
     private IDictionaryItemService dictionaryItemService;
 
     @Override
-    public void deleteDictionaryGroup(Long id) {
+    public boolean deleteDictionaryGroup(Long id) {
         IPage<DictionaryItem> page1 = dictionaryItemService.findItemByGroupId(id).get();
         if(page1 != null && CollectionUtils.isNotEmpty(page1.getRecords()) && page1.getRecords().size() > 0) {
             throw new ValidatorException(new ResultVO(ResultCodeEnum.DICTIONARY_GROUP_DELETE_HAVE_ITEM_ERROR));
         }
-        DictionaryGroup dictionaryGroup = new DictionaryGroup().setId(id).setIsDeleted(DeleteEnum.YES.getValue());
-        updateById(dictionaryGroup);
+        // DictionaryGroup dictionaryGroup = new DictionaryGroup().setId(id).setIsDeleted(DeleteEnum.YES.getValue());
+        // updateById(dictionaryGroup);
+        return removeById(id);
     }
 }

@@ -185,10 +185,7 @@ public class UserController extends BaseController {
      */
     @DeleteMapping("/{id:\\d+}")
     public ResultVO delete(@PathVariable Long id){
-        User user = new User();
-        user.setId(id);
-        user.setIsDeleted(DeleteEnum.YES.getValue());
-        boolean isSuccess = userService.updateById(user);
+        boolean isSuccess = userService.removeById(id);
         if(!isSuccess){
             log.warn("修改用户失败，执行返回结果：", isSuccess);
             return unknownError();

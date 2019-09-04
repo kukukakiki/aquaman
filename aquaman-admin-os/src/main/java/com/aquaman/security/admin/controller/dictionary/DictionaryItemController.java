@@ -107,12 +107,9 @@ public class DictionaryItemController extends BaseController {
      */
     @DeleteMapping("/{id:\\d+}")
     public ResultVO delete(@PathVariable Long id){
-        DictionaryItem dictionaryItem = new DictionaryItem();
-        dictionaryItem.setId(id);
-        dictionaryItem.setIsDeleted(DeleteEnum.YES.getValue());
-        boolean isSuccess = dictionaryItemService.updateById(dictionaryItem);
+        boolean isSuccess = dictionaryItemService.removeById(id);
         if(!isSuccess){
-            log.warn("修改字典项失败，执行返回结果：", isSuccess);
+            log.warn("逻辑删除字典项失败，执行返回结果：", isSuccess);
             return unknownError();
         }
         return success();

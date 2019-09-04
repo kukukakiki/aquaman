@@ -113,10 +113,7 @@ public class MenuController extends BaseController {
      */
     @DeleteMapping("/{id:\\d+}")
     public ResultVO delete(@PathVariable Long id) {
-        Menu menu = new Menu();
-        menu.setId(id);
-        menu.setIsDeleted(DeleteEnum.YES.getValue());
-        boolean isSuccess = menuService.updateById(menu);
+        boolean isSuccess = menuService.removeById(id);
         if(!isSuccess){
             return error(ResultCodeEnum.MENU_DELETE_ERROR);
         }

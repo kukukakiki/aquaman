@@ -81,10 +81,7 @@ public class DeptController extends BaseController {
     @DeleteMapping("/{id:\\d+}")
     @Deprecated
     public ResultVO delete(@PathVariable Long id) {
-        Dept dept = new Dept();
-        dept.setId(id);
-        dept.setIsDeleted(DeleteEnum.YES.getValue());
-        boolean isSuccess = deptService.updateById(dept);
+        boolean isSuccess = deptService.removeById(id);
         if(!isSuccess){
             return error(ResultCodeEnum.MENU_DELETE_ERROR);
         }
