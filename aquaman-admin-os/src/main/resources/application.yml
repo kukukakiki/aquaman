@@ -65,6 +65,7 @@ spring:
 management:
   server:
     port: 8082
+# mybatis-plus工具配置官方文档:https://mp.baomidou.com
 mybatis-plus:
   # 设置mybatis配置文件路径
   config-location: classpath:mybatis/mybatis-config.xml
@@ -74,6 +75,14 @@ mybatis-plus:
   type-aliases-package: com.aquaman.security.admin.entity.domain
   # 配置通用枚举,https://mp.baomidou.com/guide/enum.html
   type-enums-package: com.aquaman.security.admin.enums
+  # 全局配置项
+  global-config:
+    # 数据配置项
+    db-config:
+      # 逻辑已删除值(默认为 1), https://mp.baomidou.com/guide/logic-delete.html
+      logic-delete-value: 1
+      # 逻辑未删除值(默认为 0), https://mp.baomidou.com/guide/logic-delete.html
+      logic-not-delete-value: 0
 
 # 定义日志级别
 logging:

@@ -60,6 +60,7 @@ public class UserRole implements Serializable {
     /**
      * 是否删除(0:否;1:是)
      */
+    @TableLogic
     private Integer isDeleted;
 
 

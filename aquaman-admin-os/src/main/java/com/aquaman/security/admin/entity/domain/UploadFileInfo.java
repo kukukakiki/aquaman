@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -60,11 +61,6 @@ public class UploadFileInfo implements Serializable {
      */
     private Long originSystemId;
 
-    /**
-     * 是否删除(0:否;1:是)
-     */
-    private Integer isDeleted;
-
     private Long createUserId;
 
     private String createUserAccount;
@@ -81,6 +77,12 @@ public class UploadFileInfo implements Serializable {
     @TableField(update = "now()", fill = FieldFill.INSERT_UPDATE)
     @DateTimeFormat(pattern = "yyyyMMddHHmmss")
     private Long gmtModify;
+
+    /**
+     * 是否删除(0:否;1:是)
+     */
+    @TableLogic
+    private Integer isDeleted;
 
 
 }
