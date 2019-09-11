@@ -6,7 +6,7 @@
 		<groupId>com.aquaman.security</groupId>
 		<artifactId>aquaman-security-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
+        <relativePath>../../pom.xml</relativePath>
 	</parent>
 
 	<artifactId>aquaman-admin-os</artifactId>

@@ -30,8 +30,8 @@ mvnw.cmd
 ### Aquaman ###
 spy.log
 /aquaman-base/aquaman-common/target
-/aquaman-admin-os/target
-/aquaman-gateway-os/target
+/aquaman-admin/aquaman-admin-os/target
+/aquaman-gateway/aquaman-gateway-os/target
 /aquaman-base/code-generator/target
 /aquaman-extension/aquaman-kafka/target
 /aquaman-extension/aquaman-zookeeper/target
