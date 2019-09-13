@@ -3,7 +3,6 @@ server:
 
 # druid 公钥配置
 publickey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAIvYfACyldtg8G9CDaFBr2r4rzupQbVbVjzRGFUeTQyUrcSDwXB3zQhHeQqtxlalmfvEUck1erSSbkZWI0BueK0CAwEAAQ==
-
 spring:
   # DB 配置
   datasource:

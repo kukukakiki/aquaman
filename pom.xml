@@ -15,17 +15,21 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+
+	<modules>
+		<module>aquaman-admin/aquaman-admin-os</module>
+		<!-- aquaman系统基础包目录 -->
+		<module>aquaman-base/aquaman-common</module>
+		<module>aquaman-base/code-generator</module>
+		<!-- 以下都是扩展包目录，例如：OSS，Kafka，Redis等等 -->
+		<module>aquaman-extension/aquaman-oss</module>
+		<module>aquaman-extension/aquaman-kafka</module>
+		<module>aquaman-extension/aquaman-redis</module>
+		<module>aquaman-extension/aquaman-zookeeper</module>
+		<module>aquaman-gateway/aquaman-gateway-os</module>
+		<module>aquaman-base/aquaman-logger</module>
+		<module>aquaman-admin/aquaman-admin-api</module>
+	</modules>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -44,21 +48,87 @@
 		<axon-spring-boot-autoconfigure-version>3.2</axon-spring-boot-autoconfigure-version>
 		<disruptor-version>3.4.2</disruptor-version>
 		<p6spy-version>3.8.5</p6spy-version>
+		<!-- dubbo -->
+		<dubbo-version>2.7.3</dubbo-version>
+		<dubbo-rpc-version>2.7.3</dubbo-rpc-version>
 	</properties>
 
-	<modules>
-		<module>aquaman-admin/aquaman-admin-os</module>
-		<!-- aquaman系统基础包目录 -->
-		<module>aquaman-base/aquaman-common</module>
-		<module>aquaman-base/code-generator</module>
-		<!-- 以下都是扩展包目录，例如：OSS，Kafka，Redis等等 -->
-        <module>aquaman-extension/aquaman-oss</module>
-        <module>aquaman-extension/aquaman-kafka</module>
-        <module>aquaman-extension/aquaman-redis</module>
-		<module>aquaman-extension/aquaman-zookeeper</module>
-		<module>aquaman-gateway/aquaman-gateway-os</module>
-        <module>aquaman-base/aquaman-logger</module>
-    </modules>
+
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<!-- dubbo framework -->
+			<dependency>
+				<groupId>org.apache.dubbo</groupId>
+				<artifactId>dubbo</artifactId>
+				<version>${dubbo-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.dubbo</groupId>
+				<artifactId>dubbo-rpc-rest</artifactId>
+				<version>${dubbo-rpc-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.curator</groupId>
+				<artifactId>curator-framework</artifactId>
+				<version>2.12.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.curator</groupId>
+				<artifactId>curator-recipes</artifactId>
+				<version>2.12.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.dubbo</groupId>
+				<artifactId>dubbo-spring-boot-starter</artifactId>
+				<version>2.7.3</version>
+			</dependency>
+			<!-- aquaman framework  -->
+			<dependency>
+				<groupId>com.aquaman.security</groupId>
+				<artifactId>aquaman-common</artifactId>
+				<version>${base-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.aquaman.security</groupId>
+				<artifactId>aquaman-logger</artifactId>
+				<version>${base-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.aquaman.security</groupId>
+				<artifactId>aquaman-redis</artifactId>
+				<version>${base-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.aquaman.security</groupId>
+				<artifactId>aquaman-kafka</artifactId>
+				<version>${base-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.aquaman.security</groupId>
+				<artifactId>aquaman-oss</artifactId>
+				<version>${base-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.aquaman.security</groupId>
+				<artifactId>aquaman-zookeeper</artifactId>
+				<version>${base-version}</version>
+			</dependency>
+			<!-- aquaman API  -->
+			<dependency>
+				<groupId>com.aquaman.security</groupId>
+				<artifactId>aquaman-admin-api</artifactId>
+				<version>${base-version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<build>
 		<plugins>

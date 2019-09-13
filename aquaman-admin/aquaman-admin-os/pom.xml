@@ -17,72 +17,31 @@
 		<dependency>
 			<groupId>com.aquaman.security</groupId>
 			<artifactId>aquaman-common</artifactId>
-			<version>${base-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.aquaman.security</groupId>
 			<artifactId>aquaman-logger</artifactId>
-			<version>${base-version}</version>
-		</dependency>
-		 <dependency>
-			<groupId>com.aquaman.security</groupId>
-			<artifactId>aquaman-kafka</artifactId>
-			<version>${base-version}</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>com.aquaman.security</artifactId>
-					<groupId>aquaman-common</groupId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.aquaman.security</groupId>
 			<artifactId>aquaman-oss</artifactId>
-			<version>${base-version}</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>com.aquaman.security</artifactId>
-					<groupId>aquaman-common</groupId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<!--<dependency>
 			<groupId>com.aquaman.security</groupId>
 			<artifactId>aquaman-zookeeper</artifactId>
-			<version>${base-version}</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>com.aquaman.security</artifactId>
-					<groupId>aquaman-common</groupId>
-				</exclusion>
-			</exclusions>
 		</dependency>-->
 		<dependency>
 			<groupId>com.aquaman.security</groupId>
 			<artifactId>aquaman-redis</artifactId>
-			<version>${base-version}</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>com.aquaman.security</artifactId>
-					<groupId>aquaman-common</groupId>
-				</exclusion>
-			</exclusions>
 		</dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>com.aquaman.security</groupId>
             <artifactId>aquaman-kafka</artifactId>
-            <version>${base-version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>com.aquaman.security</artifactId>
-                    <groupId>aquaman-common</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-		<!-- <dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-redis</artifactId>
-		</dependency> -->
+        </dependency>-->
+		<dependency>
+			<groupId>com.aquaman.security</groupId>
+			<artifactId>aquaman-admin-api</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
@@ -121,6 +80,7 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		<!-- test -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -162,6 +122,19 @@
 			<groupId>p6spy</groupId>
 			<artifactId>p6spy</artifactId>
 			<version>${p6spy-version}</version>
+		</dependency>
+		<!-- dubbo spring boot -->
+		<dependency>
+			<groupId>org.apache.dubbo</groupId>
+			<artifactId>dubbo-spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.curator</groupId>
+			<artifactId>curator-framework</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.curator</groupId>
+			<artifactId>curator-recipes</artifactId>
 		</dependency>
 	</dependencies>
 

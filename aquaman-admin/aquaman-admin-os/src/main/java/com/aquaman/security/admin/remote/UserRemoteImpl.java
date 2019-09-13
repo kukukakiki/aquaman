@@ -21,34 +21,36 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.aquaman.security.admin;
+package com.aquaman.security.admin.remote;
 
-import com.aquaman.security.admin.utils.SpringUtil;
-import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
-// import org.springframework.kafka.annotation.EnableKafka;
+import com.aquaman.security.admin.api.remote.UserRemote;
+import com.aquaman.security.admin.entity.domain.User;
+import com.aquaman.security.admin.mapper.UserMapper;
+import com.aquaman.security.common.util.JSONUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import org.apache.dubbo.config.annotation.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * 引导类
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
- * @version 2019/2/26
- * @since 2019/2/26
+ * @version 2019-09-12
+ * @since 2019-09-12
  */
-@MapperScan("com.aquaman.security.admin.mapper")
-@SpringBootApplication
-@ComponentScan(basePackages = {"com.aquaman.security"})
-@EnableDubbo(scanBasePackages = "com.aquaman.security.admin.remote")
-// @EnableKafka
-public class AquamanAdminOsApplication {
+@Service
+public class UserRemoteImpl implements UserRemote {
 
-    public static void main(String[] args) {
-        ApplicationContext applicationContext = SpringApplication.run(AquamanAdminOsApplication.class, args);
-        SpringUtil.setApplicationContext(applicationContext);
+    @Autowired
+    private UserMapper userMapper;
+
+    @Override
+    public String queryUserByAccount(String account) {
+        User user = userMapper.loadUserByAccount(account);
+        try {
+            return JSONUtil.objectToJSONString(user);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
-
 }

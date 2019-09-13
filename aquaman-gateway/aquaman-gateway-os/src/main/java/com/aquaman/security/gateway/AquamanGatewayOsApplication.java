@@ -23,9 +23,11 @@ SOFTWARE.
  */
 package com.aquaman.security.gateway;
 
+import org.apache.dubbo.config.spring.context.annotation.DubboComponentScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * @author 创建者 wei.wang
@@ -34,6 +36,7 @@ import org.springframework.context.ApplicationContext;
  * @since 2019-08-29
  */
 @SpringBootApplication
+@ComponentScan({"com.aquaman.security", "com.aquaman.security.admin.api"})
 public class AquamanGatewayOsApplication {
 
     public static void main(String[] args) {

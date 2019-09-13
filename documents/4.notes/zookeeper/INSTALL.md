@@ -1,5 +1,7 @@
 # zookeeper配置安装
 
+## Linux版本
+
 ### 1.下载
 
 访问zookeeper官网,[下载zookeeper](http://zookeeper.apache.org/releases.html#download)
@@ -81,6 +83,22 @@ zookeeper数据存放目录地址
 >clientPort
 
 客户端连接端口,默认2181
+
+## Docker安装
+
+### 安装zookeeper镜像
+
+不指定版本将会安装最新的zookeeper版本
+
+    docker pull zookeeper
+
+### 启动Zookeeper服务器实例
+
+    docker run --name some-zookeeper --restart always -d zookeeper
+    
+### 从Zookeeper命令行客户端连接到Zookeeper
+
+    docker run -it --rm --link some-zookeeper:zookeeper zookeeper zkCli.sh -server zookeeper
 
 
 

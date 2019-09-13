@@ -21,34 +21,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.aquaman.security.admin;
-
-import com.aquaman.security.admin.utils.SpringUtil;
-import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
-// import org.springframework.kafka.annotation.EnableKafka;
+package com.aquaman.security.gateway.service;
 
 /**
- * 引导类
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
- * @version 2019/2/26
- * @since 2019/2/26
+ * @version 2019-09-12
+ * @since 2019-09-12
  */
-@MapperScan("com.aquaman.security.admin.mapper")
-@SpringBootApplication
-@ComponentScan(basePackages = {"com.aquaman.security"})
-@EnableDubbo(scanBasePackages = "com.aquaman.security.admin.remote")
-// @EnableKafka
-public class AquamanAdminOsApplication {
+public interface ConsumerService {
 
-    public static void main(String[] args) {
-        ApplicationContext applicationContext = SpringApplication.run(AquamanAdminOsApplication.class, args);
-        SpringUtil.setApplicationContext(applicationContext);
-    }
-
+    String getUserByAccount(String account);
 }

@@ -23,7 +23,7 @@ SOFTWARE.
  */
 package com.aquaman.security.admin.kafka;
 
-import com.aquaman.security.kafka.producer.KafkaBaseProducer;
+// import com.aquaman.security.kafka.producer.KafkaBaseProducer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,11 +40,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class KafkaTest {
 
-    @Autowired
+    /*@Autowired
     private KafkaBaseProducer kafkaBaseProducer;
 
     @Test
     public void sendTopicAquamanLoggerTest() {
         kafkaBaseProducer.sendMessageByString("aquamanLogger", "test测试一下消息");
-    }
+    }*/
 }
