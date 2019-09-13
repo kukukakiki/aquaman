@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
  * @version 2019/8/9
  * @since 2019/8/9
  */
-@Configuration
+/*@Configuration
 public class AquamanZookeeperCuratorConfig {
 
     @Bean
@@ -26,4 +26,4 @@ public class AquamanZookeeperCuratorConfig {
             .build();
         return client;
     }
-}
+}*/
