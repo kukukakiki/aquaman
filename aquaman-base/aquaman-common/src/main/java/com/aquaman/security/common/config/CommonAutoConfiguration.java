@@ -21,41 +21,31 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.aquaman.security.admin;
+package com.aquaman.security.common.config;
 
-import com.aquaman.security.admin.utils.SpringUtil;
-import com.aquaman.security.common.config.DemoApplicationRunner;
-import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
+import com.aquaman.security.common.annotation.ExampleCode;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-// import org.springframework.kafka.annotation.EnableKafka;
+import org.springframework.context.annotation.Configuration;
 
 /**
- * 引导类
+ * 自动配置
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
- * @version 2019/2/26
- * @since 2019/2/26
+ * @version 2019-09-25
+ * @since 2019-09-25
  */
-@MapperScan("com.aquaman.security.admin.mapper")
-@SpringBootApplication
-@ComponentScan(basePackages = {"com.aquaman.security"})
-@EnableDubbo(scanBasePackages = "com.aquaman.security.admin.remote")
-// @EnableKafka
-public class AquamanAdminOsApplication {
-
-    public static void main(String[] args) {
-        ApplicationContext applicationContext = SpringApplication.run(AquamanAdminOsApplication.class, args);
-        SpringUtil.setApplicationContext(applicationContext);
-    }
+@Configuration
+@ConditionalOnClass(DemoApplicationRunner.class)
+public class CommonAutoConfiguration {
 
     @Bean
+    @ConditionalOnMissingBean(DemoApplicationRunner.class)
+    @ConditionalOnProperty(name="aquaman.common.enable.demo", havingValue = "true", matchIfMissing = true)
+    @ExampleCode("启动加载Demo配置")
     public DemoApplicationRunner demoApplicationRunner() {
-        return new DemoApplicationRunner("Aquaman");
+        return new DemoApplicationRunner();
     }
-
 }
