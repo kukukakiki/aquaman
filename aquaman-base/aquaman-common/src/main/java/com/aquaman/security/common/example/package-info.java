@@ -1,1 +1,0 @@
-package com.aquaman.security.common.example;
