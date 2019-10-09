@@ -21,17 +21,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.aquaman.security.common.example;
+package com.aquaman.example;
 
 import com.aquaman.security.common.annotation.ExampleCode;
-import com.aquaman.security.common.example.AutoCloseExecutorService;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author 创建者 wei.wang
