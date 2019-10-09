@@ -26,7 +26,9 @@
 ```lua
 aquaman
 └── aquaman-base -- 海王系统基础包目录
-    └── aquaman-common -- 海王管理系统系统公共模块
+    └── aquaman-base-spring-boot-starter -- spring boot starter方式加载common和logger等工程
+    └── aquaman-common -- 公共模块
+    └── aquaman-logger -- 日志模块
     └── code-generator -- mybatis-plus代码生成工具模块
 └── aquaman-extension -- 扩展包目录
     ├── aquaman-redis -- redis缓存服务模块
