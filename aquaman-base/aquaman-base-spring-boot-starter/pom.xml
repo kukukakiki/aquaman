@@ -6,25 +6,18 @@
         <artifactId>aquaman-security-parent</artifactId>
         <groupId>com.aquaman.security</groupId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>aquaman-oss</artifactId>
-
+    <artifactId>aquaman-base-spring-boot-starter</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.aquaman.security</groupId>
-            <artifactId>aquaman-base-spring-boot-starter</artifactId>
+            <artifactId>aquaman-common</artifactId>
         </dependency>
-
-        <!-- 阿里云OSS服务 -->
         <dependency>
-            <groupId>com.aliyun.oss</groupId>
-            <artifactId>aliyun-sdk-oss</artifactId>
-            <version>3.5.0</version>
+            <groupId>com.aquaman.security</groupId>
+            <artifactId>aquaman-logger</artifactId>
         </dependency>
     </dependencies>
-
-
 </project>

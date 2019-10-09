@@ -24,6 +24,7 @@ SOFTWARE.
 package com.aquaman.security.common.config;
 
 import com.aquaman.security.common.annotation.ExampleCode;
+import com.aquaman.security.common.config.DemoApplicationRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

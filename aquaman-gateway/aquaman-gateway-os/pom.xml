@@ -13,6 +13,10 @@
     <artifactId>aquaman-gateway-os</artifactId>
 
     <dependencies>
+        <dependency>
+            <groupId>com.aquaman.security</groupId>
+            <artifactId>aquaman-base-spring-boot-starter</artifactId>
+        </dependency>
         <!-- dubbo -->
         <dependency>
             <groupId>org.apache.dubbo</groupId>

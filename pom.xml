@@ -29,6 +29,7 @@
 		<module>aquaman-gateway/aquaman-gateway-os</module>
 		<module>aquaman-base/aquaman-logger</module>
 		<module>aquaman-admin/aquaman-admin-api</module>
+		<module>aquaman-base/aquaman-base-spring-boot-starter</module>
 	</modules>
 
 	<properties>
@@ -51,12 +52,18 @@
 		<!-- dubbo -->
 		<dubbo-version>2.7.3</dubbo-version>
 		<dubbo-rpc-version>2.7.3</dubbo-rpc-version>
+		<base.version>0.0.1-SNAPSHOT</base.version>
 	</properties>
 
 
 
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>com.aquaman.security</groupId>
+				<artifactId>aquaman-base-spring-boot-starter</artifactId>
+				<version>${base.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>

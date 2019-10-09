@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>com.aquaman.security</groupId>
-            <artifactId>aquaman-common</artifactId>
+            <artifactId>aquaman-base-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

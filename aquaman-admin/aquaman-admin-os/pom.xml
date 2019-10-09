@@ -16,11 +16,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.aquaman.security</groupId>
-			<artifactId>aquaman-common</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.aquaman.security</groupId>
-			<artifactId>aquaman-logger</artifactId>
+			<artifactId>aquaman-base-spring-boot-starter</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.aquaman.security</groupId>
