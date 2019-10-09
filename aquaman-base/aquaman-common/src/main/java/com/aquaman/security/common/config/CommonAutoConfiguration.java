@@ -31,7 +31,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * 自动配置
+ * 启动自动加载配置类
+ * 注意：SpringBootApplication的扫描就能扫到我们的Configuration类，那么配不配置spring.factories无关紧要，
+ * 如果没能扫描到Configuration类，那么必须配置spring.factories才能实现启动自动加载
  * @author 创建者 wei.wang
  * @author 修改者 wei.wang
  * @version 2019-09-25

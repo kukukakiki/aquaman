@@ -53,9 +53,9 @@ public class AquamanAdminOsApplication {
         SpringUtil.setApplicationContext(applicationContext);
     }
 
-    @Bean
-    public DemoApplicationRunner demoApplicationRunner() {
-        return new DemoApplicationRunner("Aquaman");
-    }
+//    @Bean
+//    public DemoApplicationRunner demoApplicationRunner() {
+//        return new DemoApplicationRunner("Aquaman");
+//    }
 
 }
