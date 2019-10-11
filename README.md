@@ -60,7 +60,7 @@ aquaman
 
 ### aquaman-common工程
 
-package在com.aquaman.example下的文件均为示例代码，可工使用者参考和学习使用
+package在com.aquaman.example下的文件均为示例代码，可供使用者参考和学习使用
 
 ## mybatis-plus 改造点记录
 

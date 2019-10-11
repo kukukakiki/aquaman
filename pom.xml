@@ -15,6 +15,13 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>https://github.com/kukukakiki/aquaman/blob/master/LICENSE</url>
+		</license>
+	</licenses>
+
 
 	<modules>
 		<module>aquaman-admin/aquaman-admin-os</module>
