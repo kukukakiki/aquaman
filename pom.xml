@@ -57,7 +57,7 @@
 		<disruptor-version>3.4.2</disruptor-version>
 		<p6spy-version>3.8.5</p6spy-version>
 		<!-- dubbo -->
-		<dubbo-version>2.7.3</dubbo-version>
+		<dubbo-version>2.7.15</dubbo-version>
 		<dubbo-rpc-version>2.7.3</dubbo-rpc-version>
 		<base.version>0.0.1-SNAPSHOT</base.version>
 	</properties>
